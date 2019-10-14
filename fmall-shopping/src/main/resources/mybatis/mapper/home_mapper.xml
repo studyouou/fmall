@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.og.fmall.fmallshopping.mapper.HomeMapper">
+    <select id="queryPanels" resultType="org.og.fmall.fmallshopping.model.Panel">
+        SELECT
+        id,fruit_id,panel_img_url,panel_location,fruit_name,each_price,seller_id
+        FROM
+        tb_panel
+        WHERE
+        panel_location=#{location}
+        ORDER BY
+        `order`,create_time
+        ASC
+        limit 0,#{offset}
+    </select>
+    <select id="queryDefaultPanel" resultType="panel">
+         SELECT
+        id,fruit_id,panel_img_url,panel_location,fruit_name,each_price,seller_id
+        FROM
+        tb_panel
+        WHERE
+        panel_location=#{location}
+        limit 0,#{offset}
+    </select>
+</mapper>

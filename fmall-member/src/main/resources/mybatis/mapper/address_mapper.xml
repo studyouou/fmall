@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.og.fmall.fmalluser.mapper.AddressMapper">
+    <select id="queryAddressMemberDefault" resultType="address">
+        SELECT
+        id,member_id,recive_name,tel,prov,city,area,stree_name,default_address
+        FROM
+        tb_member_address
+        WHERE
+        default_address=1
+        AND
+        member_id=#{memberId}
+    </select>
+    <select id="queryAddress" resultType="address">
+        SELECT
+        id,member_id,recive_name,tel,prov,city,area,stree_name,default_address
+        FROM
+        tb_member_address
+        WHERE
+        default_address IN (0,1)
+        AND
+        member_id=#{memberId}
+        order by
+        default_address DESC,last_update_time DESC
+    </select>
+
+    <update id="updateDefaultAddress">
+        UPDATE
+        tb_member_address
+        SET
+        default_address=1
+        WHERE
+        id=#{id}
+    </update>
+
+    <update id="cancelDefaultAddress">
+        UPDATE
+        tb_member_address
+        SET
+        default_address=0
+        WHERE
+        default_address=1
+        AND
+        member_id=#{memberId}
+    </update>
+
+    <insert id="inssrtUGeneratedKeys" useGeneratedKeys="true" keyProperty="id">
+        INSERT
+        INTO
+        tb_member_address(member_id,recive_name,tel,prov,city,area,stree_name)
+        VALUES(
+        #{address.memberId},
+        #{address.reciveName},
+        #{address.tel},
+        #{address.prov},
+        #{address.city},
+        #{address.area},
+        #{address.streeName}
+        )
+    </insert>
+</mapper>

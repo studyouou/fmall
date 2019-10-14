@@ -1,0 +1,243 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>订单详情</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/all.css" />
+    <link rel="stylesheet" type="text/css" href="css/reset1.css">
+    <link rel="stylesheet" type="text/css" href="css/home.css">
+</head>
+<body>
+<header>
+    <div class="wrap clearFix">
+        <div class="topBar clearfix">
+            <div class="comWidth">
+                <div class="rightArea">
+                    <div id="userTip">
+                    </div>
+                    <div id="userMenLogin" class="dropdown">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="logoBar">
+            <div class="comWidth clearfix">
+                <div class="logo">
+                    <a href="index.html"><img src="images/logo.jpg" alt="首页"></a>
+                </div>
+                <div class="search_box">
+                    <input type="text" class="search_text">
+                    <input type="button" class="search_btn" value="搜 索">
+                </div>
+                <div class="shopCar">
+                    <span class="shopText"><i></i>购物车</span>
+                    <span class="shopNum">0<i></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="panel panel-default" >
+  <div class="panel-heading" style="text-align: center;">水果订单详情</div>
+    <div style="text-align: center;">
+        <table class="table" style="width: 80%; height: auto;margin: auto" id="goodslist">
+            <tr>
+                <td>商品名称</td>
+                <td colspan="3" id="fruitName"></td>
+
+                <td colspan="3" id="priceAndNum"></td>
+            </tr>
+            <tr>
+                 <td>商品图片</td>
+                 <td colspan="2"><img  id="fruitImg" width="200" height="200" /></td>
+            </tr>
+            <tr>
+                <td>订单价格</td>
+                <td colspan="2"  id="orderPrice" align="right"></td>
+             </tr>
+            <tr>
+     		    <td>下单时间</td>
+        	    <td id="createDate" colspan="2"></td>
+             </tr>
+            <tr id="payTime">
+
+            </tr>
+            <tr>
+                <td>收货人</td>
+                <td id="reciveName" colspan="2"></td>
+             </tr>
+            <tr>
+                <td>收货地址</td>
+                <td id="address" colspan="2"></td>
+             </tr>
+            <tr>
+                <td>订单状态</td>
+                <td id="orderStatus"></td>
+                <td colspan="1" id="stateBtn" align="right">
+               </td>
+            </tr>
+  </table>
+    </div>
+</div>
+</body>
+</html>
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="jquery-validation/jquery.validate.min.js"></script>
+<script type="text/javascript" src="layer/layer.js"></script>
+<script type="text/javascript" src="js/all.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script src="js/user.js"></script>
+<script>
+function render(result){
+	var orderVo = result.data;
+	$("#fruitName").text(orderVo.fruitName);
+	$("#priceAndNum").text("￥"+orderVo.eachPrice+" x "+orderVo.orderTotal)
+	$("#fruitImg").attr("src", orderVo.imgUrl);
+    var price = $("#orderPrice");
+	price.append("<p>应付     ￥"+orderVo.idealPay+"</p>");
+    var v1 = orderVo.postFee;
+    var v2 = orderVo.voucherFee;
+    var v3 = orderVo.favorablePrice;
+	if (v1){
+        price.append("<p>运费       <i>+￥"+v1+"</i></p>");
+    }
+    if (v2) {
+        price.append("<p>优惠券       <i>-￥"+v2+"</i></p>");
+    }
+    if (v3){
+        price.append("<p>店家活动       <i>-￥"+v3+"</i></p>");
+    }
+    price.append("<p>实际付款        <i>￥"+orderVo.actualPay+"</i></p>");
+	$("#createDate").text(new Date(orderVo.createTime).format("yyyy-MM-dd hh:mm:ss"));
+	var status = "";
+    var staB = $("#stateBtn");
+	if(orderVo.orderState == 0){
+		status = "未支付"
+        staB.append("<button class=\"btn btn-primary btn-block\" onclick=\"payOrder('"+orderVo.id+"')\">立即支付</button>");
+        staB.append("<button class=\"btn btn-primary btn-block\" onclick=\"cancelOrder('"+orderVo.id+"')\">取消订单</button>");
+        staB.append("<button class=\"btn btn-primary btn-block\" onclick=\"deleteOrder('"+orderVo.id+"')\">删除订单</button>");
+	}else if(orderVo.orderState == 1){
+		status = "已支付";
+		$("#payTime").append("<td>付款时间</td>\n" +
+            "                <td colspan=\"2\">"+orderVo.payTime+"</td>");
+        staB.append("<button class=\"btn btn-primary btn-block\" onclick=\"deleteOrder('"+orderVo.id+"')\">删除订单</button>");
+	}else {
+	    status = "已取消";
+        staB.append("<button class=\"btn btn-primary btn-block\" onclick=\"newOrder()\">重新下单</button>")
+        staB.append("<button class=\"btn btn-primary btn-block\" onclick=\"deleteOrder('"+orderVo.id+"')\">删除订单</button>");
+	}
+	$("#orderStatus").text(status);
+	$("#reciveName").text(orderVo.reciveName);
+	$("#address").text(orderVo.prov+" "+orderVo.city+" "+orderVo.area+" "+orderVo.streeName)
+}
+
+$(function(){
+	getOrderDetail();
+})
+
+function getOrderDetail(){
+	var orderId = g_getQueryString("id");
+	$.ajax({
+		url:"/"+orderId+"/order",
+		type:"GET",
+		data:{
+			id:orderId
+		},
+		success:function(result){
+			if(result.code == 0){
+			    layer.closeAll();
+				render(result);
+			}else{
+			    layer.closeAll;
+                if (result.code == -1501){
+                    layer.msg(result.msg);
+                    if(confirm("您当前未登录,是否登录？")) {
+                        window.location.href="login.html";
+                    }else {
+                        backHtml();
+                    }
+                }else {
+                    layer.closeAll();
+                    layer.msg(result.msg);
+                }
+			}
+		},
+		error:function(){
+			layer.msg("客户端请求有误");
+		}
+	});
+}
+
+function payOrder(id) {
+    
+}
+
+function cancelOrder(id) {
+    if(confirm("是否确定取消订单？")) {
+        g_showLoading("正在取消订单");
+        $.ajax({
+            url:"/"+id+"/order",
+            type:"PUT",
+            success:function (result) {
+                if (result.code == 0){
+                    layer.closeAll();
+                    layer.msg("取消订单成功!",{time:1})
+                    window.location.reload();
+                }else {
+                    layer.closeAll();
+                    if(result.code = -1501){
+                        if (confirm("您当前未登录或长时间为操作，是否登录")){
+                            window.location.href = "index.html";
+                        }else {
+                            window.location.href="index.html";
+                        }
+                    }
+                    layer.msg("取消订单失败,"+result.msg);
+                }
+            },
+            error:function () {
+                layer.msg("服务器错误!");
+            }
+        });
+    }
+}
+
+function newOrder(id) {
+
+}
+
+function deleteOrder(id) {
+    if (confirm("确认删除订单!")) {
+        g_showLoading("删除中");
+        $.ajax({
+            url: "/" + id + "/order",
+            type: "DELETE",
+            success: function (result) {
+                if (result.code == 0) {
+                    layer.closeAll();
+                    layer.msg("删除成功");
+                    backHtml();
+                } else {
+                    layer.closeAll();
+                    if(result.code = -1501){
+                        if (confirm("您当前未登录或长时间为操作，是否登录")){
+                            window.location.href = "index.html";
+                        }else {
+                            window.location.href="index.html";
+                        }
+                    }
+                    layer.msg("删除失败," + result.msg)
+                }
+            },
+            error: function () {
+                layer.msg("服务器错误!");
+            }
+        });
+    }
+}
+</script>

@@ -1,0 +1,71 @@
+@charset "utf-8";
+/*banner样式开始*/
+.banner{
+    background: url("../images/banner4.jpg") no-repeat 50% 50%;
+    height: 400px;
+    width: 100%;
+    overflow: hidden;
+    margin: 0 auto;
+}
+/*banner样式结束*/
+/*文章列表样式开始*/
+.con{
+    margin-top: 30px;
+}
+
+.con .con_right, .con .con_right .articleList {
+    float: left;
+}
+.con .con_right {
+    width: 980px;
+    text-align: center;
+    padding-bottom: 50px;
+}
+.articleList {
+    margin:10px 0 40px 10px;
+    padding-top: 20px;
+}
+.articleList:not(:first-child){
+    border-top:1px  dashed #cccccc;
+}
+.articleList .artList_date,.articleList .artList_info{
+    float: left;
+}
+.articleList .artList_date{
+    width: 80px;
+    height: 80px;
+    background: #F2F2F2;
+    color: #666;
+}
+.articleList .artList_date p:nth-child(1){
+    margin-top: 20px ;
+    font:25px/25px "arial";
+}
+.articleList .artList_date p:nth-child(2){
+    font:14px/14px "arial";
+}
+.articleList .artList_info{
+    text-align: left;
+    margin-left: 10px;
+}
+
+.articleList .artList_info .art_title{
+    font: 16px/36px "微软雅黑";
+}
+.articleList .artList_info .art_detail{
+    font: 14px/24px "微软雅黑";
+    color: #808080;
+}
+/*文章列表样式结束*/
+/*页码样式开始*/
+.conR_pages{
+    width: 100%;
+    line-height: 30px;
+    margin: 30px auto;
+    float: left;
+    text-align: center;
+}
+.conR_pages span{
+    margin-left: 25px;
+}
+/*页码样式结束*/

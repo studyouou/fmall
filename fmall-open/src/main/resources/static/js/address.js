@@ -1,0 +1,1 @@
+var host = "http://fmall.ngrok2.xiaomiqiu.cn";

@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>结算页</title>
+
+	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/all.css" />
+	<link rel="stylesheet" type="text/css" href="css/reset1.css">
+	<link rel="stylesheet" type="text/css" href="css/home.css">
+</head>
+<body>
+
+	<header>
+		<div class="topBar">
+			<div class="comWidth clearfix">
+				<div class="rightArea">
+					<div id="userTip">
+
+					</div>
+					<div id="userMenLogin" class="dropdown">
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="logoBar">
+			<div class="comWidth clearfix">
+				<div class="logo">
+					<a href="index.html"><img src="images/logo.jpg" alt="首页"></a>
+				</div>
+				<div class="search_box">
+					<input type="text" class="search_text">
+					<input type="button" class="search_btn" value="搜 索">
+				</div>
+				<div class="shopCar">
+					<span class="shopText"><i></i>购物车</span>
+					<span class="shopNum">0<i></i></span>
+				</div>
+			</div>
+		</div>
+		</div>
+	</header>
+
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="myModal"  aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">×
+					</button>
+					<button type="button" class="btn btn-primary" id="upAddAddressModal">添加收货地址</button>
+				</div>
+				<div class="modal-body">
+					<div style="text-align: center;">
+						<table class="table" style="width: 80%; height: auto;margin: auto" id="addressTable">
+
+						</table>
+						<div style="text-align: center;margin: auto">
+							<ul class="pagination" id="pagesShow">
+							</ul>
+						</div>
+					</div>
+					<span id="noAddress"></span>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default"
+							data-dismiss="modal">关闭
+					</button>
+					<button type="button" class="btn btn-primary">
+						确定
+					</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div>
+	<div class="modal fade" id="addAdressModel"  aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true" onclick="backMyModal()">×
+					</button>
+
+					<form name="registerForm" role="form" id="addAddress" method="post"  >
+						<div class="form-group">
+							<input class="form-control input-sm" id="adrecive" name="reciveName" type="text" placeholder="收件人" />
+						</div>
+						<div class="ececk_warning"><span>收件人不能为空</span></div>
+						<div class="form-group">
+							<input class="form-control input-sm" id="retel" name="tel" type="text" placeholder="手机号" />
+						</div>
+						<div class="ececk_warning"><span>手机号不能为空</span></div>
+						<div class="form-group">
+							<input class="form-control input-sm" id="prov" name="prov" type="text" placeholder="省份" />
+						</div>
+						<div class="ececk_warning"><span>省份不能为空</span></div>
+
+						<div class="form-group">
+							<input class="form-control input-sm" id="reccity"  name="city"  type="text" placeholder="城市"/>
+						</div>
+						<div class="ececk_warning"><span>城市不能为空</span></div>
+
+						<div class="form-group">
+							<input class="form-control input-sm" id="recarea"  name="area"  type="text" placeholder="区间"/>
+						</div>
+						<div class="ececk_warning"><span>区间不能为空</span></div>
+						<div class="form-group">
+							<input class="form-control input-sm" id="streeName"  name="streeName"  type="text" placeholder="街道"/>
+						</div>
+						<div class="ececk_warning"><span>街道/详细地址不能为空</span></div>
+					</form>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default"
+							data-dismiss="modal" onclick="backMyModal()">关闭
+					</button>
+					<button type="button" onclick="addAdress()" class="btn btn-primary">
+						添加
+					</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div>
+	<div class="modal fade" id="updateAddressModal"  aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true" onclick="backMyModal()">×
+					</button>
+
+					<form name="updateAddress" role="form" id="updateAddressForm">
+						<div class="form-group">
+							<input class="form-control input-sm" id="ureciveName" name="reciveName" type="text" placeholder="收件人" />
+						</div>
+
+						<div class="form-group">
+							<input class="form-control input-sm" id="utel" name="tel" type="text" placeholder="手机号" />
+						</div>
+						<div class="form-group">
+							<input class="form-control input-sm" id="uprov" name="prov" type="text" placeholder="省份" />
+						</div>
+						<div class="form-group">
+							<input class="form-control input-sm" id="ucity"  name="city"  type="text" placeholder="城市"/>
+						</div>
+						<div class="form-group">
+							<input class="form-control input-sm" id="uarea"  name="area"  type="text" placeholder="区间"/>
+						</div>
+
+						<div class="form-group">
+							<input class="form-control input-sm" id="ustreeName"  name="streeName"  type="text" placeholder="街道"/>
+						</div>
+						<label>设置为默认</label>
+						<label class="radio-inline">
+							<input type="radio" name="defaultA" value="1"> 是
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="defaultA"  value="0"> 否
+						</label>
+					</form>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default"
+							data-dismiss="modal" onclick="backMyModal()">关闭
+					</button>
+					<button type="button" id="updateAddr" class="btn btn-primary">
+						修改
+					</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div>
+
+	<div class="order">
+		<section class="addr">
+			<h3>收货信息</h3>
+			<div class="addrCon">
+				<ul class="addrForm" id="addressUl">
+					<input type="hidden" id="addressId"/>
+					<li><b>选择省份:</b><input type="text" class="detailed"  id="province" readonly="readonly"></input></li>
+					<li><b>选择城市:</b><input type="text" class="detailed" id="city" readonly="readonly"></input></li>
+					<li><b>选择市区:</b><input type="text" class="detailed" id="area" readonly="readonly"></input></li>
+					<li><b>详细地址:</b><input type="text" class="detailed" placeholder="最多输入26个汉字" id="detailAddr" readonly="readonly"><br></li>
+					<li><b>收 货 人:</b><input type="text" placeholder="最多10个汉字" id="reciveName" readonly="readonly"></li>
+					<li><b>手    机</b><input type="text" placeholder="11位手机号" id="tel" readonly="readonly"></li>
+				</ul>
+				<div class="submit"><span id="chooseAddress" data-toggle="modal">选择收货地址</span></div>
+			</div>
+		</section>
+
+		<section class="pay">
+			<h3>支付方式</h3>
+			<div class="payCon">
+				<p><b></b><a href="">支付宝支付</a><i></i>用微信扫一扫就能支付</p>
+			</div>
+		</section>
+
+		<section class="list">
+			<h3>订单详情</h3>
+			<div class="listCon">
+
+				<div class="panel panel-default" >
+					<input type="hidden" id="sessionToken">
+					<div>
+						<table class="table" style="width: 80%; height: auto;margin: auto" id="goodslist">
+							<tr>
+								<td>商品名称</td>
+								<td colspan="3" id="fruitName"><span id="priceAndNum" style="float: right"></span></td>
+
+							</tr>
+							<tr>
+								<td>商品图片</td>
+								<td colspan="2"><img  id="fruitImg" width="200" height="200" /></td>
+							</tr>
+							<tr>
+								<td>邮寄方式</td>
+								<td id="postAndPrice"></td>
+							</tr>
+							<tr>
+								<td>店铺优惠</td>
+								<td id="fav"></td>
+							</tr>
+							<tr>
+								<td>订单备注</td>
+								<td><input type="text" placeholder="请先和商家协商" /></td>
+							</tr>
+							<tr>
+								<td>订单价格</td>
+								<td colspan="2"  id="orderPrice" align="right"></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><button class="btn btn-primary btn-block" id="submitOrder">提交订单</button></td>
+							</tr>
+
+						</table>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div><!-- order结束	 -->
+
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="layer/layer.js"></script>
+	<script type="text/javascript" src="js/all.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script src="js/user.js"></script>
+	<script type="text/javascript" src="js/base.js"></script>
+	<script>
+		$(function () {
+            g_showLoading("正在获取信息");
+            chooseAddressBt();
+            $.ajax({
+                url: "/isLogin",
+                type: "GET",
+                success: function (result) {
+                    layer.closeAll();
+                    if (result.code != 0) {
+                        if (confirm("您当前未登录或长时间没操作，是否登录？")){
+                            window.location.href="login.html";
+						}else {
+                            backHtml();
+                            return;
+						}
+                    }else {
+                        g_showLoading("数据正在加载");
+                        $.ajax({
+                            url:"/default/address",
+                            type:"GET",
+                            success:function (result) {
+                                if (result.code == 0){
+                                    layer.closeAll();
+                                    var address = result.data;
+                                    if (!address){
+                                        if (confirm("您未设置默认地址，是否选定地址？")){
+											$("#chooseAddress").click();
+											return;
+                                        }else {
+                                            $("#addressUl").hide();
+                                        }
+                                        return;
+                                    }
+                                    $("#addressId").val(address.id);
+                                    $("#province").val(address.prov);
+                                    $("#city").val(address.city);
+                                    $("#area").val(address.area);
+                                    $("#tel").val(address.tel);
+                                    $("#reciveName").val(address.reciveName);
+                                    $("#detailAddr").val(address.streeName);
+                                }else {
+                                    if (result.code = -1501){
+                                        if (confirm("您未登录或登录失效，是否重新登录？")){
+                                            window.location.href="login.html";
+                                        }else {
+                                            backHtml();
+                                        }
+                                        layer.closeAll();
+                                    }else {
+                                        layer.msg("获取地址失败，"+result.msg);
+                                    }
+                                }
+                            },
+                            error:function () {
+                                layer.closeAll();
+                                layer.msg("获取地址失败");
+                            }
+                        });
+                        var enc = g_getQueryString("oif");
+                        var num = g_getQueryString("num");
+
+                        $.ajax({
+                            url:"/des/decode",
+                            type:"GET",
+                            data:{
+                                encParam: enc
+                            },
+                            success:function (result) {
+                                layer.closeAll();
+                                if (result.code == 0){
+                                    var fruitVo = result.data;
+                                    $("#fruitName").prepend(fruitVo.disciption+" "+fruitVo.fruitName);
+                                    $("#priceAndNum").text("￥"+fruitVo.eachPrice+" x "+num);
+                                    $("#fruitImg").attr("src",fruitVo.imgUrl);
+                                    var price = $("#orderPrice");
+                                    var acPay = Number(num)*Number(fruitVo.eachPrice);
+                                    var v1 = fruitVo.postFee;
+                                    var v2 = fruitVo.voucherFee;
+                                    var v3 = fruitVo.favorablePrice;
+                                    var ideaPay = acPay;
+                                    price.append("<p>应付     ￥"+acPay+"</p>");
+                                    if (10){
+                                        price.append("<p>运费       <i>+￥"+10+"</i></p>");
+                                        acPay = acPay+Number(10);
+                                    }
+                                    if (v2) {
+                                        price.append("<p>优惠券       <i>-￥"+v2+"</i></p>");
+                                        acPay = acPay - Number(v2);
+                                    }
+                                    if (v3){
+                                        price.append("<p>店家活动       <i>-￥"+v3+"</i></p>");
+                                        acPay = acPay - Number(v3);
+                                    }
+                                    price.append("<p>实际付款        <i>￥"+acPay+"</i></p>");
+                                    $("#submitOrder").one('click',function () {
+                                        $(this).attr({"disabled":"disabled"});
+                                        submitOrder(fruitVo,acPay,num,ideaPay);
+                                    });
+                                }else {
+                                    layer.msg(result.msg);
+                                }
+                            },
+                            error:function () {
+                                layer.closeAll();
+                                layer.msg("服务器错误");
+                            }
+                        });
+					}
+                },
+                error: function () {
+                    layer.closeAll();
+                    layer.msg("服务器出错");
+                }
+            });
+        })
+
+        function submitOrder(fruitVo,acpay,num,ideaPay) {
+            var addressId = $("#addressId").val();
+            if (!addressId || addressId == ""){
+                alert("请选择地址");
+                return;
+			}
+			g_showLoading("正在提交");
+			$.ajax({
+				url:"/order",
+				type:"POST",
+				data:{
+                    sellerId:fruitVo.sellerId,
+                    fruitId:fruitVo.id,
+                    fruitName:fruitVo.fruitName,
+                    orderTotal:num,
+                    addressId:addressId,
+                    streeName:$("#detailAddr").val(),
+                    postWay:"中通", //后期修改
+                    freePost:0, //后期修改
+                    postFee:10, //后期修改
+                    eachPrice:fruitVo.eachPrice,
+                    actualPay:acpay,
+                    idealPay:ideaPay,
+					imgUrl:fruitVo.imgUrl
+				},
+				success:function (result) {
+				    layer.closeAll();
+					if (result.code == 0){
+					    if (result.data.isMessage == 0){
+					        g_showLoading("前往支付页面",{time:1000});
+                            $.ajax({
+								url:"/pay",
+								type:"POST",
+                                async:false,
+								data:{
+                                    orderId:result.data.id,
+                                    actualPay:acpay,
+                                    eachPrice:fruitVo.eachPrice,
+                                    orderTotal:num,
+                                    fruitName:fruitVo.fruitName
+								},
+
+								success:function (result) {
+                                    layer.closeAll();
+									if (result.code == 0){
+                                        const div = document.createElement('div');
+                                        div.innerHTML = result.data.html;
+                                        document.body.appendChild(div);
+                                        document.forms.punchout_form.setAttribute('target', '_self');
+                                        document.forms.punchout_form.submit();
+									}else {
+									    layer.msg(result.msg);
+									}
+                                },
+								error:function () {
+								    layer.closeAll();
+									layer.msg("服务器错误");
+                                }
+							});
+						}else {
+                            setTimeout(function(){
+                                getOrderResult(result.data,fruitVo,num,acpay);
+                            }, 1000);
+						}
+					}else {
+					    layer.msg(result.msg);
+					}
+                },
+				error:function () {
+				    layer.closeAll();
+					layer.msg("服务器错误");
+                }
+			})
+        }
+        
+        function chooseAddressBt() {
+			var myModel = $("#myModal");
+			var sp = $("#chooseAddress");
+			sp.click(function () {
+				$("#upAddAddressModal").click(function () {
+                    myModel.modal('hide');
+                    $("#addAdressModel").modal({
+						show:true
+					});
+                });
+			    myModel.modal({
+                    show: true
+				});
+				showAddress(1,10);
+            });
+        }
+
+        function showAddress(page,pageSize){
+            $("#pagesShow").html("");
+            $.ajax({
+                url:"/addresses",
+				data:{
+					page:page,
+					pageSize:pageSize
+				},
+                type:"GET",
+                success:function (result) {
+                    if (result.code == 0){
+                        var b = tableList(result.data.list);
+                        if (b) {
+                            showPages(result);
+                        }
+                    }else {
+                        if (result.code == -1501){
+                            layer.msg(result.msg);
+                            if(confirm("您当前未登录,是否登录？")) {
+                                window.location.href="login.html";
+                            }else {
+                                backHtml();
+                            }
+                        }
+                        layer.msg("获取地址失败",result.msg);
+                    }
+                },
+                error:function () {
+                    layer.msg("服务器错误");
+                }
+            });
+		}
+
+        function tableList(list) {
+            var table1 = $("#addressTable");
+            table1.html("");
+            var len = 0;
+            if (!list || (len=list.length) == 0){
+                $("#noAddress").append("<font color=\"#d3d3d3\">您还没有收货地址哟，添加一个吧！</font>");
+                return false;
+            }
+            table1.append("<thead>\n" +
+                "    <tr >\n" +
+                "        <th class=\"text-center\">收货人</th>\n" +
+                "        <th class=\"text-center\">手机号</th>\n" +
+                "        <th class=\"text-center\">收货地址</th>\n" +
+                "        <th class=\"text-center\">操作</th>\n" +
+                "    </tr>\n" +
+                "    </thead>");
+            var brr = null;
+            for (var num = 0; num < len; num++){
+                brr = $("<tr class=\"success\"></tr>");
+				brr.append("<td>"+list[num].reciveName+"</td>");
+				brr.append("<td>"+list[num].tel+"</td>");
+                brr.append("<td>"+list[num].prov+" "+list[num].city+" "+list[num].area+" "+list[num].streeName+"</td>");
+                brr.append("<td><button class='btn btn-primary' onclick='editAddress("+JSON.stringify(list[num])+")'>编辑</button>");
+                brr.append("<td><button class='btn btn-primary' onclick='okAddress("+JSON.stringify(list[num])+")'>选定</button>");
+                brr.appendTo(table1);
+            }
+            return true;
+        }
+
+        function showPages(result) {
+            var pages = result.data.pages;
+            var currentPage = result.data.pageNum;
+            var pagesShow = $("#pagesShow");
+            pagesShow.html("");
+            if (result.data.isFirstPage){
+                pagesShow.append("<li class='disabled'><a>&laquo;</a></li>");
+            }else {
+                pagesShow.append("<li><a onclick=\"showAddress("+result.data.prePage+",10)\">&laquo;</a></li>");
+            }
+
+            if (currentPage <= 6){
+                for (var nums1 = 1; nums1 <= pages && nums1 <= 10; nums1++){
+                    if (nums1 == currentPage){
+                        pagesShow.append("<li class='active'><a>"+nums1+"</a></li>");
+                        continue;
+                    }
+                    pagesShow.append("<li><a onclick=\"showAddress("+nums1+",10)\">"+nums1+"</a></li>")
+                }
+            }else {
+                if (pages-4<currentPage){
+                    for (var nums2 = pages - 10; nums2 <= pages; nums2++){
+                        if (nums2 <= 0){
+                            nums2 = 1;
+                        }
+                        if (nums2 == currentPage){
+                            pagesShow.append("<li class='active'><a>"+nums2+"</a></li>");
+                            continue;
+                        }
+                        pagesShow.append("<li><a onclick=\"showAddress("+nums2+",10)\">"+nums2+"</a></li>")
+                    }
+                }else {
+                    for (var nums3 = currentPage-5; nums3 <= currentPage + 10, nums3 < pages;nums3++){
+                        if (i == currentPage){
+                            pagesShow.append("<li class=\"active\"><a>"+nums3+"</a></li>");
+                            continue;
+                        }
+                        pagesShow.append("<li><a onclick=\"showAddress("+nums3+",10)\">"+nums3+"</a></li>")
+                    }
+                }
+            }
+
+            if (!result.data.isLastPage){
+                pagesShow.append("<li><a onclick=\"showAddress("+result.data.nextPage+",10)\">&raquo;</a></li>")
+            }else {
+                pagesShow.append("<li class='disabled'><a>&laquo;</a></li>");
+            }
+        }
+
+        function addAdress() {
+            var reciName = $("#adrecive").val();
+            var tel = $("#retel").val();
+            var pro = $("#prov").val();
+            var city = $("#reccity").val();
+            var area = $("#recarea").val();
+            var streeName = $("#streeName").val();
+            var check = checkPhone(tel);
+            if (check) {
+                alert("手机号不符合要求");
+                return;
+            }
+            if (pro == "" || pro == null || pro == undefined) {
+                alert("省份不能为空！");
+                return;
+            }
+            if (city == "" || city == null || city == undefined) {
+                alert("城市不能为空！");
+                return;
+            }
+            if (area == "" || area == null || area == undefined) {
+                alert("区间不能为空！");
+                return;
+            }
+            if (streeName == "" || streeName == null || streeName == undefined) {
+                alert("街道/详细信息不能为空！");
+                return;
+            }
+			g_showLoading("正在添加");
+            $.ajax({
+                url: "/address",
+                type: "POST",
+                async:false,
+                ifModified:true,
+                data:{
+                    reciveName: reciName,
+                    tel: tel,
+                    prov: pro,
+                    city: city,
+                    area: area,
+                    streeName: streeName
+                },
+                success: function (result) {
+					layer.closeAll();
+					if(result.code == 0){
+						layer.msg("添加成功");
+						if (confirm("添加成功,是否设置为默认地址？")) {
+                            $.ajax({
+                                url: "/" + result.data.id + "/default/address",
+                                type: "PUT",
+                                success: function (result) {
+                                    if (result == 0) {
+                                        layer.msg("设置成功");
+                                        $("#addAdressModel").modal({
+                                            show: false
+                                        });
+                                        $("#chooseAddress").click();
+                                        return;
+                                    } else {
+                                        layer.msg("设置失败" + result.msg);
+                                    }
+                                },
+                                error: function () {
+                                    layer.msg("服务器错误")
+                                }
+                            });
+                        } else {
+                            $("#addAdressModel").modal({
+                                show: false
+                            });
+                            $("#chooseAddress").click();
+                        }
+					}else{
+						layer.msg(result.msg);
+					}
+				},
+				error:function(){
+					layer.closeAll();
+					layer.msg("服务器错误");
+					$("#addAdressModel").modal({
+					show:false
+				});
+					$("#chooseAddress").click();
+				}
+            });
+        }
+
+        function okAddress(address) {
+            $("#myModal").modal({
+				show:false
+			});
+            $("#addressId").val(address.id);
+            $("#province").val(address.prov);
+            $("#city").val(address.city);
+            $("#area").val(address.area);
+            $("#tel").val(address.tel);
+            $("#reciveName").val(address.reciveName);
+            $("#detailAddr").val(address.streeName);
+            $("#myModal").modal("hide");
+        }
+        
+        function editAddress(data) {
+			$("#myModal").modal('hide');
+
+			$("#updateAddressModal").modal({
+				show:true
+			});
+
+            $("#ureciveName").val(data.reciveName);
+            $("#utel").val(data.tel);
+            $("#uprov").val(data.prov);
+            $("#ucity").val(data.city);
+            $("#uarea").val(data.area);
+            $("#ustreeName").val(data.streeName);
+            if (data.defaultAddress == 1){
+			    $("input[name='defaultA'][value='1']").prop("checked",true);
+                $("input[name='defaultA'][value='0']").removeAttr("checked");
+            }else {
+                $("input[name='defaultA'][value='0']").prop("checked",true);
+                $("input[name='defaultA'][value='1']").removeAttr("checked");
+			}
+            //off删除以前的时间，不然会重复多次事件
+            $("#updateAddr").off('click').click(function () {
+                updateMemberAddr(JSON.stringify(data));
+            });
+        }
+
+        function updateMemberAddr(dataJson) {
+		    var data = JSON.parse(dataJson);
+			var ureviName = $("#ureciveName").val();
+			var utel = $("#utel").val();
+			var upro = $("#uprov").val();
+			var uarea = $("#uarea").val();
+			var ucity = $("#ucity").val();
+			var ustree = $("#ustreeName").val();
+			var defaultA = $("input[name='defaultA']:checked").val();
+			var i = 7;
+			if (ureviName == data.reciveName || !ureviName){
+			    ureviName = null;
+			    i = i - 1;
+			}
+
+			if (utel == data.tel || !utel){
+			    utel = null;
+                i = i - 1;
+			}
+
+			if (upro == data.prov || !upro){
+			    upro = null;
+                i = i - 1;
+			}
+
+			if (ucity == data.city || !ucity){
+			    ucity = null;
+                i = i - 1;
+			}
+
+            if (uarea == data.area || !uarea){
+                uarea = null;
+                i = i - 1;
+            }
+
+			if (ustree == data.streeName || !ustree){
+			    ustree = null;
+                i = i - 1;
+			}
+			if (defaultA == data.defaultAddress){
+			    defaultA = null;
+                i = i - 1;
+			}
+			if (i == 0){
+			    alert("至少修改一项内容才可以修改哟")
+			}else {
+				g_showLoading("修改中");
+                $.ajax({
+                    url:"/address",
+                    type:"PUT",
+                    data:{
+                        id:data.id,
+                        reciveName:ureviName,
+                        tel:utel,
+                        prov:upro,
+                        city:ucity,
+                        area:uarea,
+                        streeName:ustree,
+                        defaultAddress:defaultA
+                    },
+					success:function (result) {
+                        layer.closeAll();
+						if (result.code == 0){
+						    layer.msg("修改成功",{time:1000});
+						    $("#updateAddressModal").modal('hide');
+						    $("#chooseAddress").click();
+						}else {
+						    layer.msg(result.msg,{time:1000});
+						}
+                    },
+					error:function () {
+                        layer.closeAll();
+                        layer.msg("服务器错误");
+                    }
+                });
+			}
+        }
+        
+        function backMyModal() {
+			$("#myModal").modal('show');
+        }
+        
+        function getOrderResult(data,fruitVo,num,acpay) {
+			g_showLoading("正在提交");
+			$.ajax({
+				url:"/"+data.id+"/getResult",
+				data:{
+				    fruitId:data.fruitId
+				},
+				type:"GET",
+				success:function (reslut) {
+					if (reslut == 0){
+					    if (reslut.data == 1){
+					        layer.closeAll();
+							layer.msg("下单成功",{time:1000});
+                            g_showLoading("前往支付页面");
+                            $.ajax({
+                                url:"/pay",
+                                type:"POST",
+                                async:false,
+								data:{
+                                    orderId:data.id,
+                                    actualPay:acpay,
+                                    eachPrice:fruitVo.eachPrice,
+                                    orderTotal:num,
+                                    fruitName:fruitVo.fruitName
+								},
+                                dataType: "text",
+                                success:function (result) {
+                                    layer.closeAll();
+                                    // if (result.code == 0){
+                                    //    var ow = window.open();
+                                    //    ow.document.write(result);
+                                    //    ow.document.clear();
+                                    // }else {
+                                    //     layer.msg(result.msg);
+                                    // }
+                                },
+                                error:function () {
+                                    layer.closeAll();
+                                    layer.msg("服务器错误");
+                                }
+                            });
+						}
+						else if (reslut.data == 0){
+                            setTimeout(function(){
+                                getOrderResult(result.data);
+                            }, 1000);
+						}else {
+					        layer.msg("下单失败");
+						}
+					}
+                }
+			});
+        }
+	</script>
+</body>
+</html>
+			
+			

@@ -1,0 +1,14 @@
+
+server:
+  port: 8084
+mybatis:
+  mapper-locations: classpath*:mybatis/mapper/*_mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #打印sql
+  type-aliases-package: org.og.fmall.fmalluser.model
+spring:
+  profiles:
+    active: dev,redis
+mapper:
+  not-empty: true

@@ -1,0 +1,11 @@
+
+spring:
+  profiles:
+    active: dev
+mybatis:
+  type-aliases-package: org.og.fmall.fmallstock.model
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mybatis/mapper/*_mapper.xml
+server:
+  port: 8081

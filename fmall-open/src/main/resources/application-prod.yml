@@ -1,0 +1,46 @@
+server:
+  port: 8080
+dubbo:
+  protocol:
+    name: dubbo
+    port: 20880
+  registry:
+    address: zookeeper://192.168.43.205:2181
+  scan:
+    base-packages: org.og.fmall.fmallshop.iservice
+  consumer:
+    timeout: 6000
+  application:
+    name: fmall-shop-service
+    qos-accept-foreign-ip: false
+    qos-port: 33333
+    qos-enable: false
+rocketmq:
+  namesrvAddr: 192.168.43.205:9876
+  productor:
+    group: producter
+    reconsumeTimes: 5
+error:
+  out:
+    file: /error.log
+spring:
+#  thymeleaf:
+#    prefix: classpath:/templates/
+#    suffix: .html
+#    cache: false
+#    servlet:
+#      content-type: text/html
+#    enabled: true
+#    encoding: UTF-8
+#    mode: HTML5
+  resources:
+    add-mappings: true
+    cache:
+      period: 3600
+    chain:
+      enabled: true
+      gzipped: true
+      html-application-cache: true
+    static-locations: classpath:/static/
+  freemarker:
+    cache: false

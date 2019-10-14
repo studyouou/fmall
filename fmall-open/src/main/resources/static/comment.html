@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>详情页</title>
+	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/all.css" />
+	<link rel="stylesheet" type="text/css" href="css/reset1.css">
+	<link rel="stylesheet" type="text/css" href="css/home.css">
+</head>
+<body>
+	<header>
+		<div class="wrap clearFix">
+			<div class="topBar clearfix">
+				<div class="comWidth">
+					<div class="rightArea">
+						<div id="userTip">
+
+						</div>
+						<div id="userMenLogin" class="dropdown">
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="logoBar">
+				<div class="comWidth clearfix">
+					<div class="logo">
+						<a href="index.html"><img src="images/logo.jpg" alt="首页"></a>
+					</div>
+					<div class="search_box">
+						<input type="text" class="search_text">
+						<input type="button" class="search_btn" value="搜 索">
+					</div>
+					<div class="shopCar">
+						<span class="shopText"><i></i>购物车</span>
+						<span class="shopNum">0<i></i></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	<div class="details">
+		<div class="curLocation">
+			
+				<a href="">首页</a>
+				<a href="">平板电脑</a>
+				<a href="">Apple 苹果</a>
+				<a href="">MD531CH</a>
+				
+			
+		</div>
+		<div class="proIntro clearfix">
+			<div class="proIntro-lf">
+				
+				<img class="bgImg" id="fruitImg" src="" alt="" style="width: 300px">
+
+			</div>
+			<div class="proIntro-rt">
+				<h3 id="discriptionAndName"></h3>
+				<div class="dl">
+					<div class="dt">单价</div>
+					<p class="price">￥<strong id="fruitPrice"></strong></p>
+				</div>
+				<div class="dl" id="favorable">
+					<!--<div class="dt"></div>-->
+					<!--<i class="switchIcon"></i>-->
+				</div>
+				<div class="select">
+
+					<div class="dl"> 
+
+						<div class="dt">数量</div>
+						<div class="numberCon">
+							<span id="sub">-</span>
+							<span class="num" id="num">1</span>
+							<span id="add">+</span>
+						</div>
+					</div>
+				</div>
+				<div class="car-buy">
+					<span class="joinCar"><i class="carIcon"></i>加入购物车</span>
+					<span class="onceBuy"><a id="buyNow" href="javascript:void(0);">立即购买</a></span>
+				</div>
+				<div class="tip">
+					注意：此商品可提供普通发票，不提供增值税发票。
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="js/all.js"></script>
+	<script type="text/javascript" src="layer/layer.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script src="js/user.js"></script>
+	<script>
+		$(function () {
+		    var id = g_getQueryString("id");
+		    if (!id){
+		        layer.msg("信息错误");
+		        backHtml();
+			}
+			$.ajax({
+				url:"/"+id+"/fruit",
+				type:"GET",
+				success:function (result) {
+					if (result.code == 0){
+						render(result);
+					}else {
+					    layer.msg("错误："+result.msg);
+					}
+                },
+				error:function () {backHtml()
+					layer.msg("服务器错误");
+                }
+			});
+        });
+
+        function render(result) {
+            var fruitVo = result.data;
+            var d = fruitVo.disciption+" "+fruitVo.fruitName;
+            var i = fruitVo.imgUrl;
+            var pr = fruitVo.eachPrice;
+            var fav = fruitVo.favorable;
+            $("#fruitImg").attr("src",i);
+            $("#discriptionAndName").text(d);
+            $("#fruitPrice").text(pr+"/500g");
+            $("#favorable").text(fav);
+            var max = fruitVo.stock;
+            addNum(max);
+            sub();
+            $("#buyNow").click(function () {
+                g_showLoading("正在跳转");
+				$.ajax({
+					url:"/des/enCode",
+					type:"GET",
+					data:{
+					    id:fruitVo.id,
+						sellerId:fruitVo.sellerId,
+                        imgUrl:i,
+                        eachPrice:pr,
+                        fruitName:fruitVo.fruitName,
+                        disciption:fruitVo.disciption
+					},
+					success:function (result) {
+                        layer.closeAll();
+						if (result.code == 0){
+							window.location.href = "confirmOrder.html?oif="+result.data+"&num="+numKey.text();
+						}else {
+						    if (result.code == -1501){
+						        if (confirm("您未登录或长时间未操作，是否登录")){
+						            window.location.href = "login.html";
+								}
+								return;
+							}
+						    layer.msg(result.msg);
+						}
+                    },
+					error:function () {
+                        layer.closeAll()
+						layer.msg("服务器错误");
+                    }
+				})
+            });
+        }
+
+		var numKey = $("#num");
+
+        function addNum(max) {
+			$("#add").click(function () {
+			    if (numKey.text() >= max){
+			        return;
+				}
+				numKey.text(Number(numKey.text()) + 1);
+            });
+        }
+        
+        function sub() {
+            $("#sub").click(function () {
+                if (numKey.text() <=1 ){
+                    return;
+				}
+                numKey.text(Number(numKey.text())-1);
+            });
+        }
+        
+
+	</script>
+</body>
+</html>

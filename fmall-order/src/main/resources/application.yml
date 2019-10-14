@@ -1,0 +1,10 @@
+mybatis:
+  mapper-locations: classpath*:mybatis/mapper/*_mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: org.og.fmall.fmallorder.model
+spring:
+  profiles:
+    active: dev,redis
+  aop:
+    proxy-target-class: true

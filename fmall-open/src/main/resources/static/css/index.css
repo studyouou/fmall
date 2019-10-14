@@ -1,0 +1,434 @@
+@charset "utf-8";
+/*pic-show样式开始*/
+.pic_show .box {
+    float: left;
+    margin: 32px 0;
+}
+
+.pic_show .box:nth-child(2) {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.pic_show .box img{
+    width: 390px;
+    height: 202px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+.pic_show .box img:hover{
+    width: 390px;
+    height: 202px;
+    cursor: pointer;
+    box-shadow: 0 0 10px 0 #000000;
+    border-radius: 3px;
+}
+/*pic-show样式结束*/
+/*recommend样式开始*/
+.recommend {
+    margin: 50px 0;
+}
+
+.recommend .re_title {
+    background: url("../images/line-pic.jpg") no-repeat;
+    line-height: 48px;
+}
+
+.recommend .re_title span:nth-child(1) {
+    font-size: 24px;
+    color: rgb(72, 144, 15);
+    font-weight: bold;
+}
+
+.recommend .re_title span:nth-child(2) {
+    font-size: 12px;
+    color: rgb(193, 193, 193);
+    margin-left: 10px;
+}
+
+.recommend .re_con {
+    margin-top: 30px;
+}
+
+.recommend .con_left, .recommend .con_right, .recommend .con_right .box {
+    float: left;
+}
+.recommend .con_left{
+    height: 660px;
+    width: 320px;
+    overflow: hidden;
+}
+.recommend .con_left img{
+
+    transition: all 1s ease;
+}
+.recommend .con_left img:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+}
+
+.recommend .con_right {
+    width: 875px;
+    text-align: center;
+}
+
+.recommend .con_right .box {
+    margin: 10px;
+    cursor: pointer;
+}
+.recommend .con_right .box img {
+    width: 269px;
+    height: 200px;
+    transition: all 1s ease;
+    margin: 0;
+}
+.recommend .con_right .box img:hover{
+    box-shadow: 0 0 10px 0 #000000;
+}
+.recommend .con_right .box .box_title {
+    border-bottom: 1px dashed #cccccc;
+}
+
+.recommend .con_right .box .box_title a {
+    font-size: 16px;
+    color: #000;
+    line-height: 30px;
+}
+
+.recommend .con_right .box .box_price {
+    margin: 10px auto;
+}
+
+.recommend .con_right .box .box_price span:nth-child(1) {
+    color: #4ab344;
+    font-size: 12px;
+}
+
+.recommend .con_right .box .box_price span:nth-child(2) {
+    font-size: 20px;
+    margin-right: 8px;
+    color: #4ab344;
+}
+
+.recommend .con_right .box .box_price span:nth-child(3) {
+    font-size: 12px;
+    color: #767676;
+    text-decoration: line-through;
+}
+
+.recommend .con_right .box .buy {
+    background-color: #4ab344;
+    padding: 5px 90px;
+    cursor: pointer;
+    border-radius: 3px;
+    width: 30px;
+    margin: 0 auto 20px;
+}
+
+.recommend .con_right .box .buy a {
+    font-size: 14px;
+    color: #ffffff;
+}
+
+/*recommend样式结束*/
+/*sale样开始*/
+.sale .sale_title {
+    text-align: center;
+    margin: 100px 0;
+}
+
+.sale .sale_title .sTitle_top span:nth-child(1), .sale .sale_title .sTitle_top span:nth-child(3) {
+    color: rgb(231, 231, 231);
+    font-size: 31px;
+}
+
+.sale .sale_title .sTitle_top b {
+    color: rgb(33, 33, 33);
+    font-size: 31px;
+}
+
+.sale .sale_title .sTitle_bottom span {
+    color: rgb(136, 136, 136);
+    font-size: 16px;
+    line-height: 39px;
+}
+
+.sale_hot .hotList, .sale_hot .hotPic {
+    float: left;
+}
+
+.sale_hot .hotList {
+    width: 250px;
+    padding: 20px 0 0 20px;
+}
+
+.sale_hot .hotList p:nth-child(1) {
+    color: rgb(75, 75, 75);
+    font-size: 16px;
+    line-height: 29px;
+}
+
+.sale_hot .hotList p:nth-child(2) {
+    color: rgb(75, 75, 75);
+    line-height: 29px;
+    font-size: 20px;
+}
+
+.sale_hot .hotList p:nth-child(3) {
+    color: rgb(53, 53, 53);
+    font-size: 18px;
+    font-weight: normal;
+    margin: 25px 0;
+}
+
+.sale_hot .hotList p:nth-child(3) span {
+    color: rgb(243, 151, 0);
+    line-height: 29px;
+    font-weight: bold;
+    font-size: 42px;
+
+}
+
+.sale_hot .hotList p:nth-child(4) {
+    background-color: #49900f;
+    line-height: 50px;
+    cursor: pointer;
+    width: 160px;
+    text-align: center;
+}
+
+.sale_hot .hotList p:nth-child(4) a {
+    font-size: 18px;
+    color: #ffffff;
+
+}
+.sale_hot .hotPic{
+    height: 284px;
+    width: 894px;
+    overflow: hidden;
+}
+.sale_hot .hotPic img {
+    height: 284px;
+    width: 894px;
+    transition: all 1s ease;
+}
+
+.sale_hot .hotPic img:hover {
+    transform: scale(1.2);
+}
+
+.sale_show {
+    margin: 30px 0 50px;
+}
+
+.sale_show .box {
+    float: left;
+    height: 189px;
+    width: 275px;
+    position: relative;
+    margin-right: 18px;
+    overflow: hidden;
+}
+
+.sale_show .box{
+    transition: all 1s ease;
+}
+
+.sale_show .box:hover{
+    box-shadow: 0 0 10px 0 #000000;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/*sale样式结束*/
+/*info样式开始*/
+.info {
+    margin-bottom: 40px;
+}
+
+.info .infoTitle {
+    border-bottom: 1px solid #ececec;
+    padding-bottom: 10px;
+}
+
+.info .infoTitle span:nth-child(1) {
+    color: rgb(103, 141, 30);
+    font-size: 20px;
+}
+
+.info .infoTitle span:nth-child(2) {
+    color: rgb(53, 53, 53);
+    float: right;
+}
+
+.info .infoCon {
+    width: 100%;
+}
+
+.info .infoCon .infoL, .info .infoCon .infoR {
+    float: left;
+}
+
+/*滚动的新闻样式开始*/
+.info .infoCon .infoL {
+    border-right: 1px solid #ececec;
+}
+
+.info .infoCon .infoL span {
+    font-size: 16px;
+    color: #333333;
+    width: 140px;
+    float: left;
+    display: block;
+}
+
+.info .infoCon .infoL .infoL_title {
+    height: 50px;
+}
+
+.info .infoCon .infoL .infoL_title span {
+    padding: 10px 0;
+
+}
+
+.info .infoCon .infoL .infoL_con {
+    width: 560px;
+    height: 200px;
+    overflow: hidden;
+}
+
+.info .infoCon .infoL .infoL_con1 {
+    height: 272px;
+}
+
+.info .infoCon .infoL .infoL_con1 li {
+    height: 40px;
+    line-height: 40px;
+}
+
+/*滚动的新闻样式结束*/
+/*轮播图样式开始*/
+
+.info .infoCon .infoR {
+    position: relative;
+    margin: 20px 0 20px 10px;
+    width: 602px;
+    height: 272px;
+}
+
+.infoR_list img {
+    display: block;
+    position: absolute;
+}
+
+.infoRtop_list img {
+    display: block;
+    position: absolute;
+}
+
+.infoR_list li {
+    display: none;
+}
+.infoRtop_list li {
+    display: none;
+}
+.infoR_list .active {
+    display: block;
+}
+.infoRtop_list .active {
+    display: block;
+}
+
+.infoR_btns {
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 30px;
+    background: #000;
+    opacity: 0.7;
+    line-height: 30px;
+
+}
+.infoRtop_btns {
+    position: absolute;
+    right: 0;
+    bottom: -74px;
+    width: 100%;
+    height: 58px;
+    background: #000;
+    opacity: 0.7;
+    line-height: 50px;
+    /*margin-top: 500px;*/
+}
+.infoR_btns .btns_info {
+    color: #ffffff;
+    margin-left: 20px;
+}
+.infoRtop_btns .btnstop_info {
+    color: #ffffff;
+    margin-left: 20px;
+    margin-top: 100%;
+}
+
+.infoR_btns .btns_info p {
+    display: none;
+}
+.infoRtop_btns .btnstop_info p {
+    display: none;
+}
+
+.infoR_btns .btns_a {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin-right: 10px;
+}
+.infoRtop_btns .btnstop_a {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin-right: 10px;
+}
+
+.infoR_btns .btns_a a {
+    color: #000;
+    font-size: 14px;
+    background: #fff;
+    text-align: center;
+    line-height: 14px;
+    padding: 0 5px;
+    cursor: pointer;
+}
+
+.infoRtop_btns .btnstop_a a {
+    color: #000;
+    font-size: 23px;
+    background: #fff;
+    text-align: center;
+    line-height: 14px;
+    padding: 0 5px;
+    cursor: pointer;
+}
+
+.infoR_btns .btns_a .on {
+    background: #c70008;
+    color: #fff;
+}
+
+.infoR_btns .btns_info .on {
+    display: block;
+}
+
+.infoRtop_btns .btnstop_info .on {
+    display: block;
+}
+
+.infoRtop_btns .btnstop_a .on {
+    background: #c70008;
+    color: #fff;
+}
+
+/*轮播图样式结束*/
+
+/*info样式结束*/

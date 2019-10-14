@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.og.fmall.fmalluser.mapper.MemberMapper">
+    <select id="hasRegiestTel" resultType="long">
+        SELECT
+        tel
+        FROM
+        tb_member
+        WHERE
+        tel=#{tel}
+    </select>
+    <select id="hasRegitstEmail" resultType="string">
+        SELECT
+        email
+        FROM
+        tb_member
+        WHERE
+        email=#{email}
+    </select>
+    <select id="queryMemerByTel" resultType="member">
+        SELECT
+        id,tel,password,nick_name,email,age,sex,seller,status,salt
+        FROM
+        tb_member
+        WHERE
+        tel = #{tel}
+    </select>
+
+    <select id="queryMemberByEmail" resultType="member">
+        SELECT
+        id,tel,password,nick_name,email,age,sex,seller,status,salt
+        FROM
+        tb_member
+        WHERE
+        email = #{email}
+    </select>
+
+    <select id="queryPassById" resultType="member">
+        SELECT
+        id,password
+        FROM
+        tb_member
+        WHERE
+        id = #{id}
+    </select>
+
+    <update id="updatePassword">
+        UPDATE
+        tb_member
+        SET password=#{newPassword}
+        where
+        id=#{id}
+    </update>
+</mapper>

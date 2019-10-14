@@ -1,0 +1,11 @@
+server:
+  port: 8085
+mybatis:
+  mapper-locations: classpath*:/mybatis/mapper/*_mapper.xml
+  base-packages: org.og.fmall.fmallshopping.mapper
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: org.og.fmall.fmallshopping.model
+spring:
+  profiles:
+    active: dev,redis

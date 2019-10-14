@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>果然新鲜|消息中心</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/all.css" />
+</head>
+<body>
+<!-- 头部 开始-->
+<header>
+    <div class="wrap clearFix">
+        <div class="topBar clearfix">
+            <div class="comWidth">
+                <div class="rightArea">
+                    <div id="userTip">
+                    </div>
+                    <div id="userMenLogin" class="dropdown">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="logoBar">
+            <div class="comWidth clearfix">
+                <div class="logo">
+                    <a href="index.html"><img src="images/logo.jpg" alt="首页"></a>
+                </div>
+                <div class="search_box">
+                    <input type="text" class="search_text">
+                    <input type="button" class="search_btn" value="搜 索">
+                </div>
+                <div class="shopCar">
+                    <span class="shopText"><i></i>购物车</span>
+                    <span class="shopNum">0<i></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div id="centers">
+
+</div>
+<div style="text-align: center;">
+    <table id="tableId" class="table" style="width: 80%; height: auto;margin: auto">
+
+    </table>
+</div>
+<center>
+    <ul class="pagination" id="pagesShow">
+    </ul>
+</center>
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="layer/layer.js"></script>
+<script type="text/javascript" src="js/all.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/user.js"></script>
+<script>
+    $(function () {
+        var page = g_getQueryString("page");
+        var pageSize = g_getQueryString("pageSize");
+        if (page == null){
+            page = 1;
+        }
+        if (pageSize == null){
+            pageSize=10;
+        }
+        $.ajax({
+            url:"/messages",
+            type:"GET",
+            data:{
+                page:page,
+                pageSize:pageSize
+            },
+            success:function (result) {
+                layer.closeAll();
+                if (result.code == 0){
+                    var flag = showMessage(result.data.list);
+                    if (flag) {
+                        showPages(result);
+                    }
+                }else {
+                    if (result.code == -1501){
+                        layer.msg(result.msg);
+                        if(confirm("您当前未登录,是否登录？")) {
+                            window.location.href="login.html";
+                        }else {
+                            backHtml();
+                        }
+                    }else {
+                        layer.msg(result.msg);
+                    }
+                }
+            },
+            error:function () {
+                layer.closeAll();
+                layer.msg("服务器错误");
+            }
+        });
+    });
+
+    function showMessage(list) {
+        var table1 = $("#tableId");
+        var len = list.length;
+        if (len == 0){
+            $("#centers").append("<font color=\"#d3d3d3\">当前无消息</font>");
+            return false;
+        }
+        table1.append("<thead>\n" +
+            "    <tr >\n" +
+            "        <th class=\"text-center\">名称</th>\n" +
+            "        <th class=\"text-center\">发送时间</th>\n" +
+            "        <th class=\"text-center\">查看</th>\n" +
+            "    </tr>\n" +
+            "    </thead>");
+        var brr = null;
+        for (var num = 0; num < len; num++){
+            //0表示消息已经看了
+            if (list[num].messageState == 0){
+                brr = $("<tr class=\"success\"></tr>");
+            }else {
+                brr = $("<tr class=\"warn\"></tr>");
+            }
+            brr.append("<td>"+list[num].fruitName+"</td>");
+            brr.append("<td>"+new Date(list[num].createTime).format("yyyy-MM-dd hh:mm:ss")+"</td>");
+            brr.append("<td><button class='btn btn-primary' onclick=\"watchMessAge('"+list[num].id+"')\">查看详细</button>");
+            brr.appendTo(table1);
+        }
+
+        return true;
+    }
+
+    function watchMessAge(id) {
+
+    }
+
+    function showPages(result) {
+        var pages = result.data.pages;
+        var currentPage = result.data.pageNum;
+        var pagesShow = $("#pagesShow");
+        if (result.data.isFirstPage){
+            pagesShow.append("<li class='disabled'><a>&laquo;</a></li>");
+        }else {
+            pagesShow.append("<li><a href=\"message.html?page="+result.data.prePage+"&pageSize=10\">&laquo;</a></li>");
+        }
+
+        if (currentPage <= 6){
+            for (var nums1 = 1; nums1 <= pages && nums1 <= 10; nums1++){
+                if (nums1 == currentPage){
+                    pagesShow.append("<li class='active'><a>"+nums1+"</a></li>");
+                    continue;
+                }
+                pagesShow.append("<li><a href=\"message.html?page="+nums1+"&pageSize=10\">"+nums1+"</a></li>")
+            }
+        }else {
+            if (pages-4<currentPage){
+                for (var nums2 = pages - 10; nums2 <= pages; nums2++){
+                    if (nums2 <= 0){
+                        nums2 = 1;
+                    }
+                    if (nums2 == currentPage){
+                        pagesShow.append("<li class='active'><a>"+nums2+"</a></li>");
+                        continue;
+                    }
+                    pagesShow.append("<li><a href=\"message.html?page="+nums2+"&pageSize=10\">"+nums2+"</a></li>")
+                }
+            }else {
+                for (var nums3 = currentPage-5; nums3 <= currentPage + 10, nums3 < pages;nums3++){
+                    if (i == currentPage){
+                        pagesShow.append("<li class=\"active\"><a>"+nums3+"</a></li>");
+                        continue;
+                    }
+                    pagesShow.append("<li><a href=\"message.html?page="+nums3+"&pageSize=10\">"+nums3+"</a></li>")
+                }
+            }
+        }
+        if (!result.data.isLastPage){
+            pagesShow.append("<li><a href=\"message.html?page="+result.data.nextPage+"&pageSize=10\">&raquo;</a></li>")
+        }else {
+            pagesShow.append("<li class='disabled'><a>&laquo;</a></li>");
+        }
+    }
+</script>
+</body>
+</html>

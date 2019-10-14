@@ -1,0 +1,388 @@
+@charset "utf-8";
+/*公共样式开始*/
+.wrap {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.icon {
+    background: url("../images/ico.png") no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+}
+
+/*公共样式结束*/
+/*head样式开始*/
+.head {
+    padding: 10px 0;
+    border-bottom: 1px solid #dddddd;
+}
+
+.head .logo, .head ul, .head li {
+    float: left;
+}
+
+.head .cart {
+    float: right;
+}
+
+.head .logo {
+    padding-right: 140px;
+}
+.head .login {
+    width: 40px;
+    margin: 20px 0;
+    position: relative;
+    border: 1px solid #e6e6e6;
+    background-color: #fff;
+    text-align: left;
+}
+/*3D导航开始*/
+.head .nav {
+    height: 40px;
+    margin: 25px 0;
+    font: 16px/40px "微软雅黑";
+}
+
+.head .nav li {
+    padding: 0 20px;
+    width:100px;
+    height: 100%;
+    float: left;
+    perspective-origin:50% 50%;
+    perspective:2000px;
+    list-style: none;
+}
+
+.head li:hover a {
+    color: #fff;
+}
+.reverse{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    -webkit-transform-style:preserve-3d;
+    transition: transform 0.3s;
+    -webkit-transition:-webkit-transform 0.3s;
+    transform: rotateX(0deg);
+    -webkit-transform:rotateX(0deg);
+}
+
+.reverse a {
+    display: block;
+    color: #fff;
+    width: 100%;
+    height: 100%;
+    line-height: 40px;
+    text-align: center;
+    font-size: 14px;
+    position: absolute;
+}
+
+.reverse a:nth-child(1){
+    -webkit-transform: translateZ(20px);
+    transform:translateZ(20px);
+    color: #fff;
+    background-color: #4ab344;
+}
+
+.reverse a:nth-child(2){
+    -webkit-transform: rotateX(-90deg) translateZ(20px);
+    transform: rotateX(-90deg) translateZ(20px);
+    color: #fff;
+    background-color: #4ab344;
+}
+.nav li:hover .reverse{
+    color: #fff;
+    transform: rotateX(90deg);
+    -webkit-transform:rotateX(90deg);
+}
+
+/*3D导航结束*/
+
+.head .cart {
+    width: 135px;
+    margin: 20px 0;
+    position: relative;
+    border: 1px solid #e6e6e6;
+    background-color: #fff;
+    text-align: left;
+    cursor: pointer;
+}
+
+.head .cart a {
+    color: #919191;
+    font: 12px/55px "微软雅黑";
+}
+
+.head .cart .cartL {
+    background-position: 0 -148px;
+    width: 25px;
+    height: 44px;
+    margin-left: 10px;
+
+}
+
+.head .cart .cartR {
+    position: absolute;
+    top: 24px;
+    right: 18px;
+    width: 10px;
+    height: 6px;
+    background: url("../images/ico.png") no-repeat 2px -673px;
+
+}
+
+/*head样式结束*/
+/*banner样式结束*/
+.banner {
+    /*background: url("../images/banner1.jpg") no-repeat 50% 50%;*/
+    height: 550px;
+    width: 100%;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+/*banner样式结束*/
+/*左侧菜单样式开始*/
+.sidebar{
+    float: left;
+    /*margin-top: 30px;*/
+}
+.sidebar ul {
+    width: 210px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #dadada;
+}
+.sidebar ul li{
+    line-height: 45px;
+    text-indent: 20px;
+    border-right: 1px solid #dadada;
+    border-left: 1px solid #dadada;
+    cursor: pointer;
+}
+.sidebar .classify span{
+    cursor: pointer;
+}
+.sidebar .s_title{
+    background: #5fad01;
+    text-indent: 10px;
+}
+.sidebar .s_title a{
+    color: #ffffff;
+}
+
+
+.sidebar .s_line{
+    border-bottom: 1px dashed #e0e0e0;
+}
+.sidebar .qq_list{
+    border-bottom: 1px dashed #e0e0e0;
+}
+.sidebar .qq_list p a img{
+    display: inline-block;
+    vertical-align: middle;
+}
+.sidebar .qq_list p a span{
+    margin-left: 10px;
+}
+.sidebar .onlineTime  img{
+    display: inline-block;
+    vertical-align: middle;
+}
+.sidebar .onlineTime  a {
+    margin-left: 5px;
+    font-weight: bold;
+    font-size: 15px;
+}
+.sidebar .serviceTime p{
+    font-size: 14px;
+    color: #666666;
+    line-height: 24px;
+}
+.sidebar .serviceTime p:nth-child(2){
+    padding-bottom: 20px;
+}
+
+/*左侧菜单样式结束*/
+/*右侧内容框样式开始*/
+.con{
+    margin-top: 30px;
+}
+.con .con_right{
+    float: left;
+}
+.con .con_right {
+    width: 980px;
+    text-align: center;
+    padding-bottom: 50px;
+}
+
+
+
+
+
+/*右侧内容框样式结束*/
+
+
+
+/*footer样式开始*/
+.footer {
+    background: transparent url("../images/footPic.jpg") no-repeat center;
+    width: 100%;
+    height: 555px; /*********/
+    position: relative;
+}
+
+/*foot_top样式开始*/
+.foot_top {
+    padding: 80px 0 30px 0;
+    border-bottom: 2px solid #129235;
+    height: 110px;
+}
+
+.foot_top > div, .foot_top .box > div {
+    float: left;
+}
+
+.foot_top .boxL{
+    width: 67px;
+    height: 67px;
+    margin-left: 20px;
+}
+.foot_top .fpic1{
+    background: url("../images/footpic1.png") no-repeat center;
+}
+.foot_top .fpic2{
+    background: url("../images/footpic2.png") no-repeat center;
+}
+.foot_top .fpic3{
+    background: url("../images/footpic3.png") no-repeat center;
+}
+.foot_top .fpic4{
+    background: url("../images/footpic4.png") no-repeat center;
+}
+
+.foot_top .boxR {
+    background: url("../images/footline.png") no-repeat center;
+    width: 67px;
+    height: 67px;
+    margin-left: 30px;
+}
+
+.foot_top .boxM {
+    margin-left: 20px;
+    padding-top: 15px;
+}
+.foot_top .boxM p:nth-child(1){
+    color: #ffffff;
+    font-size: 18px;
+    line-height: 20px;
+    
+}
+.foot_top .boxM p:nth-child(2){
+    color: rgb(146, 202, 157);
+    font-size: 14px;
+    line-height: 30px;
+}
+/*footer_top样式结束*/
+/*friend_link样式结束*/
+.friend_link{
+    padding: 40px;
+}
+.friend_link>div{
+    float: left;
+    width: 300px;
+}
+.friend_link .box:nth-child(4){
+    width: 200px;
+}
+.friend_link .box .box_title{
+    color: #ffffff;
+    font-size: 18px;
+    line-height: 40px;
+}
+.friend_link .box p{
+    color: rgb(146, 202, 157);
+    font-size: 14px;
+    line-height: 25px;
+}
+/*friend_link样式结束*/
+/*版权信息样式开始*/
+.copyright{
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    color: #92ca9d;
+    font-size: 14px;
+    z-index: 1;
+    transform: translateX(-50%);
+}
+/*版权信息样式结束*/
+/*返回顶部样式开始*/
+.returnTop img{
+    position: fixed;
+    right: 4px;
+    bottom: 0;
+    display: none;
+    cursor: pointer;
+    padding: 3px;
+    background: #ffffff;
+    border-radius: 50%;
+}
+/*返回顶部样式结束*/
+
+/*info样式结束*/
+
+
+/*商品分类样式开始*/
+.banner_list {
+    position: absolute;
+    top: 50%;
+    margin-top: -150px;
+    left: 0;
+    z-index: 9999;
+    width: 150px;
+    /*display: none;*/
+}
+
+.banner_list .list_title {
+    background-color: rgb(196, 0, 0);
+    cursor: pointer;
+    color: #f5f5f5;;
+    height: 50px;
+    font: 16px/50px "微软雅黑";
+    text-align: center;
+    position: relative;
+}
+
+.banner_list .list_title i {
+    background: url('../images/vbg01.png') 0 -1480px no-repeat;
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    left: 10%;
+    top: 40%;
+    margin-top: 1px;
+}
+
+.banner_list .list_detail li {
+    height: 60px;
+    font: 15px/60px "微软雅黑";
+    text-indent: 20px;
+    color: #484848;
+    background: #F7F7F7;
+    border: 1px solid transparent;
+}
+
+.banner_list .list_detail li:hover {
+    font: 15px/60px "微软雅黑";
+    color: rgb(196, 0, 0);
+    border: 1px solid rgb(196, 0, 0);
+    background: #FFFFff;
+    cursor: pointer;
+}
+
+/*商品分类样式结束*/
