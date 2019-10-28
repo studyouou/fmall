@@ -1,3 +1,5 @@
+server:
+  port: 18090
 dubbo:
   application:
     name: user-service

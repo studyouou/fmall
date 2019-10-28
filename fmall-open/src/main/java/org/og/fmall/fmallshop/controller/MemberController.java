@@ -11,6 +11,7 @@ import org.og.fmall.user.api.dto.MemberRequest;
 import org.og.fmall.user.api.dto.MemberResponse;
 import org.og.fmall.user.api.iservice.IMemberCoreService;
 import org.og.fmall.user.api.session.MemberSession;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,9 @@ public class MemberController {
     @Reference(check = false)
     private IMemberCoreService iMemberCoreService;
 
+    @Value("${cookis.domain:localhost}")
+    private String domain;
+
     @PostMapping("/login")
     public Result<MemberResponse> login(MemberRequest request, HttpServletResponse response){
         MemberResponse memberResponse = iMemberCoreService.login(request);
@@ -40,6 +44,7 @@ public class MemberController {
             Cookie cookie = new Cookie(OrderConstants.COOKIE_NAME_LOIN,uuid);
             cookie.setPath("/");
             cookie.setMaxAge(60000);
+            cookie.setDomain(domain);
             response.addCookie(cookie);
         }
         Result<MemberResponse> result = ResultUtil.build();
@@ -71,6 +76,9 @@ public class MemberController {
         Cookie cookies[] = request.getCookies();
         String salt = null;
         String md5V = null;
+        if(cookies == null){
+            return false;
+        }
         for (Cookie cookie : cookies){
             if ("registerSalt".equals(cookie.getName())){
                 salt = cookie.getValue();

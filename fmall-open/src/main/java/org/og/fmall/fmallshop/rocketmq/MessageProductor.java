@@ -16,6 +16,7 @@ import org.og.fmall.order.api.dto.OrderResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -25,6 +26,7 @@ import javax.annotation.PostConstruct;
  * @date:2019/9/2713:12
  */
 @Service
+@ConditionalOnProperty(prefix = "rocketmq.send",name = "enable",havingValue = "true")
 public class MessageProductor {
     private static Logger logger = LoggerFactory.getLogger(MessageProductor.class);
     @Value("${rocketmq.namesrvAddr:192.168.43.205:9876}")
@@ -63,6 +65,7 @@ public class MessageProductor {
         producer = new DefaultMQProducer(group);
         producer.setNamesrvAddr(namesrvAddr);
         producer.setRetryTimesWhenSendFailed(retryTimes);
+        logger.info("rocketmq is starting to send messages");
         producer.start();
     }
 }

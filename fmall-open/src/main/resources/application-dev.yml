@@ -1,11 +1,11 @@
 server:
-  port: 8080
+  port: 18080
 dubbo:
   protocol:
     name: dubbo
     port: 20880
   registry:
-    address: zookeeper://localhost:2181
+    address: zookeeper://192.168.43.205:2181
   scan:
     base-packages: org.og.fmall.fmallshop.iservice
   consumer:
@@ -20,12 +20,19 @@ rocketmq:
   productor:
     group: producter
     reconsumeTimes: 5
-  enable:
-    send: false
 error:
   out:
     file: /error.log
 spring:
+#  thymeleaf:
+#    prefix: classpath:/templates/
+#    suffix: .html
+#    cache: false
+#    servlet:
+#      content-type: text/html
+#    enabled: true
+#    encoding: UTF-8
+#    mode: HTML5
   resources:
     add-mappings: true
     cache:
@@ -42,5 +49,6 @@ spring:
       charset: UTF-8
       enabled: true
       force: true
+
 cookie:
-  domain: ngrok2.xiaomiqiu.cn
+  domain: localhost

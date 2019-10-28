@@ -54,7 +54,7 @@ $(function () {
                 }
             },
             error:function(){
-                layer.msg("客户端请求有误");
+                layer.msg("客户端请求有误",{time:1000});
             }
         })
     }
@@ -69,14 +69,14 @@ $(function () {
                         var picId = "pic_"+i;
                         var aid = "pic_top_a_"+i;
                         $("#"+picId).attr("src",result.data[i-1].panelImgUrl).attr("alt",result.data[i-1].fruitName);
-                        $("#"+aid).attr("href","comment.html?fruitId="+ result.data[i-1].id);
+                        $("#"+aid).attr("href","comment.html?id="+ result.data[i-1].fruitId);
                     }
                 }else {
-                    layer.msg(result.msg);
+                    layer.msg(result.msg,{time:2000});
                 }
             },
             error:function(){
-                layer.msg("客户端请求有误");
+                layer.msg("客户端请求有误",{time:1000});
             }
         });
     }
@@ -98,15 +98,15 @@ $(function () {
                             "                        <span>￥0.00</span>\n" +
                             "                    </p>\n" +
                             "\n" +
-                            "                    <p class=\"buy\"><a href=\"comment.html?id="+result.data[i-1].id+"\">购买</a></p>\n" +
+                            "                    <p class=\"buy\"><a href=\"comment.html?id="+result.data[i-1].fruitId+"\">购买</a></p>\n" +
                             "                </div>");
                     }
                 }else {
-                    layer.msg(result.msg);
+                    layer.msg(result.msg,{time:2000});
                 }
             },
             error:function(){
-                layer.msg("客户端请求有误");
+                layer.msg("客户端请求有误",{time:2000});
             }
         })
     }
@@ -119,16 +119,17 @@ $(function () {
                 if (result.code == 0){
                     for (var i = 1; i <= 4 && i <= result.data.length; i++ ) {
                         $("#everyNew").append("<div class=\"box\">\n" +
-                            "                <a href=\"/comment.html?id="+result.data[i-1].id+"\">" +
+                            "                <a href=\"/comment.html?id="+result.data[i-1].fruitId+"\">" +
                             "<img src=\""+result.data[i-1].panelImgUrl+"\" alt=\""+result.data[i-1].fruitName+"\"/></a>\n" +
                             "            </div>")
                     }
                 }else {
-                    layer.msg(result.msg);
+                    g_showLoading()
+                    layer.msg(result.msg,{time:2000});
                 }
             },
             error:function(){
-                layer.msg("客户端请求有误");
+                layer.msg("客户端请求有误",{time:2000});
             }
         });
     }
@@ -141,15 +142,15 @@ $(function () {
                     if (result.code == 0){
                         for (var i = 1; i <= 3; i++ ){
                             $("#bottomPollingI"+i).attr("src",result.data[i-1].panelImgUrl);
-                            $("#bomA"+i).attr("href","fruitDetail.html?fruitId="+result.data[i-1].fruitId);
+                            $("#bomA"+i).attr("href","comment.html?fruitId="+result.data[i-1].fruitId);
                             $("#bottomPollingP"+i).text(result.data[i-1].fruitName);
                         }
                     }else {
-                        layer.msg(result.msg);
+                        layer.msg(result.msg,{time:2000});
                     }
                 },
                 error:function(){
-                    layer.msg("客户端请求有误");
+                    layer.msg("客户端请求有误",{time:1000});
                 }
             });
         }

@@ -17,10 +17,6 @@ function backHtml() {
         window.location.href = 'index.html';
         return;
     }else {
-        if (prevLink.indexOf('http://localhost') == -1) {	//来自其它站点
-            window.location.href = 'index.html';
-            return;
-        }
         if (prevLink.indexOf('register.html') != -1) {		//来自注册页面
             window.location.href = 'index.html';
             return;

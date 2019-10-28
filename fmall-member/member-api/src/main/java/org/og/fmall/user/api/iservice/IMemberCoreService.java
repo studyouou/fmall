@@ -1,5 +1,6 @@
 package org.og.fmall.user.api.iservice;
 
+import org.og.fmall.commonapi.tkmapper.TkMapper;
 import org.og.fmall.user.api.dto.MemberDto;
 import org.og.fmall.user.api.dto.MemberRequest;
 import org.og.fmall.user.api.dto.MemberResponse;

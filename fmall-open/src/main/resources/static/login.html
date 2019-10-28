@@ -67,12 +67,12 @@
             type:"GET",
             suucess:function (result) {
                 if (result.code == 0){
-                    layer.msg("您已登录！");
+                    layer.msg("您已登录！",{time:2000});
                     backHtml();
                 }
             },
             error:function () {
-                layer.msg("服务器出错");
+                layer.msg("服务器出错",{time:1000});
             }
         });
     });

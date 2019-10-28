@@ -91,13 +91,13 @@
                             backHtml();
                         }
                     }else {
-                        layer.msg(result.msg);
+                        layer.msg(result.msg,{time:2000});
                     }
                 }
             },
             error:function () {
                 layer.closeAll();
-                layer.msg("服务器错误");
+                layer.msg("服务器错误",{time:1000});
             }
         });
     });

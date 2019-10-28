@@ -136,5 +136,4 @@ public class AddressController {
         result.setData(response);
         return result;
     }
-
 }

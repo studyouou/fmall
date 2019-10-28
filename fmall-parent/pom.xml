@@ -11,8 +11,25 @@
 		<java.version>1.8</java.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
 	</properties>
 
+	<modules>
+		<module>../fmall-commons/common-api</module>
+		<module>../fmall-commons/common-tools</module>
+		<module>../fmall-member/member-api</module>
+		<module>../fmall-member/member-verification</module>
+		<module>../fmall-member</module>
+		<module>../fmall-order/order-api</module>
+		<module>../fmall-order</module>
+		<module>../fmall-pay/pay-api</module>
+		<module>../fmall-pay</module>
+		<module>../fmall-shopping/shopping-api</module>
+		<module>../fmall-shopping</module>
+		<module>../fmall-stocks/stock-api</module>
+		<module>../fmall-stocks</module>
+		<module>../fmall-open</module>
+	</modules>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

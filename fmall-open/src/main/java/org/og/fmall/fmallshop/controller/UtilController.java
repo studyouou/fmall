@@ -16,6 +16,7 @@ import org.og.fmall.user.api.session.MemberSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.crypto.*;
@@ -43,6 +44,9 @@ public class UtilController {
 
     private static Logger logger = LoggerFactory.getLogger(UtilController.class);
 
+    @Value("${cookis.domain:localhost}")
+    private String domain;
+
     @RequestMapping(value = "/getVerifyCode", method = RequestMethod.GET)
     public Result<String> getVerifyCod(HttpServletRequest request, HttpServletResponse response) {
         Result<String> result = ResultUtil.build();
@@ -58,10 +62,11 @@ public class UtilController {
             cookieValue.setMaxAge(120);
             cookieSalt.setPath("/");
             cookieValue.setPath("/");
+
             cookieSalt.setHttpOnly(true);
             cookieValue.setHttpOnly(true);
-            cookieSalt.setDomain("localhost");
-            cookieValue.setDomain("localhost");
+            cookieSalt.setDomain(domain);
+            cookieValue.setDomain(domain);
             response.addCookie(cookieSalt);
             response.addCookie(cookieValue);
             ImageIO.write(image, "JPEG", out);

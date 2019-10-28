@@ -33,7 +33,7 @@ public class HomePageController {
 
     @GetMapping("/home/queryTopPanel")
     public Result<List<PanelVo>> queryPanel(){
-
+        System.out.println("欧根");
         String panel = redisService.get(OrderConstants.TOP_PANEL_KEY);
         Result<List<PanelVo>> result = ResultUtil.build();
         List<PanelVo> panelVos = new ArrayList<>();

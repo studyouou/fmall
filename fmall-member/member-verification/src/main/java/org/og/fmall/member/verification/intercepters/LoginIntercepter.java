@@ -29,6 +29,10 @@ public class LoginIntercepter implements HandlerInterceptor{
 
     @Value("${redis.token.timeout:360}")
     private Integer timeout;
+
+    @Value("${cookis.domain:localhost}")
+    private String domain;
+
     @Autowired
     private RedisService redisService;
     @Override
@@ -121,6 +125,7 @@ public class LoginIntercepter implements HandlerInterceptor{
         redisService.set(OrderConstants.LOGIN_KEY+token,memberSession,timeout);
         Cookie cookie = new Cookie(OrderConstants.COOKIE_NAME_LOIN,token);
         cookie.setPath("/");
+        cookie.setDomain(domain);
         cookie.setMaxAge(timeout);
         response.addCookie(cookie);
     }
