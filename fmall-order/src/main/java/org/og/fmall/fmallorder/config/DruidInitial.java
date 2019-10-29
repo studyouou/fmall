@@ -3,6 +3,7 @@ package org.og.fmall.fmallorder.config;
 import com.alibaba.druid.pool.DruidDataSource;
 import org.og.fmall.commontools.druid.DruidProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,23 +18,27 @@ import java.sql.SQLException;
 @Configuration
 @EnableConfigurationProperties(DruidProperties.class)
 public class DruidInitial {
+
     @Autowired
-    private DruidProperties druitConfig;
+    private DruidProperties druidProperties;
+
+    @Value("${rabbitmq.enable}")
+    private String enable;
 
     @Bean
     public DruidDataSource druidDataSource() throws SQLException {
         DruidDataSource druidDataSource = new DruidDataSource();
-        druidDataSource.setUrl(druitConfig.getUrl());
-        druidDataSource.setUsername(druitConfig.getUsername());
-        druidDataSource.setPassword(druitConfig.getPassword());
-        druidDataSource.setDriverClassName(druitConfig.getDriverClassName());
-        druidDataSource.setInitialSize(druitConfig.getInitialSize());
-        druidDataSource.setMaxActive(druitConfig.getMaxActive());
-        druidDataSource.setMinIdle(druitConfig.getMinIdle());
-        druidDataSource.setTestWhileIdle(druitConfig.isTestWhileIdle());
-        druidDataSource.setTimeBetweenEvictionRunsMillis(druitConfig.getTimeBetweenEvictionRunsMillis());
-        druidDataSource.setValidationQuery(druitConfig.getValidationQuery());
-        druidDataSource.setMaxWait(druitConfig.getMaxWait());
+        druidDataSource.setUrl(druidProperties.getUrl());
+        druidDataSource.setUsername(druidProperties.getUsername());
+        druidDataSource.setPassword(druidProperties.getPassword());
+        druidDataSource.setDriverClassName(druidProperties.getDriverClassName());
+        druidDataSource.setInitialSize(druidProperties.getInitialSize());
+        druidDataSource.setMaxActive(druidProperties.getMaxActive());
+        druidDataSource.setMinIdle(druidProperties.getMinIdle());
+        druidDataSource.setTestWhileIdle(druidProperties.isTestWhileIdle());
+        druidDataSource.setTimeBetweenEvictionRunsMillis(druidProperties.getTimeBetweenEvictionRunsMillis());
+        druidDataSource.setValidationQuery(druidProperties.getValidationQuery());
+        druidDataSource.setMaxWait(druidProperties.getMaxWait());
         druidDataSource.init();
         return druidDataSource;
     }

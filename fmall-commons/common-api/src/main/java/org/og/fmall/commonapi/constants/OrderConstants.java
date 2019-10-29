@@ -36,4 +36,10 @@ public class OrderConstants {
     public static final String ENCODE = "@#html:param#@";
 
     public static final String AES = "AES";
+
+    public static final String ORDER_QUEUE_NAME = "order_queue";
+
+    public static final String ORDER_DIRECT_EXCHANGE_NAME = "order_direct_exchange";
+
+    public static final String ROUTE_KEY= "order_create";
 }

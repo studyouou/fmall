@@ -2,17 +2,19 @@ package org.og.fmall.fmallshop.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.github.pagehelper.PageInfo;
+import com.rabbitmq.client.BuiltinExchangeType;
 import org.apache.rocketmq.common.message.Message;
 import org.og.fmall.commonapi.constants.OrderConstants;
 import org.og.fmall.commonapi.constants.RocketMQConstant;
 import org.og.fmall.commonapi.enums.CommonEnum;
-import org.og.fmall.commonapi.exception.BaseException;
 import org.og.fmall.commonapi.result.Result;
 import org.og.fmall.commonapi.utils.JSONUtil;
 import org.og.fmall.commonapi.utils.OrderUtil;
 import org.og.fmall.commonapi.utils.ResultUtil;
 import org.og.fmall.commontools.redis.RedisService;
-import org.og.fmall.fmallshop.rocketmq.MessageProductor;
+import org.og.fmall.fmallshop.rabbitmq.RabbitMQMessage;
+import org.og.fmall.fmallshop.rabbitmq.RabbitMQSendMessage;
+import org.og.fmall.fmallshop.rocketmq.RocketMQMessageProductor;
 import org.og.fmall.fmallshop.vo.OrderVo;
 import org.og.fmall.member.verification.annotation.AccessKey;
 import org.og.fmall.order.api.dto.OrderDto;
@@ -20,7 +22,6 @@ import org.og.fmall.order.api.dto.OrderRequest;
 import org.og.fmall.order.api.dto.OrderResponse;
 import org.og.fmall.order.api.iservice.IOrderQueryService;
 import org.og.fmall.order.api.iservice.IOrderService;
-import org.og.fmall.stock.api.dto.FruitDto;
 import org.og.fmall.stock.api.iservice.IFruitQueryService;
 import org.og.fmall.user.api.dto.AddressDto;
 import org.og.fmall.user.api.iservice.IAddressQueryService;
@@ -30,15 +31,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 /**
  * @author:ougen
@@ -63,14 +65,17 @@ public class OrderController {
     @Autowired
     private RedisService redisService;
 
-    @Autowired
-    private MessageProductor messageProductor;
+    @Autowired(required = false)
+    private RocketMQMessageProductor rocketMQMessageProductor;
+
+    @Autowired(required = false)
+    private RabbitMQSendMessage rabbitMQSendMessage;
 
     @PostMapping("/order")
     @AccessKey
-    public Result<OrderResponse> createOrder(@Valid OrderRequest orderRequest, BindingResult bindingResult,MemberSession session) throws UnsupportedEncodingException {
+    public Result<OrderResponse> createOrder(@Valid OrderRequest orderRequest, BindingResult bindingResult,MemberSession session) throws IOException, TimeoutException {
         Result<OrderResponse> result = ResultUtil.build();
-        OrderResponse response ;
+        OrderResponse response = null;
         if (bindingResult.hasErrors()){
             result.setCode(CommonEnum.FAIL.getCode());
             result.setMsg(bindingResult.getFieldError().getField()+"不能为空");
@@ -82,15 +87,27 @@ public class OrderController {
         String s ;
         //判断是否是热门商品，如果是，则发送消息创建订单，如果不是，则直接调用接口创建
         if ( (s = redisService.get(OrderConstants.FRUIT_NUM+orderRequest.getFruitId()))!=null && !"".equals(s)){
-            logger.info("热门商品，消息队列发送创建订单");
-            Message message = new Message();
-            message.setTopic(RocketMQConstant.OTDER_CREATE_TOPIC);
-            message.setTags("default");
-            message.setBody(JSONUtil.beanToString(orderRequest).getBytes("utf-8"));
-            response = messageProductor.sendOrderMessage(message);
-            response.setId(orderId);
-            response.setFruitId(orderRequest.getFruitId());
-            response.setIsMessage(1);
+            if (rabbitMQSendMessage != null){
+                logger.info("热门商品，rabbitmq消息队列发送创建订单");
+                RabbitMQMessage message = new RabbitMQMessage();
+                message.setExchange(OrderConstants.ORDER_DIRECT_EXCHANGE_NAME);
+                message.setQueue(OrderConstants.ORDER_QUEUE_NAME);
+                message.setRouteKey(OrderConstants.ROUTE_KEY);
+                message.setBody(JSONUtil.beanToString(orderRequest).getBytes("utf-8"));
+                response = rabbitMQSendMessage.sendMessage(message, BuiltinExchangeType.DIRECT);
+            }else if (rocketMQMessageProductor != null){
+                logger.info("热门商品，rocketmq消息队列发送创建订单");
+                Message message = new Message();
+                message.setTopic(RocketMQConstant.OTDER_CREATE_TOPIC);
+                message.setTags("default");
+                message.setBody(JSONUtil.beanToString(orderRequest).getBytes("utf-8"));
+                response = rocketMQMessageProductor.sendOrderMessage(message);
+                response.setId(orderId);
+                response.setFruitId(orderRequest.getFruitId());
+                response.setIsMessage(1);
+            }else {
+                throw new RuntimeException("热门消息未初始化消息队列");
+            }
         }else {
             logger.info("调用接口创建订单");
             response = iOrderService.createOrder(orderRequest);

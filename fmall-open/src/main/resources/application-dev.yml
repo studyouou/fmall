@@ -5,7 +5,7 @@ dubbo:
     name: dubbo
     port: 20880
   registry:
-    address: zookeeper://localhost:2181
+    address: zookeeper://49.235.118.239:2181
   scan:
     base-packages: org.og.fmall.fmallshop.iservice
   consumer:
@@ -16,7 +16,7 @@ dubbo:
     qos-port: 33333
     qos-enable: false
 rocketmq:
-  namesrvAddr: localhost:9876
+  namesrvAddr: 49.235.118.239:9876
   productor:
     group: producter
     reconsumeTimes: 5
@@ -25,15 +25,15 @@ error:
   out:
     file: /error.log
 spring:
-#  thymeleaf:
-#    prefix: classpath:/templates/
-#    suffix: .html
-#    cache: false
-#    servlet:
-#      content-type: text/html
-#    enabled: true
-#    encoding: UTF-8
-#    mode: HTML5
+  #  thymeleaf:
+  #    prefix: classpath:/templates/
+  #    suffix: .html
+  #    cache: false
+  #    servlet:
+  #      content-type: text/html
+  #    enabled: true
+  #    encoding: UTF-8
+  #    mode: HTML5
   resources:
     add-mappings: true
     cache:
@@ -46,7 +46,7 @@ spring:
   freemarker:
     cache: false
 rabbitmq:
-  host: localhost
+  host: 49.235.118.239
   port: 5672
   username: fmalluser
   password: fmall

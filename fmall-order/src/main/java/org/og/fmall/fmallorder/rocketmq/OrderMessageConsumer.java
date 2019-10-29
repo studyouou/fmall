@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -28,6 +29,7 @@ import java.util.List;
  * @date:2019/9/2710:58
  */
 @Service
+@ConditionalOnProperty(prefix = "rocketmq",name = "enable",havingValue = "true")
 public class OrderMessageConsumer implements InitializingBean{
     private static Logger logger = LoggerFactory.getLogger(OrderMessageConsumer.class);
 
