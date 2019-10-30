@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>结算页</title>
 
 	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
@@ -620,8 +620,11 @@
 						layer.msg("添加成功");
 						if (confirm("添加成功,是否设置为默认地址？")) {
                             $.ajax({
-                                url: "/" + result.data.id + "/default/address",
+                                url: "/address",
                                 type: "PUT",
+								data:{
+                                    id:result.data.id
+								},
                                 success: function (result) {
                                     if (result == 0) {
                                         layer.msg("设置成功");
@@ -660,6 +663,7 @@
         }
 
         function okAddress(address) {
+            $("#addressUl").show();
             $("#myModal").modal({
 				show:false
 			});

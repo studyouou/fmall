@@ -10,6 +10,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../fmall-parent/pom.xml</relativePath>
 	</parent>
+	<packaging>jar</packaging>
 	<groupId>org.og.fmall</groupId>
 	<artifactId>fmall-order</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -74,6 +75,10 @@
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.mybatis</groupId>
@@ -141,7 +146,18 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>org.og.fmall.fmallorder.FmallOrderApplication</mainClass>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
+
 		</plugins>
 	</build>
 

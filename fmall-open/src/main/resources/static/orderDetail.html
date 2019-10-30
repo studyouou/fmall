@@ -163,12 +163,12 @@ function getOrderDetail(){
                     }
                 }else {
                     layer.closeAll();
-                    layer.msg(result.msg);
+                    layer.msg(result.msg,{time:2000});
                 }
 			}
 		},
 		error:function(){
-			layer.msg("客户端请求有误");
+			layer.msg("客户端请求有误",{time:1000});
 		}
 	});
 }
@@ -186,7 +186,7 @@ function cancelOrder(id) {
             success:function (result) {
                 if (result.code == 0){
                     layer.closeAll();
-                    layer.msg("取消订单成功!",{time:1})
+                    layer.msg("取消订单成功!",{time:1000})
                     window.location.reload();
                 }else {
                     layer.closeAll();
@@ -197,18 +197,18 @@ function cancelOrder(id) {
                             window.location.href="index.html";
                         }
                     }
-                    layer.msg("取消订单失败,"+result.msg);
+                    layer.msg("取消订单失败,"+result.msg,{time:2000});
                 }
             },
             error:function () {
-                layer.msg("服务器错误!");
+                layer.msg("服务器错误!",{time:1000});
             }
         });
     }
 }
 
 function newOrder(id) {
-
+    alert("功能开发中，请期待");
 }
 
 function deleteOrder(id) {
@@ -220,7 +220,7 @@ function deleteOrder(id) {
             success: function (result) {
                 if (result.code == 0) {
                     layer.closeAll();
-                    layer.msg("删除成功");
+                    layer.msg("删除成功",{time:1000});
                     backHtml();
                 } else {
                     layer.closeAll();
@@ -231,11 +231,11 @@ function deleteOrder(id) {
                             window.location.href="index.html";
                         }
                     }
-                    layer.msg("删除失败," + result.msg)
+                    layer.msg("删除失败," + result.msg,{time:2000})
                 }
             },
             error: function () {
-                layer.msg("服务器错误!");
+                layer.msg("服务器错误!",{time:1000});
             }
         });
     }

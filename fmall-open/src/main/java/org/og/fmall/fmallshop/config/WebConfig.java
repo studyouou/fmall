@@ -23,6 +23,7 @@ public class WebConfig implements WebMvcConfigurer{
         return new LoginIntercepter();
     }
 
+
     @Bean
     public MemberSessionParamterResovler memberSessionParamterResovler(){
         return new MemberSessionParamterResovler();
@@ -44,4 +45,5 @@ public class WebConfig implements WebMvcConfigurer{
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**");
     }
+
 }

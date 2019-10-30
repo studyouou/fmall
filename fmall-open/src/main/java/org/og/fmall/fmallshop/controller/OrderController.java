@@ -59,7 +59,7 @@ public class OrderController {
     @Reference(check = false,timeout = 6000)
     private IFruitQueryService iFruitQueryService;
 
-    @Reference(check = false,timeout = 6000)
+    @Reference(check = false,timeout = 6000,retries = 0)
     private IAddressQueryService iAddressQueryService;
 
     @Autowired

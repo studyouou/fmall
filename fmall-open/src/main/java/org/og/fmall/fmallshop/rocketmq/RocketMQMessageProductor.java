@@ -1,4 +1,4 @@
-package org.og.fmall.fmallshop.rocketmq;
+﻿package org.og.fmall.fmallshop.rocketmq;
 
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
@@ -20,10 +20,16 @@ import javax.annotation.PostConstruct;
  * @date:2019/9/2713:12
  */
 @Service
+<<<<<<< HEAD:fmall-open/src/main/java/org/og/fmall/fmallshop/rocketmq/RocketMQMessageProductor.java
 @ConditionalOnProperty(prefix = "rocketmq",name = "enable",havingValue = "true")
 public class RocketMQMessageProductor {
     private static Logger logger = LoggerFactory.getLogger(RocketMQMessageProductor.class);
-    @Value("${rocketmq.namesrvAddr:192.168.43.205:9876}")
+=======
+@ConditionalOnProperty(prefix = "rocketmq.send",name = "enable",havingValue = "true")
+public class MessageProductor {
+    private static Logger logger = LoggerFactory.getLogger(MessageProductor.class);
+
+   @Value("${rocketmq.namesrvAddr:192.168.43.205:9876}")
     private String namesrvAddr;
 
     @Value("${rocketmq.productor.group:defaultGroup}")
@@ -59,6 +65,7 @@ public class RocketMQMessageProductor {
         producer = new DefaultMQProducer(group);
         producer.setNamesrvAddr(namesrvAddr);
         producer.setRetryTimesWhenSendFailed(retryTimes);
+        logger.info("rocketmq is starting to send messages");
         producer.start();
     }
 }

@@ -1,11 +1,11 @@
 server:
-  port: 8080
+  port: 18080
 dubbo:
   protocol:
     name: dubbo
     port: 20880
   registry:
-    address: zookeeper://49.235.118.239:2181
+    address: zookeeper://192.168.43.205:2181
   scan:
     base-packages: org.og.fmall.fmallshop.iservice
   consumer:
@@ -16,7 +16,7 @@ dubbo:
     qos-port: 33333
     qos-enable: false
 rocketmq:
-  namesrvAddr: 49.235.118.239:9876
+  namesrvAddr: 192.168.43.205:9876
   productor:
     group: producter
     reconsumeTimes: 5
@@ -53,3 +53,5 @@ rabbitmq:
   enable: true
   producer:
     retries: 3
+cookie:
+  domain: localhost

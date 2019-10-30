@@ -13,12 +13,8 @@
     <artifactId>fmall-open</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
+
     <dependencies>
-        <dependency>
-            <groupId>org.og.fmall</groupId>
-            <artifactId>fmall-commons</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -106,7 +102,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>org.og.fmall.fmallshop.FmallOpenApplication</mainClass>
+                    <mainClass>org.og.fmall.fmallshop.FmallOpenApplication</mainClass> <!-- 你的主类名 -->
                 </configuration>
                 <executions>
                     <execution>

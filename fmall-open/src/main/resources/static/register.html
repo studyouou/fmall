@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<!-- md5.js -->
-		<meta charset="utf-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>注册界面</title>
 		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/reset.css" />
@@ -135,6 +135,7 @@
             },
             error:function(){
                 layer.closeAll();
+                layer.msg("服务器错误");
             }
         });
     }

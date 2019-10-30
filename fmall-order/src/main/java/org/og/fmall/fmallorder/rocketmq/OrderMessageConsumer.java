@@ -1,4 +1,4 @@
-package org.og.fmall.fmallorder.rocketmq;
+﻿package org.og.fmall.fmallorder.rocketmq;
 
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
@@ -30,6 +30,7 @@ import java.util.List;
  */
 @Service
 @ConditionalOnProperty(prefix = "rocketmq",name = "enable",havingValue = "true")
+
 public class OrderMessageConsumer implements InitializingBean{
     private static Logger logger = LoggerFactory.getLogger(OrderMessageConsumer.class);
 

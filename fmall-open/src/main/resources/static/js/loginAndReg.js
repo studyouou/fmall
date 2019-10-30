@@ -43,7 +43,7 @@ function doLogin() {
         },
         error:function () {
             layer.closeAll();
-            layer.msg("服务器错误")
+            layer.msg("服务器错误",{time:1000})
         }
     });
 };

@@ -21,19 +21,11 @@ rocketmq:
     group: producter
     reconsumeTimes: 5
   enable: false
+
 error:
   out:
     file: /error.log
 spring:
-#  thymeleaf:
-#    prefix: classpath:/templates/
-#    suffix: .html
-#    cache: false
-#    servlet:
-#      content-type: text/html
-#    enabled: true
-#    encoding: UTF-8
-#    mode: HTML5
   resources:
     add-mappings: true
     cache:
@@ -53,3 +45,5 @@ rabbitmq:
   enable: true
   producer:
     retries: 3
+cookie:
+  domain: ngrok2.xiaomiqiu.cn
