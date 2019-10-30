@@ -7,7 +7,7 @@ dubbo:
     port: 20882
     name: dubbo
   registry:
-    address: zookeeper://192.168.43.205:2181
+    address: zookeeper://49.235.118.239:2181
   scan:
     base-packages: org.og.fmall.fmalluser.service
 
@@ -26,5 +26,5 @@ spring:
     validation-query: SELECT 1 FROM DUAL
     test-while-idle: true
     time-between-eviction-runs-millis: 60000
-    url: jdbc:mysql://192.168.43.205:3306/fmall?useUnicode=true&characterEncoding=utf8&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=UTC
-
+    url: jdbc:mysql://49.235.118.239:3306/fmall?useUnicode=true&characterEncoding=utf8&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=UTC
+    filters: stat

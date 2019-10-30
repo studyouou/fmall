@@ -1,21 +1,33 @@
 package org.og.fmall.fmallorder.rabbitmq;
 
-import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import com.rabbitmq.client.ConnectionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author:ougen
- * @date:2019/10/2612:41
+ * @author:  ougen
+ * @description:
+ * @date: 2019/10/29
  */
 @Configuration
-public class RabbitMqConfig {
+@EnableConfigurationProperties(RabbitmqProperties.class)
+@ConditionalOnProperty(prefix = "rabbitmq",name = "enable",havingValue = "true")
+public class RabbitmqConfig {
+
+    @Autowired
+    private RabbitmqProperties rabbitmqProperties;
 
     @Bean
-    @ConditionalOnProperty(prefix = "spring.rabbitmq",name = "enable",havingValue = "true")
-    public AmqpTemplate amqpTemplate(){
-        return new RabbitTemplate();
+    public ConnectionFactory autoConfiguration(){
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        connectionFactory.setUsername(rabbitmqProperties.getUsername());
+        connectionFactory.setPassword(rabbitmqProperties.getPassword());
+        connectionFactory.setHost(rabbitmqProperties.getHost());
+        connectionFactory.setPort(rabbitmqProperties.getPort());
+        connectionFactory.setVirtualHost(rabbitmqProperties.getVirtualHost());
+        return connectionFactory;
     }
 }

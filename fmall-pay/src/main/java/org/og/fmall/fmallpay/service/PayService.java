@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Map;
 
 /**
@@ -69,6 +70,7 @@ public class PayService implements IPayService {
             response.setMsg(response1.getMsg());
             return response;
         }else {
+            params.put("refund_reason","签名验证失败");
             returnFund(params);
             response.setCode(CommonEnum.FAIL.getCode());
             response.setMsg("服务器错误,签名验证失败,正在退款");
@@ -81,13 +83,12 @@ public class PayService implements IPayService {
         PayResponse response = new PayResponse();
         AlipayTradeRefundRequest refundRequest = new AlipayTradeRefundRequest();
         String orderId = params.get("out_trade_no");
-        params.get("");
         AlipayReturnFundBean returnFundBean = AlipayReturnFundBean.builder().out_trade_no(orderId)
-                .refund_amount(1000.88d)
-                .refund_reason("不喜欢，正常退款")
-                .out_request_no("HZ01RF002")
-                .operator_id("OP001")
-                .store_id("OG_001").build();
+                .refund_amount(new BigDecimal(params.get("total_amount")).doubleValue())
+                .refund_reason(params.get("refund_reason"))
+                .out_request_no(params.get("out_request_no"))
+                .operator_id(params.get("params"))
+                .store_id(params.get("store_id")).build();
         String string = JSONUtil.beanToString(returnFundBean);
         refundRequest.setBizContent(string);
         AlipayTradeRefundResponse alipayTradePagePayResponse = null;

@@ -1,4 +1,4 @@
-﻿package org.og.fmall.fmallorder.rocketmq;
+package org.og.fmall.fmallorder.rocketmq;
 
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;

@@ -86,8 +86,11 @@ public class OrderController {
         orderRequest.setMemberId(session.getId());
         String s ;
         //判断是否是热门商品，如果是，则发送消息创建订单，如果不是，则直接调用接口创建
-        if ( (s = redisService.get(OrderConstants.FRUIT_NUM+orderRequest.getFruitId()))!=null && !"".equals(s)){
-            if (rabbitMQSendMessage != null){
+        if ( (s = redisService.get(OrderConstants.FRUIT_NUM+orderRequest.getFruitId()))!=null && !"".equals(s) ){
+            if (rabbitMQSendMessage==null && rocketMQMessageProductor==null){
+                throw new RuntimeException("热门消息未初始化消息队列");
+            }
+            if (rabbitMQSendMessage != null && Integer.parseInt(s)>0){
                 logger.info("热门商品，rabbitmq消息队列发送创建订单");
                 RabbitMQMessage message = new RabbitMQMessage();
                 message.setExchange(OrderConstants.ORDER_DIRECT_EXCHANGE_NAME);
@@ -95,7 +98,10 @@ public class OrderController {
                 message.setRouteKey(OrderConstants.ROUTE_KEY);
                 message.setBody(JSONUtil.beanToString(orderRequest).getBytes("utf-8"));
                 response = rabbitMQSendMessage.sendMessage(message, BuiltinExchangeType.DIRECT);
-            }else if (rocketMQMessageProductor != null){
+                response.setId(orderId);
+                response.setFruitId(orderRequest.getFruitId());
+                response.setIsMessage(1);
+            }else if (rocketMQMessageProductor != null && Integer.parseInt(s)>0){
                 logger.info("热门商品，rocketmq消息队列发送创建订单");
                 Message message = new Message();
                 message.setTopic(RocketMQConstant.OTDER_CREATE_TOPIC);
@@ -105,8 +111,6 @@ public class OrderController {
                 response.setId(orderId);
                 response.setFruitId(orderRequest.getFruitId());
                 response.setIsMessage(1);
-            }else {
-                throw new RuntimeException("热门消息未初始化消息队列");
             }
         }else {
             logger.info("调用接口创建订单");
@@ -217,7 +221,7 @@ public class OrderController {
 
     @GetMapping("/{id}/getResult")
     @AccessKey
-    public Result<Boolean> getOrderResult(@PathVariable("id") Long id,@RequestParam("fruitId")Long fruitId){
+    public Result<Integer> getOrderResult(@PathVariable("id") Long id,@RequestParam("fruitId")Long fruitId){
         Result result = ResultUtil.build();
         Integer b = iOrderQueryService.exeistOrder(id,fruitId);
         result.setData(b);

@@ -1,6 +1,7 @@
 package org.og.fmall.fmallshop.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import javafx.scene.layout.Pane;
 import org.apache.commons.lang3.StringUtils;
 import org.og.fmall.commonapi.constants.OrderConstants;
 import org.og.fmall.commonapi.result.Result;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +35,6 @@ public class HomePageController {
 
     @GetMapping("/home/queryTopPanel")
     public Result<List<PanelVo>> queryPanel(){
-        System.out.println("欧根");
         String panel = redisService.get(OrderConstants.TOP_PANEL_KEY);
         Result<List<PanelVo>> result = ResultUtil.build();
         List<PanelVo> panelVos = new ArrayList<>();
@@ -136,4 +137,5 @@ public class HomePageController {
         result.setData(panelVos);
         return result;
     }
+
 }

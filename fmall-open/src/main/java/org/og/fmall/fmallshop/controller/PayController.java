@@ -14,6 +14,7 @@ import org.og.fmall.user.api.session.MemberSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +34,10 @@ import java.util.Map;
 public class PayController {
 
     private static Logger logger = LoggerFactory.getLogger(PayController.class);
+
+    @Value("${pay.return.url:localhost:18080}")
+    private String url;
+
     @Reference(check = false)
     private IPayService iPayService;
 
@@ -40,8 +45,9 @@ public class PayController {
     @AccessKey(accessLimit = 2)
     public Result<PayResponse> pay(PayRequest request, MemberSession memberSession, HttpServletResponse response) throws IOException {
         request.setMemberId(memberSession.getId());
-        request.setNotifyUrl("http://fmall.ngrok2.xiaomiqiu.cn/pay/returnNotify");
-        request.setReturnUrl("http://fmall.ngrok2.xiaomiqiu.cn/orderDetail.html?id="+request.getOrderId());
+        //这里提供的接口必须是其他公网可以访问的
+        request.setNotifyUrl("http://"+url+"/pay/returnNotify");
+        request.setReturnUrl("http://"+url+"/orderDetail.html?id="+request.getOrderId());
         request.checkParam();
         PayResponse payResponse = iPayService.pay(request);
         if (payResponse.getCode() != 0){
@@ -58,6 +64,7 @@ public class PayController {
 
     @PostMapping("/pay/returnNotify")
     public void retuNotify(HttpServletRequest request){
+        //后续改进
         Map<String,String> params = new HashMap<String,String>();
 
         Map<String,String[]> requestParams = request.getParameterMap();
@@ -69,8 +76,6 @@ public class PayController {
                 valueStr = (i == values.length - 1) ? valueStr + values[i]
                         : valueStr + values[i] + ",";
             }
-            //乱码解决，这段代码在出现乱码时使用
-            //valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
             params.put(name, valueStr);
         }
         PayResponse response1;

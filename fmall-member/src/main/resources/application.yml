@@ -7,6 +7,6 @@ mybatis:
   type-aliases-package: org.og.fmall.fmalluser.model
 spring:
   profiles:
-    active: dev,redis
+    active: prod,redis
 mapper:
   not-empty: true

@@ -75,7 +75,7 @@ public class CreateOrderHandler implements InvokeHandler {
             response.setMsg(response1.getMsg());
             return;
         }
-
+        redisService.set(OrderConstants.ORDER_SUBMIT_KEY+orderRequest.getId(),"true",60);
         pacResponse(response, order, orderRequest);
     }
     private void pacResponse(OrderResponse response, Order order, OrderRequest orderRequest) {

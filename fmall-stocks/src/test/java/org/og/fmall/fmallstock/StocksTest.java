@@ -18,10 +18,10 @@ import java.math.BigDecimal;
 @Slf4j
 public class StocksTest extends FmallStocksTest {
 
-    @Reference
+    @Reference(check = false)
     private IFruitQueryService iFruitQueryService;
 
-    @Reference
+    @Reference(check = false)
     private IFruitService iFruitService;
 
     @Test

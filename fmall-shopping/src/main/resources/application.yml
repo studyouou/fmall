@@ -8,4 +8,4 @@ mybatis:
   type-aliases-package: org.og.fmall.fmallshopping.model
 spring:
   profiles:
-    active: dev,redis
+    active: prod,redis

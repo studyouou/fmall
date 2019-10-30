@@ -16,10 +16,10 @@ import org.og.fmall.order.api.iservice.IOrderService;
 @Slf4j
 public class OrderTest extends FmallOrderApplicationTests {
 
-    @Reference
+    @Reference(check = false)
     private IOrderQueryService iOrderQueryService;
 
-    @Reference
+    @Reference(check = false)
     private IOrderService iOrderService;
 
     @Test

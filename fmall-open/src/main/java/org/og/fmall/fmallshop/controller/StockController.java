@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
+
 /**
  * @author:ougen
  * @date:2019/10/923:06
@@ -19,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class StockController {
 
-    @Reference
+    @Reference(check = false)
     private IFruitQueryService iFruitQueryService;
 
     @GetMapping("/{id}/fruit")
@@ -36,4 +38,5 @@ public class StockController {
         result.setData(fruitVo);
         return result;
     }
+
 }

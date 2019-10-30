@@ -52,7 +52,9 @@ public class AddressService implements IAddressService {
         Address address = new Address();
         BeanUtils.copyProperties(addressRequest,address);
         if (address.getDefaultAddress() != null){
-            addressMapper.cancelDefaultAddress(address.getId());
+            if (address.getDefaultAddress() == 1){
+                addressMapper.cancelDefaultAddress(address.getId());
+            }
         }
         addressMapper.updateByPrimaryKeySelective(address);
         AddressResponse response = new AddressResponse();
