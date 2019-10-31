@@ -42,4 +42,6 @@ public class OrderConstants {
     public static final String ORDER_DIRECT_EXCHANGE_NAME = "order_direct_exchange";
 
     public static final String ROUTE_KEY= "order_create";
+
+    public static final String COUNTHTML = "count:html";
 }
