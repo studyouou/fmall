@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
                 inputStream = new FileInputStream(file);
                 LOGGER.info("文件创建成功={}",file.getAbsolutePath());
             } catch (Exception e) {
-                LOGGER.error("创建文件失败={}",fileDirect);
+                LOGGER.error("创建文件失败={},error = {}",fileDirect,e);
             }
         }else {
             String path = aClass.getResource("/").getPath();

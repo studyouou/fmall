@@ -33,7 +33,7 @@ public class MemberController {
     @Reference(check = false)
     private IMemberCoreService iMemberCoreService;
 
-    @Value("${cookis.domain:localhost}")
+    @Value("${cookie.domain:localhost}")
     private String domain;
 
     @PostMapping("/login")

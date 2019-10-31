@@ -30,7 +30,7 @@ public class LoginIntercepter implements HandlerInterceptor{
     @Value("${redis.token.timeout:360}")
     private Integer timeout;
 
-    @Value("${cookis.domain:localhost}")
+    @Value("${cookie.domain:localhost}")
     private String domain;
 
     @Autowired

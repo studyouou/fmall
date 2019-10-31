@@ -44,7 +44,7 @@ public class UtilController {
 
     private static Logger logger = LoggerFactory.getLogger(UtilController.class);
 
-    @Value("${cookis.domain:localhost}")
+    @Value("${cookie.domain:localhost}")
     private String domain;
 
     @RequestMapping(value = "/getVerifyCode", method = RequestMethod.GET)
