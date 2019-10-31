@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @author:  ougen
- * @description:
+ * @description: 是否加载该类根据配置文件中rabbitmq.enable属性，同理rocketmq是根据rocketmq.enable属性配置是否加载
  * @date: 2019/10/29
  */
 @Configuration

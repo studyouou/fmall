@@ -45,12 +45,14 @@ public class RabbitMQSendMessage implements InitializingBean {
         }
         Channel channel = connection.createChannel();
         OrderResponse response = new OrderResponse();
+        //将信道设置为confirm模式，该模式可以确定消息是否已经发出并到rabbitmq服务器
         AMQP.Confirm.SelectOk selectOk = channel.confirmSelect();
         channel.queueDeclare(message.getQueue(),true,false,false,null);
         channel.exchangeDeclare(message.getExchange(), type,true,false,null);
         channel.queueBind(message.getQueue(),message.getExchange(),message.getRouteKey());
         channel.basicPublish(message.getExchange(),message.getRouteKey(), new AMQP.BasicProperties().builder().deliveryMode(2).build(),message.getBody());
         int count = 0;
+        //发送失败重发  默认1次，根据配置文件rabbitmq.producer.retries设置
         while (retries > count){
             try {
                 if (channel.waitForConfirms(2000)){
@@ -60,6 +62,7 @@ public class RabbitMQSendMessage implements InitializingBean {
                 channel.basicPublish(OrderConstants.ORDER_DIRECT_EXCHANGE_NAME,OrderConstants.ROUTE_KEY, new AMQP.BasicProperties().builder().deliveryMode(2).build(),"".getBytes());
             }
         }
+        //发送失败
         throw new BaseException(CommonEnum.ROCKETMQ_SEND_FAIL.getCode(),CommonEnum.ROCKETMQ_CONSUMER_FAIL.getMsg());
     }
 

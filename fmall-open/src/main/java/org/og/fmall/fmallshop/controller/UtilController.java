@@ -56,13 +56,14 @@ public class UtilController {
             Cookie cookieSalt = new Cookie("registerSalt",salt);
             Cookie cookieValue = new Cookie("registerValue","");
             BufferedImage image = ImageUtil.createVerifyCodeRegister(cookieValue);
+            //将验证码结果组合随机生成的salt加密结果放入cookie，salt也放入cookie，
+            //验证时取用户cookie然后加上用户输入结果加密对比。好处时不用结果不用储存在redis中，减少网络访问次数
             String md5Hex = DigestUtils.md5Hex(salt + cookieValue.getValue());
             cookieValue.setValue(md5Hex);
             cookieSalt.setMaxAge(120);
             cookieValue.setMaxAge(120);
             cookieSalt.setPath("/");
             cookieValue.setPath("/");
-
             cookieSalt.setHttpOnly(true);
             cookieValue.setHttpOnly(true);
             cookieSalt.setDomain(domain);
@@ -94,6 +95,7 @@ public class UtilController {
     @GetMapping("/des/enCode")
     @AccessKey
     public Result<String> enCode(FruitVo fruitVo,MemberSession memberSession){
+        //des对称算法加密，用于浏览器参数加密
         Result<String> result = ResultUtil.build();
         if (fruitVo == null){
             result.setCode(CommonEnum.PARAMERTER_WRONG.getCode());
@@ -116,6 +118,7 @@ public class UtilController {
     @GetMapping("/des/decode")
     @AccessKey
     public Result<FruitVo> decode(@RequestParam("encParam") String encParam,MemberSession memberSession){
+        //浏览器参数解密
         Result<FruitVo> result = ResultUtil.build();
         try {
             String decode = AESUtil.decode(memberSession.getSalt()+OrderConstants.ENCODE, encParam);

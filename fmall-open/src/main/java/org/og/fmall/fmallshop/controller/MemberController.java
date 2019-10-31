@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author:ougen
  * @date:2019/10/115:32
+ * @description 用户操作
  */
 @RestController()
 @RequestMapping("/auth")
@@ -40,6 +41,8 @@ public class MemberController {
     public Result<MemberResponse> login(MemberRequest request, HttpServletResponse response){
         MemberResponse memberResponse = iMemberCoreService.login(request);
         if (memberResponse.getCode() == 0){
+            //当登录成功后，需要把登录产生redis的uuid储存在用户浏览器的cookie中，cookie的domain
+            //由cookie.domain设置，默认为localhost
             String uuid = memberResponse.getUuid();
             Cookie cookie = new Cookie(OrderConstants.COOKIE_NAME_LOIN,uuid);
             cookie.setPath("/");
@@ -58,6 +61,7 @@ public class MemberController {
     public Result<MemberResponse> register(MemberRequest memberRequest, HttpServletRequest request,String verifyCode){
         memberRequest.checked();
         TelValidateUtil.isMobile(memberRequest.getTel());
+        //点击注册页面时，会调用获取验证码接口，该接口会把产生的验证码
         boolean b = validateVertify(request, verifyCode);
         if (!b){
             Result result = ResultUtil.buildError();

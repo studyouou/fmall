@@ -100,8 +100,10 @@ public class OrderController {
                 response = rabbitMQSendMessage.sendMessage(message, BuiltinExchangeType.DIRECT);
                 response.setId(orderId);
                 response.setFruitId(orderRequest.getFruitId());
+                //前台页面根据该参数判断是否是消息队列创建
                 response.setIsMessage(1);
             }else if (rocketMQMessageProductor != null && Integer.parseInt(s)>0){
+                //rocketmq对服务器内存要求较大，所以这里我配置的rabbitmq，要求相对较低
                 logger.info("热门商品，rocketmq消息队列发送创建订单");
                 Message message = new Message();
                 message.setTopic(RocketMQConstant.OTDER_CREATE_TOPIC);

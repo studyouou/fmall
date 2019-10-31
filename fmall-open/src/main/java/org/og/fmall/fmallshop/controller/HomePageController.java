@@ -23,6 +23,7 @@ import java.util.List;
 /**
  * @author:ougen
  * @date:2019/10/421:03
+ * @discreption 用于主页中一些需要的数据查询
  */
 @RestController
 public class HomePageController {

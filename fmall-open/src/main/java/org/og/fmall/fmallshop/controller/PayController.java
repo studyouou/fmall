@@ -64,6 +64,7 @@ public class PayController {
 
     @PostMapping("/pay/returnNotify")
     public void retuNotify(HttpServletRequest request){
+        //支付宝回调，由setNotifyUrl方法指定，这里指定必须是公网可以访问的
         //后续改进
         Map<String,String> params = new HashMap<String,String>();
 
