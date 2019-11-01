@@ -35,7 +35,7 @@
 							</div>
 							<div class="ececk_warning"><span>密码不能为空</span></div>
 							<div class="form_text_ipt">
-								<img id="verifyCodeImg" width="80" height="32" src="/getVerifyCode" type="text" onclick="refreshVerifyCode()" />
+								<img id="verifyCodeImg" width="90" height="32"  type="text" onclick="refreshVerifyCode()" />
 							</div>
 							<div class="form_text_ipt">
 							<input id="verifyCode"  name="verifyCode"  type="text" placeholder="验证码"/>
@@ -75,18 +75,20 @@
 <script type="text/javascript" src="layer/layer.js"></script>
 <script>
     $(function() {// 初始化内容
-        $("#verifyCodeImg").attr("src", "/getVerifyCode");
+        $("#verifyCodeImg").attr("src", "/getVerifyCode?"+Math.random());
         $("#verifyCodeImg").show();
     });
     function refreshVerifyCode(){
-        $("#verifyCodeImg").attr("src", "/getVerifyCode");
+		$("#verifyCodeImg").removeAttr("src");
+        $("#verifyCodeImg").attr("src", "/getVerifyCode?"+Math.random());
+		$("#verifyCodeImg").show();
     };
 
     function checkPhone(phone){
         if(!(/^1[34578]\d{9}$/.test(phone))){
-            alert("手机号码有误，请重填");
             return false;
         }
+        return true;
     }
 
     function register_go() {
@@ -95,7 +97,7 @@
         var passwordrepeat = $("#repassword").val();
         var verifyCode = $("#verifyCode").val();
         var check = checkPhone(username);
-        if(check){
+        if(!check){
             alert("手机号不符合要求");
             return ;
         }
@@ -104,7 +106,7 @@
             return ;
         }
         if(username==""||username==null||username == undefined ){
-            alert("用户名不能为空！");
+            alert("手机号不能为空！");
             return ;
         }
         if(inputPass!=passwordrepeat){
