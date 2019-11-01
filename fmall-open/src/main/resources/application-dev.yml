@@ -45,6 +45,8 @@ spring:
     static-locations: classpath:/static/
   freemarker:
     cache: false
+  banner:
+    location: classpath:fmall.txt
 rabbitmq:
   host: 49.235.118.239
   port: 5672

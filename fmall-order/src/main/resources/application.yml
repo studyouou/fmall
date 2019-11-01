@@ -5,6 +5,6 @@ mybatis:
   type-aliases-package: org.og.fmall.fmallorder.model
 spring:
   profiles:
-    active: prod,redis
+    active: dev,redis
   aop:
     proxy-target-class: true

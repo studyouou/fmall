@@ -25,4 +25,5 @@ spring:
     test-while-idle: true
     time-between-eviction-runs-millis: 60000
     url: jdbc:mysql://localhost:3306/fmall?useUnicode=true&characterEncoding=utf8&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=UTC
-
+  banner:
+    location: classpath:fmall.txt

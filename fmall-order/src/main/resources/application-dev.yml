@@ -32,6 +32,8 @@ spring:
     port: 5672
     host: 49.235.118.239
     enable: true
+  banner:
+    location: classpath:fmall.txt
 server:
   port: 8090
 rocketmq:
@@ -48,4 +50,6 @@ rabbitmq:
   enable: true
 
 
-
+logging:
+  level:
+    root: error
