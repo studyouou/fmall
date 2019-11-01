@@ -14,8 +14,8 @@ spring:
   application:
     name: order_service
   datasource:
-    username: root
-    password: mysql123
+    username: yourusername
+    password: yourpassword
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     max-active: 10
