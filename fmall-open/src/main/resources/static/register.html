@@ -35,7 +35,7 @@
 							</div>
 							<div class="ececk_warning"><span>密码不能为空</span></div>
 							<div class="form_text_ipt">
-								<img id="verifyCodeImg" width="90" height="32"  type="text" onclick="refreshVerifyCode()" />
+								<img id="verifyCodeImg" width="100" height="38"  type="text" onclick="refreshVerifyCode()" />
 							</div>
 							<div class="form_text_ipt">
 							<input id="verifyCode"  name="verifyCode"  type="text" placeholder="验证码"/>
@@ -46,7 +46,7 @@
 								<button type="button" onclick="register_go()">注册</button>
 							</div>
 							<div class="form_reg_btn">
-								<span>已有帐号？</span><a href="index.html">马上登录</a>
+								<span>已有帐号？</span><a href="login.html">马上登录</a>或<a href="javascript:void(0);" onclick="loginVisitor()">游客登陆</a>
 							</div>
 						</form>
 						<div class="other_login">
@@ -141,5 +141,38 @@
             }
         });
     }
+	function loginVisitor(){
+		$.ajax({
+			url:"/isLogin",
+			type:"GET",
+			suucess:function (result) {
+				if (result.code == 0){
+					alert("您已登录，无需游客登录");
+				}
+			},
+			error:function () {
+				layer.msg("服务器出错",{time:1000});
+			}
+		});
+		g_showLoading("正在登陆");
+    	$.ajax({
+			url: "/auth/visitor/login",
+			type: "POST",
+			success: function (result) {
+				layer.closeAll();
+				if (result.code == 0){
+					layer.msg("登录成功,正在跳转",{time:2000});
+					layer.closeAll();
+					window.location.href="index.html";
+				}else {
+					layer.msg(result.msg)
+				}
+			},
+			error:function () {
+				layer.closeAll();
+				layer.msg("服务器错误",{time:1000})
+			}
+		});
+	}
 </script>
 </html>

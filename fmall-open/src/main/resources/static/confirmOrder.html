@@ -348,7 +348,7 @@
                                     }
                                     price.append("<p>实际付款        <i>￥"+acPay+"</i></p>");
                                     $("#submitOrder").one('click',function () {
-                                        $(this).attr({"disabled":"disabled"});
+
                                         submitOrder(fruitVo,acPay,num,ideaPay);
                                     });
                                 }else {
@@ -373,9 +373,23 @@
             var addressId = $("#addressId").val();
             if (!addressId || addressId == ""){
                 alert("请选择地址");
-				$("#submitOrder").attr({"disabled":"able"});
                 return;
 			}
+            var isVisitor  = false;
+            $.ajax({
+				url: "/auth/isVisitor",
+				type: "GET",
+				success: function (result) {
+					if (result.code == 0){
+						isVisitor = true;
+					}
+				}
+			});
+            if (isVisitor){
+				alert("当前为游客状态，无法创建订单");
+				return;
+			}
+			$(this).attr({"disabled":"disabled"});
 			g_showLoading("正在提交");
 			$.ajax({
 				url:"/order",

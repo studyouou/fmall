@@ -13,8 +13,11 @@ import org.og.fmall.user.api.dto.MemberDto;
 import org.og.fmall.user.api.dto.MemberRequest;
 import org.og.fmall.user.api.dto.MemberResponse;
 import org.og.fmall.user.api.iservice.IMemberCoreService;
+import org.og.fmall.user.api.session.MemberSession;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.UUID;
 
 /**
  * @author:ougen
@@ -78,6 +81,18 @@ public class MemberCoreService implements IMemberCoreService{
         }
         MemberResponse response = new MemberResponse();
         response.setId(request.getId());
+        return response;
+    }
+
+    @Override
+    public MemberResponse visitorLogin() {
+        MemberResponse response = new MemberResponse();
+        String uuid = UUID.randomUUID().toString();
+        response.setUuid(uuid);
+        MemberSession memberSession = new MemberSession();
+        memberSession.setId(0L);
+        memberSession.setNickName("游客模式");
+        redisService.set(OrderConstants.LOGIN_KEY+uuid,memberSession,360);
         return response;
     }
 }

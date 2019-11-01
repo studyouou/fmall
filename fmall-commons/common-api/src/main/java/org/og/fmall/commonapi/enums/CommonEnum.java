@@ -35,7 +35,8 @@ public enum  CommonEnum {
     ENCODE_FAIL(-1701,"加密失败"),
     DECODE_FAIL(-1702,"解密失败"),
     RETURN_FUND_WRONG(-1801,"退款失败"),
-    PAY_WRONG(-1802,"支付失败")
+    PAY_WRONG(-1802,"支付失败"),
+    IS_VISITOR(10009,"游客状态")
     ;
     CommonEnum(int code,String msg){
         this.code = code;

@@ -18,8 +18,8 @@ public class ImageUtil {
     private static char[] ops = new char[] {'+', '-', '*'};
 
     public static BufferedImage createVerifyCodeRegister(Cookie cookie) throws IOException {
-        int width = 80;
-        int height = 32;
+        int width = 100;
+        int height = 38;
         //create the image
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics g = image.getGraphics();

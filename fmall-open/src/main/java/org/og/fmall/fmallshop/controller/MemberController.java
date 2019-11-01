@@ -3,6 +3,7 @@ package org.og.fmall.fmallshop.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.og.fmall.commonapi.constants.OrderConstants;
+import org.og.fmall.commonapi.enums.CommonEnum;
 import org.og.fmall.commonapi.result.Result;
 import org.og.fmall.commonapi.utils.ResultUtil;
 import org.og.fmall.commonapi.utils.TelValidateUtil;
@@ -12,10 +13,7 @@ import org.og.fmall.user.api.dto.MemberResponse;
 import org.og.fmall.user.api.iservice.IMemberCoreService;
 import org.og.fmall.user.api.session.MemberSession;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.Cookie;
@@ -105,6 +103,34 @@ public class MemberController {
         result.setCode(response.getCode());
         result.setMsg(response.getMsg());
         result.setData(response);
+        return result;
+    }
+
+    @PostMapping("/visitor/login")
+    public Result<MemberResponse> visitorLogin(HttpServletResponse response){
+        MemberResponse memberResponse = iMemberCoreService.visitorLogin();
+        if (memberResponse.getCode() == 0){
+            String uuid = memberResponse.getUuid();
+            Cookie cookie = new Cookie(OrderConstants.COOKIE_NAME_LOIN,uuid);
+            cookie.setPath("/");
+            cookie.setMaxAge(60000);
+            cookie.setDomain(domain);
+            response.addCookie(cookie);
+        }
+        Result<MemberResponse> result = ResultUtil.build();
+        result.setCode(memberResponse.getCode());
+        result.setMsg(memberResponse.getMsg());
+        result.setData(memberResponse);
+        return result;
+    }
+
+    @GetMapping("/isVisitor")
+    public Result isVisitor(MemberSession memberSession){
+        Result result = ResultUtil.build();
+        if (memberSession.getId() == 0L){
+            return result;
+        }
+        result.setCode(CommonEnum.IS_VISITOR.getCode());
         return result;
     }
 }

@@ -45,4 +45,10 @@ public interface IMemberCoreService {
      * @return
      */
     MemberResponse updatePassword(MemberRequest request);
+
+    /**
+     * 游客登陆接口
+     * @return
+     */
+    MemberResponse visitorLogin();
 }

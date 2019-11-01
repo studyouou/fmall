@@ -21,4 +21,5 @@ public class MemberResponse extends ResponseContext{
     private int age;
 
     private String uuid;
+
 }

@@ -25,7 +25,7 @@ $(function () {
                             "                            <li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"updateInfo.html\">修改个人信息</a></li>\n" +
                             "                            <li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"updatePass.html\">修改密码</a></li>\n" +
                             "                            <li role=\"presentation\" class=\"divider\"></li>\n" +
-                            "                            <li role=\"presentation\"><a id=\"logout\" role=\"menuitem\" tabindex=\"-1\" onclick=\"logout()\">注销</a></li>\n" +
+                            "                            <li role=\"presentation\"><a id=\"logout\" role=\"menuitem\" tabindex=\"-1\" href=\"javascript:void(0);\" onclick=\"logout()\">注销</a></li>\n" +
                             "                        </ul>");
                         $("#logout").click(function () {
                             g_showLoading("正在注销");
