@@ -1,0 +1,30 @@
+dubbo:
+  application:
+    name: elasticsearch-service
+    qos-enable: false
+  registry:
+    address: zookeeper://localhost:2181
+  protocol:
+    name: dubbo
+    port: 28086
+  scan:
+    base-packages: org.og.fmall.fmallelasticsearch.services
+spring:
+  application:
+    name: elastic_service
+  datasource:
+    username: root
+    password: mysql123
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    max-active: 2
+    min-idle: 1
+    initial-size: 1
+    max-wait: 60000
+    validation-query: SELECT 1 FROM DUAL
+    test-while-idle: true
+    time-between-eviction-runs-millis: 60000
+    url: jdbc:mysql://49.235.118.239:3306/fmall?useUnicode=true&characterEncoding=utf8&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=UTC
+elasticsearch:
+  host: localhost
+  port: 9200

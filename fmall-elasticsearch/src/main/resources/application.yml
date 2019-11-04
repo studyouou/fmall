@@ -1,0 +1,10 @@
+server:
+  port: 8086
+mybatis:
+  mapper-locations: classpath*:mybatis/mapper/*_mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: org.og.fmall.fmallelasticsearch
+spring:
+  profiles:
+    active: prod
