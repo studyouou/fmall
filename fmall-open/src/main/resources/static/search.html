@@ -44,7 +44,7 @@
 <div>
     <span id="noThing" style="font-size: 60px;color: #636363;text-align: center;float: left"></span>
 </div>
-<div class="sale">
+<div class="sale" id="sales" style="margin-left: 50px;">
     <div id="searchDiv" class="wrap clearFix">
 
     </div>
@@ -59,14 +59,16 @@
 <script type="text/javascript" src="js/all.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/user.js"></script>
+<script type="text/javascript" src="js/search.js"></script>
 <script>
     $(function () {
+        initSearch();
         init();
-        searchRefresh();
     });
 
     function init() {
-        var key = this.g_getQueryStringss("search");
+        var key = this.g_getQueryString("search");
+        key = decodeURIComponent(key);
         if (!key){
             $("#searchDiv").append("<span style='font-size: 50px;color: #636363'>对不起，未找到你所搜索的内容！</span>");
             return;
@@ -74,12 +76,17 @@
         var page = g_getQueryString("page");
         var pageSize = g_getQueryString("pageSize");
         $("#searchValue").val(key);
-        if (page == null){
+        if (!page || page == null){
             page = 1;
         }
-        if (pageSize == null){
+        if (!pageSize || pageSize == null){
             pageSize=12;
         }
+        renderData(page,pageSize,key);
+    }
+
+    function renderData(page,pageSize,key) {
+        $("#pagesShow").html("");
         g_showLoading("加载中。。")
         $.ajax({
             url: "/search",
@@ -118,13 +125,15 @@
         }
         var brr = null;
         //排版4列，计算有多少行
-        var zong = len/4;
+        var zong = Math.ceil(len/4)
+        var height =  zong*290;
+        $("#sales").height(height);
         var count = 0;
         for (var num = 0; num < zong; num++){
             brr = $(" <div class=\"sale_show clearFix\";\">\n" +
                 "\n" +
                 "        </div>");
-            for (var lie = 0; lie < 4; lie++){
+            for (var lie = 0; lie < 4 && count < len; lie++){
                 var fruit = list[count];
                 brr.append("<div style=\"height: 289px;float: left\">\n" +
                     "            <div class=\"box\">\n" +
@@ -138,7 +147,8 @@
                     "            </br><a href='#'><span style='font-size: 10px'>小o自营水果店</span></a>\n" +
                     "            </br><span style='border-bottom-color: #8c8c8c'>月成交：开发中 </span>   |   <span style='border-bottom-color: #8c8c8c'>评价：开发中</span> \n" +
                     "            </div>\n" +
-                    "        </div>")
+                    "        </div>");
+                count = count+1;
             }
             brr.appendTo(table1);
         }
@@ -150,13 +160,14 @@
     }
     
     function showPages(result) {
+        var keyData = this.g_getQueryString("search");
         var pages = result.data.pages;
         var currentPage = result.data.pageNum;
         var pagesShow = $("#pagesShow");
-        if (result.data.isFirstPage){
+        if (result.data.firstPage){
             pagesShow.append("<li class='disabled'><a>&laquo;</a></li>");
         }else {
-            pagesShow.append("<li><a href=\"orderList.html?page="+result.data.prePage+"&pageSize=10\">&laquo;</a></li>");
+            pagesShow.append("<li><a href=\"javascript:void(0)\" onclick=\"renderData("+result.data.prePage+",10,"+keyData+")\">&laquo;</a></li>");
         }
 
         if (currentPage <= 6){
@@ -165,7 +176,7 @@
                     pagesShow.append("<li class='active'><a>"+nums1+"</a></li>");
                     continue;
                 }
-                pagesShow.append("<li><a href=\"orderList.html?page="+nums1+"&pageSize=10\">"+nums1+"</a></li>")
+                pagesShow.append("<li><a href=\"javascript:void(0)\" onclick=\"renderData("+nums1+",10,"+keyData+")\">&laquo;</a></li>");
             }
         }else {
             if (pages-4<currentPage){
@@ -177,7 +188,7 @@
                         pagesShow.append("<li class='active'><a>"+nums2+"</a></li>");
                         continue;
                     }
-                    pagesShow.append("<li><a href=\"orderList.html?page="+nums2+"&pageSize=10\">"+nums2+"</a></li>")
+                    pagesShow.append("<li><a href=\"javascript:void(0)\" onclick=\"renderData("+nums2+",10,"+keyData+")\">&laquo;</a></li>");
                 }
             }else {
                 for (var nums3 = currentPage-5; nums3 <= currentPage + 10, nums3 < pages;nums3++){
@@ -185,24 +196,17 @@
                         pagesShow.append("<li class=\"active\"><a>"+nums3+"</a></li>");
                         continue;
                     }
-                    pagesShow.append("<li><a href=\"orderList.html?page="+nums3+"&pageSize=10\">"+nums3+"</a></li>")
+                    pagesShow.append("<li><a href=\"javascript:void(0)\" onclick=\"renderData("+nums3+",10,"+keyData+")\">&laquo;</a></li>");
                 }
             }
         }
-        if (!result.data.isLastPage){
-            pagesShow.append("<li><a href=\"orderList.html?page="+result.data.nextPage+"&pageSize=10\">&raquo;</a></li>")
+        if (!result.data.lastPage){
+            pagesShow.append("<li><a href=\"javascript:void(0)\" onclick=\"renderData("+result.data.nextPage+",10,"+keyData+")\">&laquo;</a></li>");
         }else {
-            pagesShow.append("<li class='disabled'><a>&laquo;</a></li>");
+            pagesShow.append("<li class='disabled'><a>&raquo;</a></li>");
         }
     }
 
-    function searchRefresh() {
-        $("#search").click(function () {
-            $("#noThing").html("");
-            $("#searchDiv").html("");
-            init();
-        });
-    }
 </script>
 </body>
 </html>

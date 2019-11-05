@@ -28,15 +28,12 @@ function backHtml() {
 var g_passsword_salt="1a2b3c4d"
 
 // 获取url参数
-function g_getQueryStringss(name) {
-    alert(1);
-    var query = decodeURIComponent(window.location.search).substring(1);
+function g_getQueryString(name) {
+    var query = window.location.search.substring(1);
     var vars = query.split("&");
     for (var i=0;i<vars.length;i++) {
         var pair = vars[i].split("=");
-        alert(pair[0]);
-        alert(pair[1]);
-        if(pair[0] == variable){return pair[1];}
+        if(pair[0] == name){return pair[1];}
     }
     return(false);
 };

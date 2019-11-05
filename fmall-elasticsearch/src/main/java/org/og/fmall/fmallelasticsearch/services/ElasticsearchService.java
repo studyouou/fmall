@@ -5,6 +5,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.DocWriteRequest;
 import org.elasticsearch.action.DocWriteResponse;
+import org.elasticsearch.action.bulk.BulkItemResponse;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
@@ -36,6 +37,7 @@ import org.springframework.beans.factory.annotation.Value;
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -181,6 +183,7 @@ public class ElasticsearchService implements IElasticSearchService {
     @PostConstruct
     public void initData(){
         if (!hasInitial){
+            logger.info("开始初始化插入elasticsearch数据");
             List<FruitDto> list = iFruitQueryService.queryAllFruit();
             int i = 0;
             while (list.size() > i){
@@ -207,7 +210,7 @@ public class ElasticsearchService implements IElasticSearchService {
                     @Override
                     public void onResponse(BulkResponse bulkItemResponses) {
                         if (bulkItemResponses.hasFailures()){
-                            logger.warn("Bulk executed with failures");
+                            logger.warn("Bulk executed with failures {}",bulkItemResponses.status());
                         }else {
                             logger.info("elasticsearch批量插入状态={}", bulkItemResponses.status().name());
                         }
