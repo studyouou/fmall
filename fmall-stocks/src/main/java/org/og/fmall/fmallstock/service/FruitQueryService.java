@@ -10,6 +10,10 @@ import org.og.fmall.stock.api.iservice.IFruitQueryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * @author:ougen
  * @date:2019/9/2815:51
@@ -37,5 +41,20 @@ public class FruitQueryService implements IFruitQueryService {
         FruitDto fruitDto = new FruitDto();
         BeanUtils.copyProperties(fruit,fruitDto);
         return fruitDto;
+    }
+
+    @Override
+    public List<FruitDto> queryAllFruit() {
+        List<Fruit> fruits = fruitMapper.selectAll();
+        if (fruits == null || fruits.size() == 0){
+            return null;
+        }
+        List<FruitDto> list = new ArrayList<>(fruits.size());
+        fruits.forEach((fruit -> {
+            FruitDto fruitDto = new FruitDto();
+            BeanUtils.copyProperties(fruit,fruitDto);
+            list.add(fruitDto);
+        }));
+        return list;
     }
 }

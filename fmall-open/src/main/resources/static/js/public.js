@@ -15,6 +15,7 @@ $(function () {
     var main = {
         //初始化函数
         init: function () {
+            initSearch();
             this.getHomePage();
             this.roolNews();//标题滚动方法调用
             this.autoPic();//轮播图方法调用

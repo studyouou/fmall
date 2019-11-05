@@ -30,6 +30,7 @@
 		<module>../fmall-stocks/stock-api</module>
 		<module>../fmall-stocks</module>
 		<module>../fmall-open</module>
+		<module>../fmall-elasticsearch</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>
@@ -146,6 +147,11 @@
 				<groupId>commons-codec</groupId>
 				<artifactId>commons-codec</artifactId>
 				<version>1.11</version>
+			</dependency>
+			<dependency>
+				<groupId>org.elasticsearch.client</groupId>
+				<artifactId>elasticsearch-rest-high-level-client</artifactId>
+				<version>7.4.0</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

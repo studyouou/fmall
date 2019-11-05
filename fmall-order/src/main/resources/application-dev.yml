@@ -14,13 +14,13 @@ spring:
   application:
     name: order_service
   datasource:
-    username: yourusername
-    password: yourpassword
+    username: root
+    password: mysql123
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     max-active: 10
-    min-idle: 5
-    initial-size: 5
+    min-idle: 1
+    initial-size: 1
     max-wait: 60000
     test-while-idle: true
     time-between-eviction-runs-millis: 60000

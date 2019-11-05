@@ -9,6 +9,7 @@ import org.og.fmall.elasticsearch.api.iservices.IElasticSearchService;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 /**
  * @author: og
@@ -32,10 +33,15 @@ public class ElasticsearchServiceTest  extends ElasticsearchApplicationTests{
         fruit.setSellerId(1L);
         iElasticSearchService.insert("fruits","fruit", null,JSONUtil.beanToString(fruit));
     }
+    @Test
+    public void batInsert(){
+        iElasticSearchService.batchInsert(new ArrayList<Fruit>());
+    }
+
 
     @Test
     public void search(){
-        ElasticSearchDto fruit = iElasticSearchService.search("龙蛇果");
+        ElasticSearchDto fruit = iElasticSearchService.search("龙蛇果",1,0);
         log.info("fruit={}",fruit);
     }
 }

@@ -56,6 +56,11 @@
             <artifactId>elasticsearch-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.og.fmall</groupId>
+            <artifactId>stock-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>

@@ -2,6 +2,8 @@ package org.og.fmall.elasticsearch.api.iservices;
 
 import org.og.fmall.elasticsearch.api.dto.ElasticSearchDto;
 
+import java.util.List;
+
 /**
  * @author: lyp
  * @description:
@@ -30,8 +32,16 @@ public interface IElasticSearchService {
     /**
      *
      * @param data 查询数据
-     * @param  sort 排序
+     * @param size 长度
+     * @param from 起点
      * @return
      */
-    ElasticSearchDto search(String data);
+    ElasticSearchDto search(String data,int size,int from);
+
+    /**
+     *
+     * @param beanList 需要插入的数据bean
+     * @param <T>
+     */
+    <T> void batchInsert(List<T> beanList);
 }

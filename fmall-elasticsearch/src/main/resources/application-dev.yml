@@ -28,3 +28,7 @@ spring:
 elasticsearch:
   host: localhost
   port: 9200
+  #是否初始化过了，如果加载过数据库数据到elasticsearch中，true
+  hasInitial: true
+  #批量插入一次多少数据
+  initSize: 10000

@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <meta charset="UTF-8">
-    <title>果然新鲜|订单</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>果然新鲜|查询</title>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/all.css" />
 </head>
 <body>
 <!-- 头部 开始-->
-    <header>
+<header>
         <div class="wrap clearFix">
         <div class="topBar clearfix">
             <div class="comWidth">
@@ -40,13 +41,13 @@
         </div>
     </div>
     </header>
-    <div id="centers">
+<div>
+    <span id="noThing" style="font-size: 60px;color: #636363;text-align: center;float: left"></span>
+</div>
+<div class="sale">
+    <div id="searchDiv" class="wrap clearFix">
 
     </div>
-<div style="text-align: center;">
-    <table id="tableId" class="table" style="width: 80%; height: auto;margin: auto">
-
-    </table>
 </div>
 <center>
 <ul class="pagination" id="pagesShow">
@@ -58,89 +59,89 @@
 <script type="text/javascript" src="js/all.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/user.js"></script>
-<script type="text/javascript" src="js/search.js"></script>
 <script>
     $(function () {
-        initSearch();
+        init();
+        searchRefresh();
+    });
+
+    function init() {
+        var key = this.g_getQueryStringss("search");
+        if (!key){
+            $("#searchDiv").append("<span style='font-size: 50px;color: #636363'>对不起，未找到你所搜索的内容！</span>");
+            return;
+        }
         var page = g_getQueryString("page");
         var pageSize = g_getQueryString("pageSize");
+        $("#searchValue").val(key);
         if (page == null){
             page = 1;
         }
         if (pageSize == null){
-            pageSize=10;
+            pageSize=12;
         }
+        g_showLoading("加载中。。")
         $.ajax({
-            url:"/orders",
-            type:"GET",
-            data:{
-                page:page,
-                pageSize:pageSize
+            url: "/search",
+            type: "GET",
+            data: {
+                page: page,
+                pageSize: pageSize,
+                key: key
             },
-            success:function (result) {
+            success: function (result) {
                 layer.closeAll();
                 if (result.code == 0){
-                    var flag = showOrder(result.data.list);
+                    var flag = showOrder(result);
                     if (flag) {
                         showPages(result);
                     }
-                }else {
-                    if (result.code == -1501){
-                        layer.msg(result.msg);
-                        if(confirm("您当前未登录,是否登录？")) {
-                            window.location.href="login.html";
-                        }else {
-                            backHtml();
-                        }
-                    }else {
-                        layer.msg(result.msg,{time:2000});
-                    }
                 }
             },
-            error:function () {
+            error: function (result) {
                 layer.closeAll();
-                layer.msg("服务器错误",{time:1000});
+                layer.msg("服务器错误！")
             }
         });
-    });
-    
-    function showOrder(list) {
-        var table1 = $("#tableId");
-        var len = list.length;
-        if (len == 0){
-            $("#centers").append("<font color=\"#d3d3d3\">您还没有订单哟，抓紧下单吧！</font>");
+    }
+    function showOrder(result) {
+        if (!result.data || result.data == ""){
+            $("#noThing").append("<span style='color: #d3d3d3;font-size: 20px'>抱歉，当前未搜索到您的内容，请重新输入！</span>");
             return false;
         }
-        table1.append("<thead>\n" +
-            "    <tr >\n" +
-            "        <th class=\"text-center\">名称</th>\n" +
-            "        <th class=\"text-center\">下单时间</th>\n" +
-            "        <th class=\"text-center\">状态</th>\n" +
-            "        <th class=\"text-center\">查看</th>\n" +
-            "    </tr>\n" +
-            "    </thead>");
+        var list = result.data.list;
+        var table1 = $("#searchDiv");
+        var len = list.length;
+        if (len == 0){
+            $("#noThing").append("<span style='color: #d3d3d3;font-size: 20px'>抱歉，当前未搜索到您的内容，请重新输入！</span>");
+            return false;
+        }
         var brr = null;
-        for (var num = 0; num < len; num++){
-            if (list[num].orderState == 0){
-                brr = $("<tr class=\"success\"></tr>");
-                brr.append("<td>"+list[num].fruitName+"</td>");
-                brr.append("<td>"+new Date(list[num].createTime).format("yyyy-MM-dd hh:mm:ss")+"</td>");
-                brr.append("<td>未付款</td>");
-            }else if(list[num].orderState == 1) {
-                brr = $("<tr class=\"active\"></tr>");
-                brr.append("<td>"+list[num].fruitName+"</td>");
-                brr.append("<td>"+new Date(list[num].createTime).format("yyyy-MM-dd hh:mm:ss")+"</td>");
-                brr.append("<td>已付款</td>");
-            }else {
-                brr = $("<tr class=\"warning\"></tr>");
-                brr.append("<td>"+list[num].fruitName+"</td>");
-                brr.append("<td>"+new Date(list[num].createTime).format("yyyy-MM-dd hh:mm:ss")+"</td>");
-                brr.append("<td>已取消</td>");
+        //排版4列，计算有多少行
+        var zong = len/4;
+        var count = 0;
+        for (var num = 0; num < zong; num++){
+            brr = $(" <div class=\"sale_show clearFix\";\">\n" +
+                "\n" +
+                "        </div>");
+            for (var lie = 0; lie < 4; lie++){
+                var fruit = list[count];
+                brr.append("<div style=\"height: 289px;float: left\">\n" +
+                    "            <div class=\"box\">\n" +
+                    "                <a href=\"comment.html?id="+fruit.id+"\">\n" +
+                    "                    <img src=\""+fruit.imgUrl+"\">\n" +
+                    "                </a>\n" +
+                    "            </div>\n" +
+                    "            <div style=\"height: 100px;\">\n" +
+                    "                <span style=\"font-size: 10px;color: red\">￥</span><span style='font-size: 25px;color: red'>"+fruit.eachPrice+"</span>\n" +
+                    "            </br><a href=\"comment.html?id="+fruit.id+"\"><span style='font-size: 10px'>"+fruit.fruitName+"</span></a>\n" +
+                    "            </br><a href='#'><span style='font-size: 10px'>小o自营水果店</span></a>\n" +
+                    "            </br><span style='border-bottom-color: #8c8c8c'>月成交：开发中 </span>   |   <span style='border-bottom-color: #8c8c8c'>评价：开发中</span> \n" +
+                    "            </div>\n" +
+                    "        </div>")
             }
-            brr.append("<td><button class='btn btn-primary' onclick=\"orderDetail('"+list[num].id+"')\">查看详细</button>");
             brr.appendTo(table1);
         }
-
         return true;
     }
     
@@ -193,6 +194,14 @@
         }else {
             pagesShow.append("<li class='disabled'><a>&laquo;</a></li>");
         }
+    }
+
+    function searchRefresh() {
+        $("#search").click(function () {
+            $("#noThing").html("");
+            $("#searchDiv").html("");
+            init();
+        });
     }
 </script>
 </body>

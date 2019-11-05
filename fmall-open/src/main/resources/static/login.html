@@ -60,12 +60,14 @@
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/common1.js"></script>
 <script src="js/loginAndReg.js"></script>
+<script type="text/javascript" src="js/search.js"></script>
 <script>
     $(function () {
+        initSearch();
         $.ajax({
             url:"/isLogin",
             type:"GET",
-            suucess:function (result) {
+            success:function (result) {
                 if (result.code == 0){
                     layer.msg("您已登录！",{time:2000});
                     backHtml();
