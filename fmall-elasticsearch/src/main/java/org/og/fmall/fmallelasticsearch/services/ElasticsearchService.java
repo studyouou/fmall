@@ -108,11 +108,10 @@ public class ElasticsearchService implements IElasticSearchService {
     public ElasticSearchDto search(String data,int size,int from) {
         SearchRequest request = new SearchRequest("fruits");
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder ();
-        sourceBuilder.query(QueryBuilders.boolQuery().should(QueryBuilders.matchQuery("fruitName", data).boost(2f))
-                .should(QueryBuilders.matchQuery("disciption", data).boost(1f)));
+        sourceBuilder.query(QueryBuilders.matchPhraseQuery("fruitName",data).boost(2f));
         sourceBuilder.size(size);
         sourceBuilder.from(from);
-        sourceBuilder.sort(new ScoreSortBuilder().order(SortOrder.ASC));
+        sourceBuilder.sort(new ScoreSortBuilder().order(SortOrder.DESC));
         sourceBuilder.timeout(new TimeValue(10, TimeUnit.SECONDS));
         request.source(sourceBuilder);
         try {

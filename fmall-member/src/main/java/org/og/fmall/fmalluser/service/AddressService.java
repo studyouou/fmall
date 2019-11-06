@@ -53,7 +53,7 @@ public class AddressService implements IAddressService {
         BeanUtils.copyProperties(addressRequest,address);
         if (address.getDefaultAddress() != null){
             if (address.getDefaultAddress() == 1){
-                addressMapper.cancelDefaultAddress(address.getId());
+                addressMapper.cancelDefaultAddress(address.getMemberId());
             }
         }
         addressMapper.updateByPrimaryKeySelective(address);

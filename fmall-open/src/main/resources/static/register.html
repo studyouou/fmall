@@ -21,9 +21,8 @@
 							注册
 						</div>
 						<form action="#" method="post">
-							
 							<div class="form_text_ipt">
-								<input id="username" name="username" type="text" placeholder="手机号" />
+								<input id="username" name="username" type="text" placeholder="手机号" onkeyup="this.value=this.value.replace(/\D/g,'')" />
 							</div>
 							<div class="ececk_warning"><span>手机号/邮箱不能为空</span></div>
 							<div class="form_text_ipt">
@@ -31,14 +30,14 @@
 							</div>
 							<div class="ececk_warning"><span>密码不能为空</span></div>
 							<div class="form_text_ipt">
-								<input id="repassword" name="repassword" type="password" placeholder="重复密码" />
+								<input id="repassword" name="repassword" type="password" placeholder="重复密码"  />
 							</div>
 							<div class="ececk_warning"><span>密码不能为空</span></div>
 							<div class="form_text_ipt">
 								<img id="verifyCodeImg" width="100" height="38"  type="text" onclick="refreshVerifyCode()" />
 							</div>
 							<div class="form_text_ipt">
-							<input id="verifyCode"  name="verifyCode"  type="text" placeholder="验证码"/>
+							<input id="verifyCode"  name="verifyCode"  type="text" placeholder="验证码" onkeyup="this.value=this.value.replace(/\D/g,'')" />
 							</div>
 							<div class="ececk_warning"><span>验证码不能为空</span></div>
 							

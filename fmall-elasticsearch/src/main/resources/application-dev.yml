@@ -3,7 +3,7 @@ dubbo:
     name: elasticsearch-service
     qos-enable: false
   registry:
-    address: zookeeper://localhost:2181
+    address: zookeeper://192.168.12.109:2181
   protocol:
     name: dubbo
     port: 28086
@@ -24,7 +24,7 @@ spring:
     validation-query: SELECT 1 FROM DUAL
     test-while-idle: true
     time-between-eviction-runs-millis: 60000
-    url: jdbc:mysql://49.235.118.239:3306/fmall?useUnicode=true&characterEncoding=utf8&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=UTC
+    url: jdbc:mysql://192.168.12.109:3306/fmall?useUnicode=true&characterEncoding=utf8&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=UTC
 elasticsearch:
   host: localhost
   port: 9200
