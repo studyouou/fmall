@@ -2,12 +2,14 @@ package org.og.fmall.fmallorder.handlerimpl;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import org.apache.commons.lang3.StringUtils;
+import org.og.fmall.commonapi.annotation.Belong;
 import org.og.fmall.commonapi.constants.OrderConstants;
 import org.og.fmall.commonapi.dto.RequestParam;
 import org.og.fmall.commonapi.dto.ResponseContext;
 import org.og.fmall.commonapi.enums.CommonEnum;
 import org.og.fmall.commontools.redis.RedisService;
 import org.og.fmall.commonapi.bussiness.handler.InvokeHandler;
+import org.og.fmall.fmallorder.factory.OrderPipeLineFactory;
 import org.og.fmall.fmallorder.mapper.OrderMapper;
 import org.og.fmall.fmallorder.model.Order;
 import org.og.fmall.order.api.dto.OrderRequest;
@@ -28,6 +30,8 @@ import java.util.Date;
  * @author:ougen
  * @date:2019/9/2614:41
  */
+@org.springframework.core.annotation.Order(10)
+@Belong(OrderPipeLineFactory.class)
 @Component
 public class CreateOrderHandler implements InvokeHandler {
 

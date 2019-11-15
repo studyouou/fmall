@@ -60,6 +60,10 @@
 			<artifactId>dubbo-spring-boot-starter</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 		</dependency>
@@ -110,6 +114,11 @@
 		<dependency>
 			<groupId>org.og.fmall</groupId>
 			<artifactId>stock-api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.og.fmall</groupId>
+			<artifactId>fmall-kafka</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 

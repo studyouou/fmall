@@ -1,11 +1,12 @@
 dubbo:
   application:
     name: shopping-service
+    qos-enable: false
   protocol:
     port: 20883
     name: dubbo
   registry:
-    address: zookeeper://192.168.12.109:2181
+    address: nacos://192.168.12.109:8848
   scan:
     base-packages: org.og.fmall.fmallshopping.service
 

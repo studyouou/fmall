@@ -5,7 +5,7 @@ dubbo:
     name: dubbo
     port: 20880
   registry:
-    address: zookeeper://192.168.12.109:2181
+    address: nacos://192.168.12.109:8848
   scan:
     base-packages: org.og.fmall.fmallshop.iservice
   consumer:
@@ -20,9 +20,6 @@ rocketmq:
     group: producter
     reconsumeTimes: 5
   enable: false
-error:
-  out:
-    file: /error.log
 spring:
   #  thymeleaf:
   #    prefix: classpath:/templates/
@@ -56,3 +53,15 @@ rabbitmq:
     retries: 3
 cookie:
   domain: localhost
+kafka:
+  bootstrap-server: 192.168.12.109:9092
+  value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  key-serializer: org.apache.kafka.common.serialization.StringSerializer
+  # 默认发送topic
+  topic: open-log
+  batch-size: 8192
+  # 一秒延迟发送
+  linger-ms: 1000
+  retries: 2
+  buffer-mmory: 16777216
+  acks: 0

@@ -1,0 +1,12 @@
+server:
+  port: 28083
+mybatis:
+  mapper-locations: classpath*:mybatis/mapper/*_mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: org.og.fmall.fmallcomment.model
+spring:
+  application:
+    name: comment-service
+  profiles:
+    active: dev,redis

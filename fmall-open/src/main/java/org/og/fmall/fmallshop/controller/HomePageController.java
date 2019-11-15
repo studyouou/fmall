@@ -13,11 +13,19 @@ import org.og.fmall.shopping.api.dto.PanelDto;
 import org.og.fmall.shopping.api.service.IHomeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,6 +44,7 @@ public class HomePageController {
 
     @GetMapping("/home/queryTopPanel")
     public Result<List<PanelVo>> queryPanel(){
+
         String panel = redisService.get(OrderConstants.TOP_PANEL_KEY);
         Result<List<PanelVo>> result = ResultUtil.build();
         List<PanelVo> panelVos = new ArrayList<>();
@@ -139,4 +148,15 @@ public class HomePageController {
         return result;
     }
 
+    @RequestMapping("/test")
+    public String test(String s){
+//        throw new RuntimeException("测试");
+        return "sssssssss";
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder, HttpServletRequest request){
+        System.out.println(request.getParameter("date"));
+        binder.registerCustomEditor(Date.class,new CustomDateEditor(new SimpleDateFormat("MM-dd-yyyy"),false));
+    }
 }

@@ -3,11 +3,12 @@ server:
 dubbo:
   application:
     name: user-service
+    qos-enable: false
   protocol:
     port: 20882
     name: dubbo
   registry:
-    address: zookeeper://192.168.12.109:2181
+    address: nacos://192.168.12.109:8848
   scan:
     base-packages: org.og.fmall.fmalluser.service
 

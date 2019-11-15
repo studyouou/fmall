@@ -4,6 +4,7 @@ import org.og.fmall.commonapi.bussiness.factory.pipeline.AbstractPipeLineFactory
 import org.og.fmall.fmallorder.business.OrderOutInvoke;
 import org.og.fmall.commonapi.bussiness.invoke.PipeLineOutInvoke;
 import org.og.fmall.fmallorder.handlerimpl.CreateOrderHandler;
+import org.og.fmall.fmallorder.handlerimpl.LogsCollectForOrderHandler;
 import org.og.fmall.fmallorder.handlerimpl.RedisOrderNumHandler;
 import org.og.fmall.order.api.dto.OrderRequest;
 import org.og.fmall.order.api.dto.OrderResponse;
@@ -16,18 +17,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class OrderPipeLineFactory extends AbstractPipeLineFactory<OrderRequest> {
-
-    @Autowired
-    private RedisOrderNumHandler redisOrderNumHandler;
-
-    @Autowired
-    private CreateOrderHandler createOrderHandler;
-
-    @Override
-    protected void andHandler(PipeLineOutInvoke outInvoke) {
-        outInvoke.addFirst(createOrderHandler);
-        outInvoke.addFirst(redisOrderNumHandler);
-    }
 
     @Override
     protected PipeLineOutInvoke createOutInvoke(OrderRequest bean) {

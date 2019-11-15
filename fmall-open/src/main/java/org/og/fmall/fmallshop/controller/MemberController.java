@@ -1,6 +1,7 @@
 package org.og.fmall.fmallshop.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.nacos.api.annotation.NacosInjected;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.og.fmall.commonapi.constants.OrderConstants;
 import org.og.fmall.commonapi.enums.CommonEnum;

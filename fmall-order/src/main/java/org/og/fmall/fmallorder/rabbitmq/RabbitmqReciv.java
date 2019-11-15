@@ -3,6 +3,7 @@ package org.og.fmall.fmallorder.rabbitmq;
 import com.rabbitmq.client.*;
 import org.og.fmall.commonapi.constants.OrderConstants;
 import org.og.fmall.commonapi.enums.CommonEnum;
+import org.og.fmall.commonapi.exception.BaseException;
 import org.og.fmall.commonapi.utils.JSONUtil;
 import org.og.fmall.order.api.dto.OrderRequest;
 import org.og.fmall.order.api.dto.OrderResponse;
@@ -57,12 +58,17 @@ public class RabbitmqReciv implements InitializingBean {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                 OrderRequest request = JSONUtil.stringToBean(new String(body,"utf-8"),OrderRequest.class);
-                OrderResponse orderResponse = iOrderService.createOrder(request);
-                if (orderResponse.getCode() == CommonEnum.UNKOW_ERROR.getCode()){
-                    channel.basicNack(envelope.getDeliveryTag(),false,true);
-                }else {
+                try {
+                    OrderResponse orderResponse = iOrderService.createOrder(request);
+                    if (orderResponse.getCode() == CommonEnum.UNKOW_ERROR.getCode()){
+                        channel.basicNack(envelope.getDeliveryTag(),false,true);
+                    }else {
+                        channel.basicNack(envelope.getDeliveryTag(),false,false);
+                    }
+                }catch (Exception e){
                     channel.basicNack(envelope.getDeliveryTag(),false,false);
                 }
+
             }
         });
     }

@@ -22,10 +22,7 @@ import java.io.*;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
-    @Value("${error.out.file:/error.log}")
-    private String fileDirect;
 
-    private File file;
     @ExceptionHandler(Exception.class)
     public Result handler(Exception e){
         Result result = ResultUtil.build();
@@ -40,25 +37,5 @@ public class GlobalExceptionHandler {
         LOGGER.error(e.getMessage());
         e.printStackTrace();
         return result;
-    }
-    @PostConstruct
-    public void init(){
-        Class aClass = this.getClass();
-        InputStream inputStream = aClass.getResourceAsStream(fileDirect);
-        if (inputStream == null){
-            try {
-                String path = aClass.getResource("/").getPath();
-                file = new File(path+"/"+fileDirect);
-                file.createNewFile();
-                inputStream = new FileInputStream(file);
-                LOGGER.info("文件创建成功={}",file.getAbsolutePath());
-            } catch (Exception e) {
-                LOGGER.error("创建文件失败={},error = {}",fileDirect,e);
-            }
-        }else {
-            String path = aClass.getResource("/").getPath();
-            file = new File(path+fileDirect);
-            LOGGER.info("文件已经存在={}",fileDirect);
-        }
     }
 }
