@@ -1,0 +1,17 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "org.og.fmall.fmallmail.properties.ReciveProperties",
+      "name": "mail",
+      "type": "org.og.fmall.fmallmail.properties.ReciveProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "org.og.fmall.fmallmail.properties.ReciveProperties",
+      "name": "mail.receiver",
+      "type": "java.lang.String[]"
+    }
+  ]
+}

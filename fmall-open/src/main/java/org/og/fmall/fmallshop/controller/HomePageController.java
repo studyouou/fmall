@@ -148,15 +148,4 @@ public class HomePageController {
         return result;
     }
 
-    @RequestMapping("/test")
-    public String test(String s){
-//        throw new RuntimeException("测试");
-        return "sssssssss";
-    }
-
-    @InitBinder
-    public void initBinder(WebDataBinder binder, HttpServletRequest request){
-        System.out.println(request.getParameter("date"));
-        binder.registerCustomEditor(Date.class,new CustomDateEditor(new SimpleDateFormat("MM-dd-yyyy"),false));
-    }
 }

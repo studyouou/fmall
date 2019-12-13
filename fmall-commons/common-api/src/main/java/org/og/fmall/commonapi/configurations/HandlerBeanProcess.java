@@ -39,7 +39,7 @@ public class HandlerBeanProcess implements BeanPostProcessor,ApplicationContextA
                 Class<? extends InvokeHandler> aClass = value.getClass();
                 Belong belong = aClass.getAnnotation(Belong.class);
                 if (belong == null){
-                    throw new NotFoundBelongException(aClass.getName() + "not found Annotation of Belong," +
+                    throw new NotFoundBelongException(aClass.getName() + " not found Annotation of Belong," +
                             "it is must on InvokeHander");
                 }
                 if (aClass.getAnnotation(Order.class) != null) {

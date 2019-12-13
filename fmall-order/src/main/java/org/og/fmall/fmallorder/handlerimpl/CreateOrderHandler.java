@@ -20,6 +20,7 @@ import org.og.fmall.stock.api.iservice.IFruitService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +33,7 @@ import java.util.Date;
  */
 @org.springframework.core.annotation.Order(10)
 @Belong(OrderPipeLineFactory.class)
-@Component
+@Service
 public class CreateOrderHandler implements InvokeHandler {
 
     @Reference(check = false)

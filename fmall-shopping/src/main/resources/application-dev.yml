@@ -6,7 +6,7 @@ dubbo:
     port: 20883
     name: dubbo
   registry:
-    address: nacos://192.168.12.109:8848
+    address: nacos://localhost:8848
   scan:
     base-packages: org.og.fmall.fmallshopping.service
 
@@ -15,16 +15,19 @@ spring:
     name: shopping_service
   datasource:
     username: root
-    password: mysql123
+    password: password
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     max-active: 5
     min-idle: 5
-    initial-size: 5
+    initial-size: 1
     max-wait: 60000
     test-while-idle: true
     time-between-eviction-runs-millis: 60000
     validation-query: SELECT 1 FROM DUAL
-    url: jdbc:mysql://192.168.12.109:3306/fmall?useUnicode=true&characterEncoding=utf8&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/fmall?useUnicode=true&characterEncoding=utf8&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=UTC
   banner:
     location: classpath:fmall.txt
+
+
+

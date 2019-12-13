@@ -30,12 +30,12 @@ public class GlobalExceptionHandler {
             BaseException baseException = (BaseException) e;
             result.setData(baseException.getCode());
             result.setMsg(baseException.getMsg());
+            LOGGER.warn(e.getMessage(),e);
             return result;
         }
         result.setCode(CommonEnum.UNKOW_ERROR.getCode());
         result.setMsg(CommonEnum.UNKOW_ERROR.getMsg());
-        LOGGER.error(e.getMessage());
-        e.printStackTrace();
+        LOGGER.error(e.getMessage(),e);
         return result;
     }
 }

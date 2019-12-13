@@ -1,9 +1,0 @@
-spring:
-  cloud:
-    nacos:
-      config:
-        group: myGroup
-        server-addr: 192.168.12.109
-        file-extension: yaml
-  application:
-    name: fmall-shop-service

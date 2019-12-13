@@ -92,6 +92,14 @@
 			<artifactId>druid</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.alibaba.spring</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo-registry-nacos</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
@@ -121,7 +129,11 @@
 			<artifactId>fmall-kafka</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.og.fmall</groupId>
+			<artifactId>common-mail</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<!--test-->
 		<dependency>
 			<groupId>junit</groupId>
