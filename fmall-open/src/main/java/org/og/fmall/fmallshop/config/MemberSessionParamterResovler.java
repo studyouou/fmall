@@ -23,7 +23,6 @@ public class MemberSessionParamterResovler implements HandlerMethodArgumentResol
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         MemberSession memberSession = MemberSessionContext.getMemberSession();
-        System.out.println(memberSession);
         return memberSession;
     }
 }

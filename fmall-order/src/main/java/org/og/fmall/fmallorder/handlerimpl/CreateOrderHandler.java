@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -87,6 +88,7 @@ public class CreateOrderHandler implements InvokeHandler {
         BeanUtils.copyProperties(order,response);
         response.setStreeName(orderRequest.getStreeName());
         response.setTel(orderRequest.getTel());
+        response.setCreateTime(order.getCreateTime());
     }
 
     private Order createOrder(OrderRequest orderRequest) {
@@ -97,6 +99,7 @@ public class CreateOrderHandler implements InvokeHandler {
         order.setOrderTotal(orderRequest.getOrderTotal());
         order.setActualPay(orderRequest.getActualPay());
         order.setIdealPay(orderRequest.getIdealPay());
+        order.setCreateTime(new Date());
         return order;
     }
 }

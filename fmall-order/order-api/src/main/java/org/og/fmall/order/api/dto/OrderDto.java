@@ -29,6 +29,8 @@ public class OrderDto extends RequestParam{
 
     private Date createTime;
 
+    private Date payTime;
+
     private String tel;
 
     private String nickName;

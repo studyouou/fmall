@@ -40,9 +40,6 @@ public class LoginIntercepter implements HandlerInterceptor{
         
         if (handler instanceof HandlerMethod){
             MemberSession memberSession = getMember(request,response);
-            if (memberSession != null){
-                System.out.println("用户未登录，redis中为查询到");
-            }
             MemberSessionContext.setMemberSession(memberSession);
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             //Class<?> beanType = handlerMethod.getBeanType();
@@ -108,13 +105,11 @@ public class LoginIntercepter implements HandlerInterceptor{
         Cookie[] cookies = request.getCookies();
 
         if (cookies == null){
-            System.out.println("cookie为空");
             return null;
         }
         for (Cookie cookie : cookies){
             if (OrderConstants.COOKIE_NAME_LOIN.equals(cookie.getName())){
                 String token = cookie.getValue();
-                System.out.println("cookie的value为"+token);
                 String s = redisService.get(OrderConstants.LOGIN_KEY + token);
                 if (StringUtils.isNotEmpty(s)){
                     MemberSession memberSession = JSONUtil.stringToBean(s,MemberSession.class);
