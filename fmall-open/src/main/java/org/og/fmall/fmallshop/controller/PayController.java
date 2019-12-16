@@ -83,8 +83,7 @@ public class PayController {
         try {
             response1 = iPayService.notifyPay(params);
         }catch (Exception e){
-            e.printStackTrace();
-            throw new BaseException(e);
+            throw new BaseException("支付失败");
         }
         if (response1.getCode() == 0){
             logger.info("success={}");

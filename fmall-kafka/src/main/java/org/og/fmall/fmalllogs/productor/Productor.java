@@ -1,5 +1,6 @@
 package org.og.fmall.fmalllogs.productor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.og.fmall.fmalllogs.config.KafkaProperties;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class Productor {
 
     @Autowired
@@ -27,7 +29,7 @@ public class Productor {
         try {
             kafkaProducer.send(record);
         }catch (Exception e){
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
     }

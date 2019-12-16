@@ -10,6 +10,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -37,12 +38,12 @@ public class HandlerBeanProcess implements BeanPostProcessor,ApplicationContextA
             for (Map.Entry<String,InvokeHandler> entry : handlerMap.entrySet()){
                 InvokeHandler value = entry.getValue();
                 Class<? extends InvokeHandler> aClass = value.getClass();
-                Belong belong = aClass.getAnnotation(Belong.class);
+                Belong belong = AnnotationUtils.findAnnotation(aClass, Belong.class);
                 if (belong == null){
                     throw new NotFoundBelongException(aClass.getName() + " not found Annotation of Belong," +
                             "it is must on InvokeHander");
                 }
-                if (aClass.getAnnotation(Order.class) != null) {
+                if (AnnotationUtils.findAnnotation(aClass,Order.class) != null) {
                     if (factory.getClass() == belong.value()){
                         handlerList.add(value);
                     }
@@ -53,7 +54,7 @@ public class HandlerBeanProcess implements BeanPostProcessor,ApplicationContextA
             handlerList.sort(new Comparator<InvokeHandler>() {
                 @Override
                 public int compare(InvokeHandler o1, InvokeHandler o2) {
-                    return o1.getClass().getAnnotation(Order.class).value()-o2.getClass().getAnnotation(Order.class).value();
+                    return AnnotationUtils.findAnnotation(o1.getClass(),Order.class).value()-AnnotationUtils.findAnnotation(o2.getClass(),Order.class).value();
                 }
             });
             for (int i = handlerList.size()-1; i>=0; i--){

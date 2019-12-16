@@ -28,13 +28,15 @@ import java.util.*;
 @Slf4j
 public class SoftTest implements InitializingBean {
 
-    @Value("${soft.time:60000}")
+    @Value("${soft.time:600000}")
     private int time;
 
     @Autowired
     private EmailClient emailClient;
 
     private final Map<String,Boolean> hasSended = new HashMap<>(32) ;
+
+    private final Map<String,InetSocketAddress> addressMap = new HashMap<>(32);
 
     private final Map<String,String> url = new HashMap<>(32);
 
@@ -56,23 +58,31 @@ public class SoftTest implements InitializingBean {
                 for (Map.Entry<String,String> entry : url.entrySet()) {
                     try {
                         Socket socket = new Socket();
-                        String[] split = entry.getValue().split(":");
-                        socket.connect(new InetSocketAddress(split[0],Integer.parseInt(split[1])));
-                        log.info(entry.getKey()+"连接正常");
-                        hasSended.put(entry.getKey(),true);
+                        InetSocketAddress address = addressMap.get(entry.getKey());
+                        if (address == null){
+                            String[] split = entry.getValue().split(":");
+                            address = new InetSocketAddress(split[0],Integer.parseInt(split[1]));
+                            addressMap.put(entry.getKey(),address);
+                        }
+                        socket.connect(address);
+                        hasSended.put(entry.getKey(),false);
                         socket.close();
                         socket = null;
                     } catch (Exception e) {
                         log.error(entry.getKey()+"挂掉了");
-                        hasSended.put(entry.getKey(),false);
                         downSystem.add(entry.getKey());
                     }
                 }
                 if (downSystem.size() > 0) {
                     downSystem.forEach((s)->{
-                        builder.append(s).append("挂掉，尽快重启").append("\r\n");
+                        if (!hasSended.get(s)) {
+                            builder.append(s).append("挂掉，尽快重启").append("\r\n");
+                            hasSended.put(s,true);
+                        }
                     });
-                    emailClient.sendMail("系统挂掉", builder.toString());
+                    if (builder.length() > 0) {
+                        emailClient.sendMail("系统挂掉", builder.toString());
+                    }
                     builder.delete(0,builder.length());
                     downSystem.clear();
                 }

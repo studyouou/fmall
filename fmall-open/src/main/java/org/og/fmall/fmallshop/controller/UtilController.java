@@ -108,7 +108,7 @@ public class UtilController {
             result.setData(encode);
             return result;
         } catch (Exception e){
-            e.printStackTrace();
+            logger.error(e.getMessage(),e);
         }
         result.setCode(CommonEnum.ENCODE_FAIL.getCode());
         result.setMsg("服务器错误");
@@ -126,7 +126,7 @@ public class UtilController {
             result.setData(fruitVo);
             return result;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(),e);
         }
         result.setCode(CommonEnum.DECODE_FAIL.getCode());
         result.setMsg("服务器错误");

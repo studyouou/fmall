@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
             BaseException baseException = (BaseException) e;
             result.setData(baseException.getCode());
             result.setMsg(baseException.getMsg());
-            LOGGER.warn(e.getMessage(),e);
+            LOGGER.warn(e.getMessage());
             return result;
         }
         result.setCode(CommonEnum.UNKOW_ERROR.getCode());

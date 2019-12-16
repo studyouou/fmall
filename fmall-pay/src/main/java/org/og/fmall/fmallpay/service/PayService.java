@@ -8,6 +8,7 @@ import com.alipay.api.domain.AlipayTradeRefundModel;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradeRefundRequest;
 import com.alipay.api.response.AlipayTradeRefundResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.og.fmall.commonapi.bussiness.invoke.PipeLineOutInvoke;
 import org.og.fmall.commonapi.enums.CommonEnum;
 
@@ -32,6 +33,7 @@ import java.util.Map;
  * @date:2019/10/1122:40
  */
 @Service
+@Slf4j
 public class PayService implements IPayService {
 
     @Reference(check = false)
@@ -58,9 +60,16 @@ public class PayService implements IPayService {
         try {
             signVerified = AlipaySignature.rsaCheckV1(params, AlipayConfig.ALIPAY_PUBLIC_KEY,AlipayConfig.CHARSET,AlipayConfig.SIGNTYPE);
         } catch (AlipayApiException e) {
-            e.printStackTrace();
+            log.error(e.getErrMsg(),e);
+            params.put("refund_reason","签名错误");
+            PayResponse payResponse = returnFund(params);
+            if (payResponse.getCode()!=0){
+                response.setCode(CommonEnum.FAIL.getCode());
+                response.setMsg("退款失败，请联系商家");
+                return response;
+            }
             response.setCode(CommonEnum.FAIL.getCode());
-            response.setMsg(CommonEnum.FAIL.getMsg());
+            response.setMsg("签名验证错误,以退款，请重新下单");
             return response;
         }
         if(signVerified) {
@@ -71,9 +80,14 @@ public class PayService implements IPayService {
             return response;
         }else {
             params.put("refund_reason","签名验证失败");
-            returnFund(params);
+            PayResponse payResponse = returnFund(params);
+            if(payResponse.getCode()!=0){
+                response.setCode(CommonEnum.FAIL.getCode());
+                response.setMsg("退款失败，请联系商家");
+                return response;
+            }
             response.setCode(CommonEnum.FAIL.getCode());
-            response.setMsg("服务器错误,签名验证失败,正在退款");
+            response.setMsg("服务器错误,签名验证失败,退款成功");
             return response;
         }
     }
@@ -95,7 +109,7 @@ public class PayService implements IPayService {
         try {
             alipayTradePagePayResponse = alipayClient.execute(refundRequest);
         } catch (AlipayApiException e) {
-            e.printStackTrace();
+            log.error(e.getErrMsg(),e);
             response.setCode(CommonEnum.RETURN_FUND_WRONG.getCode());
             response.setMsg(CommonEnum.RETURN_FUND_WRONG.getMsg());
             return response;

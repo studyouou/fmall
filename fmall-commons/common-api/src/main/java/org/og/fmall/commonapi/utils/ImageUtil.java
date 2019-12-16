@@ -1,5 +1,7 @@
 package org.og.fmall.commonapi.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.imageio.ImageIO;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -14,6 +16,7 @@ import java.util.Random;
  * @author:ougen
  * @date:2019/10/723:15
  */
+@Slf4j
 public class ImageUtil {
     private static char[] ops = new char[] {'+', '-', '*'};
 
@@ -57,7 +60,7 @@ public class ImageUtil {
             Integer catch1 = (Integer)engine.eval(exp);
             return catch1.intValue();
         }catch(Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
             return 0;
         }
     }

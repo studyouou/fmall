@@ -4,6 +4,7 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.og.fmall.commonapi.bussiness.handler.InvokeHandler;
 import org.og.fmall.commonapi.dto.RequestParam;
 import org.og.fmall.commonapi.dto.ResponseContext;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Component;
 @Belong(PayPipeLineFactory.class)
 @Order(20)
 @Component
+@Slf4j
 public class PayHandler implements InvokeHandler {
     private static Logger logger = LoggerFactory.getLogger(PayHandler.class);
 
@@ -45,7 +47,7 @@ public class PayHandler implements InvokeHandler {
         try {
             form = alipayClient.pageExecute(payRequest).getBody();
         } catch (AlipayApiException e) {
-            e.printStackTrace();
+            log.error(e.getErrMsg(),e);
             response.setCode(CommonEnum.FAIL.getCode());
             response.setMsg(CommonEnum.FAIL.getMsg());
             return;

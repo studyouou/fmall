@@ -48,7 +48,6 @@ public class LogsCollectForOrderHandler implements InvokeHandler {
                     .append("支付宝");
             productor.sendMessage(stringBuilder.toString());
         }catch (Exception e){
-            e.printStackTrace();
             log.error("发送日志失败，失败异常信息为:"+e.getMessage());
         }
 

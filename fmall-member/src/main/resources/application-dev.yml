@@ -17,7 +17,7 @@ spring:
     name: user_service
   datasource:
     username: root
-    password: password
+    password: fmallstudyououmysql
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     max-active: 5

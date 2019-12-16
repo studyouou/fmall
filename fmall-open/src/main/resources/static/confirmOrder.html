@@ -11,7 +11,7 @@
 </head>
 <body>
 
-	<header>
+	<header><h
 		<div class="topBar">
 			<div class="comWidth clearfix">
 				<div class="rightArea">
@@ -348,7 +348,7 @@
                                         price.append("<p>店家活动       <i>-￥"+v3+"</i></p>");
                                         acPay = acPay - Number(v3);
                                     }
-                                    price.append("<p>实际付款        <i>￥"+acPay+"</i></p>");
+                                    price.append("<p>实际付款        <i>￥"+Math.round(acPay*100)+"</i></p>");
                                     $("#submitOrder").click(function () {
                                         submitOrder(fruitVo,acPay,num,ideaPay);
                                     });
