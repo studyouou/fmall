@@ -21,7 +21,7 @@ import javax.annotation.PostConstruct;
 @RestController
 public class StockController {
 
-    @Reference(check = false)
+    @Reference
     private IFruitQueryService iFruitQueryService;
 
     @GetMapping("/{id}/fruit")

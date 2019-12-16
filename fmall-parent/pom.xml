@@ -31,6 +31,8 @@
 		<module>../fmall-stocks</module>
 		<module>../fmall-open</module>
 		<module>../fmall-elasticsearch</module>
+		<module>../fmall-elasticsearch/elasticsearch-api</module>
+		<module>../fmall-comment</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>
@@ -38,6 +40,20 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-dependencies</artifactId>
 				<version>2.0.5.RELEASE</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>Finchley.RELEASE</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
+				<version>0.9.0.RELEASE</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -80,6 +96,27 @@
 				<groupId>com.alibaba.boot</groupId>
 				<artifactId>dubbo-spring-boot-starter</artifactId>
 				<version>0.2.0</version>
+				<exclusions>
+					<exclusion>
+						<groupId>com.alibaba</groupId>
+						<artifactId>dubbo</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>dubbo</artifactId>
+				<version>2.6.5</version>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>dubbo-registry-nacos</artifactId>
+				<version>0.0.1</version>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba.spring</groupId>
+				<artifactId>spring-context-support</artifactId>
+				<version>1.0.2</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -152,6 +189,12 @@
 				<groupId>org.elasticsearch.client</groupId>
 				<artifactId>elasticsearch-rest-high-level-client</artifactId>
 				<version>7.4.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.kafka</groupId>
+				<artifactId>kafka-clients</artifactId>
+				<version>2.2.0</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

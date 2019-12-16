@@ -125,7 +125,7 @@ function render(result){
 	}else if(orderVo.orderState == 1){
 		status = "已支付";
 		$("#payTime").append("<td>付款时间</td>\n" +
-            "                <td colspan=\"2\">"+orderVo.payTime+"</td>");
+            "                <td colspan=\"2\">"+new Date(orderVo.payTime).format("yyyy-MM-dd hh:mm:ss")+"</td>");
         staB.append("<button class=\"btn btn-primary btn-block\" onclick=\"deleteOrder('"+orderVo.id+"')\">删除订单</button>");
 	}else {
 	    status = "已取消";

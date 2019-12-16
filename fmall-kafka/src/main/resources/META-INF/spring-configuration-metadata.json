@@ -1,0 +1,80 @@
+{
+  "hints": [
+    {
+      "name": "kafka.key-serializer",
+      "providers": [
+        {
+          "name": "class-reference",
+          "parameters": {
+            "target": "org.apache.kafka.common.serialization.Serializer"
+          }
+        }
+      ]
+    },
+    {
+      "name": "kafka.value-serializer",
+      "providers": [
+        {
+          "name": "class-reference",
+          "parameters": {
+            "target": "org.apache.kafka.common.serialization.Serializer"
+          }
+        }
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "sourceType": "org.og.fmall.fmalllogs.config.KafkaProperties",
+      "name": "kafka",
+      "type": "org.og.fmall.fmalllogs.config.KafkaProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "org.og.fmall.fmalllogs.config.KafkaProperties",
+      "name": "kafka.acks",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.og.fmall.fmalllogs.config.KafkaProperties",
+      "name": "kafka.batch-size",
+      "type": "java.lang.Long"
+    },
+    {
+      "sourceType": "org.og.fmall.fmalllogs.config.KafkaProperties",
+      "name": "kafka.bootstrap-server",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.og.fmall.fmalllogs.config.KafkaProperties",
+      "name": "kafka.buffer-mmory",
+      "type": "java.lang.Long"
+    },
+    {
+      "sourceType": "org.og.fmall.fmalllogs.config.KafkaProperties",
+      "name": "kafka.key-serializer",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.og.fmall.fmalllogs.config.KafkaProperties",
+      "name": "kafka.linger-ms",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "org.og.fmall.fmalllogs.config.KafkaProperties",
+      "name": "kafka.retries",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "org.og.fmall.fmalllogs.config.KafkaProperties",
+      "name": "kafka.topic",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.og.fmall.fmalllogs.config.KafkaProperties",
+      "name": "kafka.value-serializer",
+      "type": "java.lang.String"
+    }
+  ]
+}

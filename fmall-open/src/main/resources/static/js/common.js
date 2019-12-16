@@ -35,7 +35,7 @@ function g_getQueryString(name) {
         var pair = vars[i].split("=");
         if(pair[0] == name){return pair[1];}
     }
-    return(false);
+    return(null);
 };
 //设定时间格式化函数，使用new Date().format("yyyyMMddhhmmss");  
 Date.prototype.format = function (format) {  

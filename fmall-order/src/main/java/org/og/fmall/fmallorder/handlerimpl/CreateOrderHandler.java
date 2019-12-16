@@ -2,12 +2,14 @@ package org.og.fmall.fmallorder.handlerimpl;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import org.apache.commons.lang3.StringUtils;
+import org.og.fmall.commonapi.annotation.Belong;
 import org.og.fmall.commonapi.constants.OrderConstants;
 import org.og.fmall.commonapi.dto.RequestParam;
 import org.og.fmall.commonapi.dto.ResponseContext;
 import org.og.fmall.commonapi.enums.CommonEnum;
 import org.og.fmall.commontools.redis.RedisService;
 import org.og.fmall.commonapi.bussiness.handler.InvokeHandler;
+import org.og.fmall.fmallorder.factory.OrderPipeLineFactory;
 import org.og.fmall.fmallorder.mapper.OrderMapper;
 import org.og.fmall.fmallorder.model.Order;
 import org.og.fmall.order.api.dto.OrderRequest;
@@ -18,17 +20,21 @@ import org.og.fmall.stock.api.iservice.IFruitService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  * @author:ougen
  * @date:2019/9/2614:41
  */
-@Component
+@org.springframework.core.annotation.Order(10)
+@Belong(OrderPipeLineFactory.class)
+@Service
 public class CreateOrderHandler implements InvokeHandler {
 
     @Reference(check = false)
@@ -82,6 +88,7 @@ public class CreateOrderHandler implements InvokeHandler {
         BeanUtils.copyProperties(order,response);
         response.setStreeName(orderRequest.getStreeName());
         response.setTel(orderRequest.getTel());
+        response.setCreateTime(order.getCreateTime());
     }
 
     private Order createOrder(OrderRequest orderRequest) {
@@ -92,6 +99,7 @@ public class CreateOrderHandler implements InvokeHandler {
         order.setOrderTotal(orderRequest.getOrderTotal());
         order.setActualPay(orderRequest.getActualPay());
         order.setIdealPay(orderRequest.getIdealPay());
+        order.setCreateTime(new Date());
         return order;
     }
 }

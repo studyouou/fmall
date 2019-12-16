@@ -31,7 +31,7 @@
 					<a href="index.html"><img src="images/logo.jpg" alt="首页"></a>
 				</div>
 				<div class="search_box">
-					<input id="searchValue" type="text" class="search_text">
+					<input id="searchValue" type="text" class="search_text" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5]/g,'')" οnpaste="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5]/g,'')" oncontextmenu = "value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5]/g,'')" />
 					<input id="search" type="button" class="search_btn" value="搜 索">
 				</div>
 				<div class="shopCar">
@@ -55,7 +55,7 @@
 				</div>
 				<div class="modal-body">
 					<div style="text-align: center;">
-						<table class="table" style="width: 80%; height: auto;margin: auto" id="addressTable">
+						<table class="table" style="width: 100%; height: auto;margin: auto" id="addressTable">
 
 						</table>
 						<div style="text-align: center;margin: auto">
@@ -86,29 +86,29 @@
 
 					<form name="registerForm" role="form" id="addAddress" method="post"  >
 						<div class="form-group">
-							<input class="form-control input-sm" id="adrecive" name="reciveName" type="text" placeholder="收件人" />
+							<input class="form-control input-sm" id="adrecive" name="reciveName" type="text" placeholder="收件人"  onkeyup="value=value.replace(/[\d]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[\d]/g,''))"/>
 						</div>
 						<div class="ececk_warning"><span>收件人不能为空</span></div>
 						<div class="form-group">
-							<input class="form-control input-sm" id="retel" name="tel" type="text" placeholder="手机号" />
+							<input class="form-control input-sm" id="retel" name="tel" type="text" placeholder="手机号" onkeyup="value=value.replace(/[^0-9]/g,'')" οnpaste="value=value.replace(/[^0-9]/g,'')" oncontextmenu = "value=value.replace(/[^0-9]/g,'')" />
 						</div>
 						<div class="ececk_warning"><span>手机号不能为空</span></div>
 						<div class="form-group">
-							<input class="form-control input-sm" id="prov" name="prov" type="text" placeholder="省份" />
+							<input class="form-control input-sm" id="prov" name="prov" type="text" placeholder="省份"   onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')"/>
 						</div>
 						<div class="ececk_warning"><span>省份不能为空</span></div>
 
 						<div class="form-group">
-							<input class="form-control input-sm" id="reccity"  name="city"  type="text" placeholder="城市"/>
+							<input class="form-control input-sm" id="reccity"  name="city"  type="text" placeholder="城市" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" />
 						</div>
 						<div class="ececk_warning"><span>城市不能为空</span></div>
 
 						<div class="form-group">
-							<input class="form-control input-sm" id="recarea"  name="area"  type="text" placeholder="区间"/>
+							<input class="form-control input-sm" id="recarea"  name="area"  type="text" placeholder="区间" onkeyup="value=value.replace(/[\d]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[\d]/g,''))"/>
 						</div>
 						<div class="ececk_warning"><span>区间不能为空</span></div>
 						<div class="form-group">
-							<input class="form-control input-sm" id="streeName"  name="streeName"  type="text" placeholder="街道"/>
+							<input class="form-control input-sm" id="streeName"  name="streeName"  type="text" placeholder="街道" onkeyup="value=value.replace(/[\d]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[\d]/g,''))"/>
 						</div>
 						<div class="ececk_warning"><span>街道/详细地址不能为空</span></div>
 					</form>
@@ -135,24 +135,24 @@
 
 					<form name="updateAddress" role="form" id="updateAddressForm">
 						<div class="form-group">
-							<input class="form-control input-sm" id="ureciveName" name="reciveName" type="text" placeholder="收件人" />
+							<input class="form-control input-sm" id="ureciveName" name="reciveName" type="text" placeholder="收件人" onkeyup="value=value.replace(/[\d]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[\d]/g,''))"/>
 						</div>
 
 						<div class="form-group">
-							<input class="form-control input-sm" id="utel" name="tel" type="text" placeholder="手机号" />
+							<input class="form-control input-sm" id="utel" name="tel" type="text" placeholder="手机号" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
 						</div>
 						<div class="form-group">
-							<input class="form-control input-sm" id="uprov" name="prov" type="text" placeholder="省份" />
+							<input class="form-control input-sm" id="uprov" name="prov" type="text" placeholder="省份" onkeyup="this.value=this.value.replace(/[^\u4e00-\u9fa5]/g,'')"/>
 						</div>
 						<div class="form-group">
-							<input class="form-control input-sm" id="ucity"  name="city"  type="text" placeholder="城市"/>
+							<input class="form-control input-sm" id="ucity"  name="city"  type="text" placeholder="城市" onkeyup="this.value=this.value.replace(/[^\u4e00-\u9fa5]/g,'')" />
 						</div>
 						<div class="form-group">
-							<input class="form-control input-sm" id="uarea"  name="area"  type="text" placeholder="区间"/>
+							<input class="form-control input-sm" id="uarea"  name="area"  type="text" placeholder="区间" onkeyup="value=value.replace(/[\d]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[\d]/g,''))"/>
 						</div>
 
 						<div class="form-group">
-							<input class="form-control input-sm" id="ustreeName"  name="streeName"  type="text" placeholder="街道"/>
+							<input class="form-control input-sm" id="ustreeName"  name="streeName"  type="text" placeholder="街道" onkeyup="value=value.replace(/[\d]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[\d]/g,''))" />
 						</div>
 						<label>设置为默认</label>
 						<label class="radio-inline">
@@ -391,7 +391,7 @@
 				alert("当前为游客状态，无法创建订单");
 				return;
 			}
-			$(this).attr({"disabled":"disabled"});
+			$("#submitOrder").attr({"disabled":"disabled"});
 			g_showLoading("正在提交");
 			$.ajax({
 				url:"/order",
@@ -533,8 +533,11 @@
 				brr.append("<td>"+list[num].reciveName+"</td>");
 				brr.append("<td>"+list[num].tel+"</td>");
                 brr.append("<td>"+list[num].prov+" "+list[num].city+" "+list[num].area+" "+list[num].streeName+"</td>");
-                brr.append("<td><button class='btn btn-primary' onclick='editAddress("+JSON.stringify(list[num])+")'>编辑</button>");
-                brr.append("<td><button class='btn btn-primary' onclick='okAddress("+JSON.stringify(list[num])+")'>选定</button>");
+                var btr = $("<td></td>");
+                btr.append("<button class='btn btn-primary' onclick='editAddress("+JSON.stringify(list[num])+")'>编辑</button>");
+				btr.append("<button class='btn btn-primary' onclick='okAddress("+JSON.stringify(list[num])+")'>选定</button>");
+				btr.append("<button class='btn btn-primary' onclick='deleteAddress("+list[num].id+")'>删除</button>");
+				btr.appendTo(brr);
                 brr.appendTo(table1);
             }
             return true;
@@ -635,20 +638,25 @@
 					layer.closeAll();
 					if(result.code == 0){
 						layer.msg("添加成功");
+						$("#adrecive").val("");
+						$("#retel").val("");
+						$("#prov").val("");
+						$("#reccity").val("");
+						$("#recarea").val("");
+						$("#streeName").val("");
 						if (confirm("添加成功,是否设置为默认地址？")) {
                             $.ajax({
                                 url: "/address",
                                 type: "PUT",
 								data:{
                                     id:result.data.id,
+									memberId:result.data.memberId,
 									defaultAddress:1
 								},
                                 success: function (result) {
-                                    if (result == 0) {
+                                    if (result.code == 0) {
                                         layer.msg("设置成功");
-                                        $("#addAdressModel").modal({
-                                            show: false
-                                        });
+                                        $("#addAdressModel").modal("hide");
                                         $("#chooseAddress").click();
                                         return;
                                     } else {
@@ -659,10 +667,10 @@
                                     layer.msg("服务器错误")
                                 }
                             });
+							$("#addAdressModel").modal("hide");
+
                         } else {
-                            $("#addAdressModel").modal({
-                                show: false
-                            });
+                            $("#addAdressModel").modal("hide");
                             $("#chooseAddress").click();
                         }
 					}else{
@@ -672,9 +680,7 @@
 				error:function(){
 					layer.closeAll();
 					layer.msg("服务器错误");
-					$("#addAdressModel").modal({
-					show:false
-				});
+					$("#addAdressModel").modal("hide");
 					$("#chooseAddress").click();
 				}
             });
@@ -682,9 +688,7 @@
 
         function okAddress(address) {
             $("#addressUl").show();
-            $("#myModal").modal({
-				show:false
-			});
+            $("#myModal").modal("hide");
             $("#addressId").val(address.id);
             $("#province").val(address.prov);
             $("#city").val(address.city);
@@ -858,6 +862,28 @@
                 }
 			});
         }
+
+        function deleteAddress(id) {
+			if (confirm("是否删除！")){
+				g_showLoading("正在删除。。。")
+				$.ajax({
+					url: "/"+id+"/address",
+					type: "DELETE",
+					success: function (result) {
+						layer.closeAll();
+						if (result.code == 0){
+							layer.msg("删除成功",{time:2000});
+							$("#chooseAddress").click();
+						}else {
+							layer.msg("删除失败，"+result.msg);
+						}
+					},
+					error: function () {
+						layer.msg("服务器错误",{time:2000});
+					}
+				})
+			}
+		}
 	</script>
 </body>
 </html>

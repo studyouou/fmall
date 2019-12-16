@@ -3,7 +3,7 @@ dubbo:
     name: elasticsearch-service
     qos-enable: false
   registry:
-    address: zookeeper://localhost:2181
+    address: nacos://localhost:8848
   protocol:
     name: dubbo
     port: 28086
@@ -14,7 +14,7 @@ spring:
     name: elastic_service
   datasource:
     username: root
-    password: mysql123
+    password: password
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     max-active: 2
@@ -24,10 +24,10 @@ spring:
     validation-query: SELECT 1 FROM DUAL
     test-while-idle: true
     time-between-eviction-runs-millis: 60000
-    url: jdbc:mysql://49.235.118.239:3306/fmall?useUnicode=true&characterEncoding=utf8&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/fmall?useUnicode=true&characterEncoding=utf8&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=UTC
 elasticsearch:
   host: localhost
-  port: 9200
+  port: 18888
   #是否初始化过了，如果加载过数据库数据到elasticsearch中，true
   hasInitial: true
   #批量插入一次多少数据

@@ -64,10 +64,10 @@
         initSearch();
         var page = g_getQueryString("page");
         var pageSize = g_getQueryString("pageSize");
-        if (page == null){
+        if (!page || page == null){
             page = 1;
         }
-        if (pageSize == null){
+        if (!pageSize || pageSize == null){
             pageSize=10;
         }
         $.ajax({

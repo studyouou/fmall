@@ -103,6 +103,7 @@ public class LoginIntercepter implements HandlerInterceptor{
 
     private MemberSession getMember(HttpServletRequest request, HttpServletResponse response) {
         Cookie[] cookies = request.getCookies();
+
         if (cookies == null){
             return null;
         }

@@ -126,7 +126,7 @@
         var brr = null;
         //排版4列，计算有多少行
         var zong = Math.ceil(len/4)
-        var height =  zong*290;
+        var height =  zong*350;
         $("#sales").height(height);
         var count = 0;
         for (var num = 0; num < zong; num++){
@@ -135,7 +135,7 @@
                 "        </div>");
             for (var lie = 0; lie < 4 && count < len; lie++){
                 var fruit = list[count];
-                brr.append("<div style=\"height: 289px;float: left\">\n" +
+                brr.append("<div style=\"height: 350px;width: 285px;float: left;border:4px solid #ac2925 ;margin-left: 15px;\">\n" +
                     "            <div class=\"box\">\n" +
                     "                <a href=\"comment.html?id="+fruit.id+"\">\n" +
                     "                    <img src=\""+fruit.imgUrl+"\">\n" +
@@ -143,9 +143,9 @@
                     "            </div>\n" +
                     "            <div style=\"height: 100px;\">\n" +
                     "                <span style=\"font-size: 10px;color: red\">￥</span><span style='font-size: 25px;color: red'>"+fruit.eachPrice+"</span>\n" +
-                    "            </br><a href=\"comment.html?id="+fruit.id+"\"><span style='font-size: 10px'>"+fruit.fruitName+"</span></a>\n" +
+                    "            </br></br><a href=\"comment.html?id="+fruit.id+"\"><span style='font-size: 10px'>"+fruit.fruitName+"</span></a>\n" +
                     "            </br><a href='#'><span style='font-size: 10px'>小o自营水果店</span></a>\n" +
-                    "            </br><span style='border-bottom-color: #8c8c8c'>月成交：开发中 </span>   |   <span style='border-bottom-color: #8c8c8c'>评价：开发中</span> \n" +
+                    "            </br></br><span style='border-bottom-color: #8c8c8c'>月成交：开发中 </span>   |   <span style='border-bottom-color: #8c8c8c'>评价：开发中</span> \n" +
                     "            </div>\n" +
                     "        </div>");
                 count = count+1;

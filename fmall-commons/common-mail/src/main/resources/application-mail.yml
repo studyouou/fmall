@@ -1,0 +1,8 @@
+spring:
+  mail:
+    host: smtp.qq.com
+    protocol: smtp
+    port: 465
+    username: 发送方邮箱(qq邮箱)
+    password: 发送方邮箱的密码(qq邮箱的授权码，开启第三方发送在设置->账户中开启pop3/smtp服务)
+    properties: {mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory, mail.smtp.ssl.enable: true}

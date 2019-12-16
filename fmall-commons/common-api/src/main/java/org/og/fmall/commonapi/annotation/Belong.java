@@ -4,10 +4,12 @@ import java.lang.annotation.*;
 
 /**
  * @author:ougen
- * @date:2019/9/2917:28
+ * @date:2019/9/3011:22
  */
-@Target(ElementType.FIELD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
+@Inherited
 @Documented
-public @interface NotNull {
+public @interface Belong {
+    Class value();
 }

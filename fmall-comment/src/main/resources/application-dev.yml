@@ -1,0 +1,7 @@
+dubbo:
+  application:
+    name: comment-service
+    qos-enable: false
+  protocol:
+    name: dubbo
+    port: 28084

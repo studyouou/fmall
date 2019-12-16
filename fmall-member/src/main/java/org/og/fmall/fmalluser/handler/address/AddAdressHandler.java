@@ -30,7 +30,8 @@ public class AddAdressHandler implements InvokeHandler{
         AddressResponse addressResponse = (AddressResponse) context;
         Address address = new Address();
         BeanUtils.copyProperties(request,address);
-        long i = addressMapper.inssrtUGeneratedKeys(address);
-        addressResponse.setId(i);
+        addressMapper.inssrtUGeneratedKeys(address);
+        addressResponse.setId(address.getId());
+        addressResponse.setMemberId(request.getMemberId());
     }
 }
