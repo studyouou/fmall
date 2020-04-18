@@ -40,7 +40,7 @@ public class LocalServiceImpl implements LocalService {
         System.out.println("--------------------------------执行order的commit操作-------------------------------------------");
         JSONObject context = (JSONObject)actionContext.getActionContext("order");
         Order order = context.toJavaObject(Order.class);
-        redisService.decrBy(OrderConstants.FRUIT_NUM+order.getId(),order.getOrderTotal());
+        redisService.decrBy(OrderConstants.FRUIT_NUM+order.getFruitId(),order.getOrderTotal());
         redisService.set(OrderConstants.ORDER_SUBMIT_KEY+order.getId(),"true",60);
         return true;
     }
