@@ -1,7 +1,8 @@
-package org.og.fmall.fmallorder.service;
+package org.og.fmall.fmallorder.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
+import io.seata.spring.annotation.GlobalTransactionScanner;
 import org.og.fmall.commonapi.enums.CommonEnum;
 import org.og.fmall.commonapi.exception.BaseException;
 import org.og.fmall.commonapi.result.Result;
@@ -41,7 +42,6 @@ public class OrderServiceImpl implements IOrderService {
     private OrderPipeLineFactory orderPipeLineFactory;
 
     @Override
-    @Transactional
     public OrderResponse createOrder(OrderRequest orderRequest) {
         OutInvoke outInvoke = orderPipeLineFactory.build(orderRequest);
         outInvoke.start();

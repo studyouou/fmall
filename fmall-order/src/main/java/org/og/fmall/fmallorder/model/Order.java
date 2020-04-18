@@ -79,4 +79,34 @@ public class Order {
     private String voucher;
     //抵用费用
     private BigDecimal voucherFee;
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id='" + id + '\'' +
+                ", fruitId=" + fruitId +
+                ", fruitName='" + fruitName + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", sellerId=" + sellerId +
+                ", memberId=" + memberId +
+                ", nickName='" + nickName + '\'' +
+                ", addressId=" + addressId +
+                ", streeName='" + streeName + '\'' +
+                ", createTime=" + createTime +
+                ", lastUpdateTime=" + lastUpdateTime +
+                ", orderState=" + orderState +
+                ", payTime=" + payTime +
+                ", orderTotal=" + orderTotal +
+                ", eachPrice=" + eachPrice +
+                ", idealPay=" + idealPay +
+                ", actualPay=" + actualPay +
+                ", postWay='" + postWay + '\'' +
+                ", freePost=" + freePost +
+                ", postFee=" + postFee +
+                ", consignTime=" + consignTime +
+                ", favorableId=" + favorableId +
+                ", voucher='" + voucher + '\'' +
+                ", voucherFee=" + voucherFee +
+                '}';
+    }
 }

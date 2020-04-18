@@ -1,6 +1,8 @@
 package org.og.fmall.fmallorder.handlerimpl;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.dubbo.config.spring.beans.factory.annotation.ReferenceAnnotationBeanPostProcessor;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.apache.commons.lang3.StringUtils;
 import org.og.fmall.commonapi.annotation.Belong;
 import org.og.fmall.commonapi.constants.OrderConstants;
@@ -10,15 +12,23 @@ import org.og.fmall.commonapi.enums.CommonEnum;
 import org.og.fmall.commontools.redis.RedisService;
 import org.og.fmall.commonapi.bussiness.handler.InvokeHandler;
 import org.og.fmall.fmallorder.factory.OrderPipeLineFactory;
+import org.og.fmall.fmallorder.mapper.OrderAckMapper;
 import org.og.fmall.fmallorder.mapper.OrderMapper;
 import org.og.fmall.fmallorder.model.Order;
+import org.og.fmall.fmallorder.model.OrderAck;
+import org.og.fmall.fmallorder.service.LocalService;
 import org.og.fmall.order.api.dto.OrderRequest;
 import org.og.fmall.order.api.dto.OrderResponse;
 import org.og.fmall.stock.api.dto.FruitResponse;
 import org.og.fmall.stock.api.iservice.IFruitQueryService;
 import org.og.fmall.stock.api.iservice.IFruitService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -47,41 +57,31 @@ public class CreateOrderHandler implements InvokeHandler {
     private OrderMapper orderMapper;
 
     @Autowired
-    private RedisService redisService;
+    private OrderAckMapper orderAckMapper;
+
+    @Autowired
+    private LocalService localService;
+
+    private ApplicationContext applicationContext;
 
     @Override
+    @GlobalTransactional
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void handle(RequestParam requestParam, ResponseContext context) {
         OrderRequest orderRequest = (OrderRequest) requestParam;
-        long fruitId = orderRequest.getFruitId();
-        Integer stock = iFruitQueryService.queryLeaveNum(fruitId);
-
-        if (stock <= 0) {
-            if (StringUtils.isNotBlank(redisService.get(OrderConstants.FRUIT_NUM+fruitId))){
-                redisService.set(OrderConstants.FRUIT_NUM+fruitId,0);
-            }
-            context.setCode(CommonEnum.NUM_OVER.getCode());
-            context.setMsg(CommonEnum.NUM_OVER.getMsg());
-            return;
-        }
-        if (stock < orderRequest.getOrderTotal()) {
-            context.setCode(CommonEnum.NUM_NOT_ENGHTH.getCode());
-            context.setMsg(CommonEnum.NUM_NOT_ENGHTH.getMsg());
-            return;
-        }
         OrderResponse response = (OrderResponse) context;
         Order order = createOrder(orderRequest);
         FruitResponse response1;
-        int insert = orderMapper.insertSelective(order);
-
-        response1 = iFruitService.reduceNum(order.getFruitId(), order.getOrderTotal());
-        if (response1.getCode()!=0){
-            redisService.set(OrderConstants.FRUIT_NUM+fruitId,0);
-            response.setCode(response1.getCode());
-            response.setMsg(response1.getMsg());
-            return;
-        }
-        redisService.set(OrderConstants.ORDER_SUBMIT_KEY+orderRequest.getId(),"true",60);
+        localService.createPrepareLocalOrder(null,order);
+//        response1 = iFruitService.reduceNum(order.getFruitId(), order.getOrderTotal());
+//        if (response1.getCode()!=0){
+//            redisService.set(OrderConstants.FRUIT_NUM+fruitId,0);
+//            response.setCode(response1.getCode());
+//            response.setMsg(response1.getMsg());
+//            return;
+//        }
+        //使用dubbo-spring-boot=start 自动扫描Reference，但是Reference不会到spring容器中
+        iFruitService.reduceOrderPrepare(order.getFruitId(),order.getOrderTotal());
         pacResponse(response, order, orderRequest);
     }
     private void pacResponse(OrderResponse response, Order order, OrderRequest orderRequest) {
@@ -102,4 +102,5 @@ public class CreateOrderHandler implements InvokeHandler {
         order.setCreateTime(new Date());
         return order;
     }
+
 }

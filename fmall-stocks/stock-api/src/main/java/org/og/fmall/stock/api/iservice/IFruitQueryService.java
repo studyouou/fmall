@@ -28,4 +28,5 @@ public interface IFruitQueryService {
      * @return 获取所有水果信息
      */
     List<FruitDto> queryAllFruit();
+
 }

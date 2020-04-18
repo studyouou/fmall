@@ -8,3 +8,7 @@ spring:
     active: dev,redis,mail
   aop:
     proxy-target-class: true
+  cloud:
+    alibaba:
+      seata:
+        tx-service-group: order-service-group

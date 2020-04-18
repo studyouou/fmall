@@ -11,6 +11,8 @@ import org.og.fmall.commontools.redis.RedisService;
 import org.og.fmall.fmallshop.vo.PanelVo;
 import org.og.fmall.shopping.api.dto.PanelDto;
 import org.og.fmall.shopping.api.service.IHomeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -36,6 +38,8 @@ import java.util.List;
 @RestController
 public class HomePageController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(HomePageController.class);
+
     @Autowired
     private RedisService redisService;
 
@@ -44,7 +48,6 @@ public class HomePageController {
 
     @GetMapping("/home/queryTopPanel")
     public Result<List<PanelVo>> queryPanel(){
-
         String panel = redisService.get(OrderConstants.TOP_PANEL_KEY);
         Result<List<PanelVo>> result = ResultUtil.build();
         List<PanelVo> panelVos = new ArrayList<>();
@@ -130,6 +133,7 @@ public class HomePageController {
     @GetMapping("/home/queryBottomPolling")
     public Result<List<PanelVo>> queryBottomPolling(){
         String panel = redisService.get(OrderConstants.BOTTOM_POLLING_KEY);
+
         Result<List<PanelVo>> result = ResultUtil.build();
         List<PanelVo> panelVos = new ArrayList<>();
 

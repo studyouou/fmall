@@ -1,5 +1,8 @@
 package org.og.fmall.stock.api.iservice;
 
+import io.seata.rm.tcc.api.BusinessActionContext;
+import io.seata.rm.tcc.api.BusinessActionContextParameter;
+import io.seata.rm.tcc.api.TwoPhaseBusinessAction;
 import org.og.fmall.commonapi.result.Result;
 import org.og.fmall.stock.api.dto.FruitDto;
 import org.og.fmall.stock.api.dto.FruitRequest;
@@ -13,10 +16,26 @@ public interface IFruitService {
     /**
      * 减少水果库存
      * @param id 水果id
-     * @param num 减少数
+     * @param freezeNum 减少数
      * @return 减少水果信息
      */
-    FruitResponse reduceNum(long id, int num);
+    @TwoPhaseBusinessAction(name="reduceOrderPrepare",commitMethod = "reduceCommit",rollbackMethod = "reduceRollback")
+    FruitResponse reduceOrderPrepare(@BusinessActionContextParameter(paramName = "fruitId") Long id,
+                            @BusinessActionContextParameter(paramName = "freezeNum") Integer freezeNum);
+
+    /**
+     * tcc分布式事务
+     * @param actionContext
+     * @return
+     */
+    boolean reduceCommit(BusinessActionContext actionContext);
+
+    /**
+     * tcc分布式事务
+     * @param actionContext
+     * @return
+     */
+    boolean reduceRollback(BusinessActionContext actionContext);
 
     /**
      * 调价水果库存

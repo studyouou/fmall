@@ -2,6 +2,10 @@
 spring:
   profiles:
     active: dev
+  cloud:
+    alibaba:
+      seata:
+        tx-service-group: stocks-service-group
 mybatis:
   type-aliases-package: org.og.fmall.fmallstock.model
   configuration:

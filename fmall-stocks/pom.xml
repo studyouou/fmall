@@ -21,7 +21,6 @@
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -34,6 +33,14 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>dubbo</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.seata</groupId>
+            <artifactId>seata-all</artifactId>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -78,11 +85,33 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <phase>install</phase>
                         <goals>
                             <goal>repackage</goal>
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.ougen.maven</groupId>
+                <artifactId>myplugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>
+                                myplugin
+                            </goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <args>this is args</args>
+                    <msg>this is msg</msg>
+                    <options>
+                        <option>option1</option>
+                        <option>option 2</option>
+                    </options>
+                </configuration>
             </plugin>
         </plugins>
     </build>

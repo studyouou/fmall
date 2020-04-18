@@ -1,12 +1,12 @@
 
 server:
-  port: 80
+  port: 8013
 dubbo:
   protocol:
     name: dubbo
     port: 20880
   registry:
-    address: nacos://localhost:8848
+    address: nacos://fmall.localHospot:8848
   scan:
     base-packages: org.og.fmall.fmallshop.iservice
   consumer:
@@ -16,7 +16,7 @@ dubbo:
     qos-accept-foreign-ip: false
     qos-enable: false
 rocketmq:
-  namesrvAddr: localhost:9876
+  namesrvAddr: fmall.localHospot:9876
   productor:
     group: producter
     reconsumeTimes: 5
@@ -47,17 +47,17 @@ spring:
   application:
     name: fmall-shop-service
 rabbitmq:
-  host: localhost
+  host: fmall.localHospot
   port: 5672
-  username: username
-  password: password
+  username: guest
+  password: guest
   enable: true
   producer:
     retries: 3
 cookie:
-  domain: fmall.club
+  domain: localhost
 kafka:
-  bootstrap-server: localhost:9092
+  bootstrap-server: fmall.localHospot:9092
   value-serializer: org.apache.kafka.common.serialization.StringSerializer
   key-serializer: org.apache.kafka.common.serialization.StringSerializer
   # 默认发送topic
@@ -73,7 +73,7 @@ pay:
     url: www.fmall.club:80
 
 soft:
-  needTest: true
-  time: 60000
+  needTest: false
+  time: 600000
 mail:
-  receiver: email
+  receiver: 304489914@qq.com

@@ -7,6 +7,7 @@ import org.apache.rocketmq.common.message.Message;
 import org.og.fmall.commonapi.constants.OrderConstants;
 import org.og.fmall.commonapi.constants.RocketMQConstant;
 import org.og.fmall.commonapi.enums.CommonEnum;
+import org.og.fmall.commonapi.rabbitmq.DataContainer;
 import org.og.fmall.commonapi.result.Result;
 import org.og.fmall.commonapi.utils.JSONUtil;
 import org.og.fmall.commonapi.utils.OrderUtil;
@@ -72,7 +73,7 @@ public class OrderController {
     private RabbitMQSendMessage rabbitMQSendMessage;
 
     @PostMapping("/order")
-    @AccessKey
+//    @AccessKey
     public Result<OrderResponse> createOrder(@Valid OrderRequest orderRequest, BindingResult bindingResult,MemberSession session) throws IOException, TimeoutException {
         Result<OrderResponse> result = ResultUtil.build();
         OrderResponse response = null;
@@ -81,9 +82,14 @@ public class OrderController {
             result.setMsg(bindingResult.getFieldError().getField()+"不能为空");
             return result;
         }
-        String orderId = OrderUtil.ceateOrderId(session.getId());
+
+//        String orderId = OrderUtil.ceateOrderId(session.getId());
+        //测试
+        String orderId = OrderUtil.ceateOrderId(14L);
         orderRequest.setId(orderId);
-        orderRequest.setMemberId(session.getId());
+//        orderRequest.setMemberId(session.getId());
+        //测试
+        orderRequest.setMemberId(14L);
         String s ;
         //判断是否是热门商品，如果是，则发送消息创建订单，如果不是，则直接调用接口创建
         if ( (s = redisService.get(OrderConstants.FRUIT_NUM+orderRequest.getFruitId()))!=null && !"".equals(s) ){
@@ -97,7 +103,7 @@ public class OrderController {
                 message.setQueue(OrderConstants.ORDER_QUEUE_NAME);
                 message.setRouteKey(OrderConstants.ROUTE_KEY);
                 message.setBody(JSONUtil.beanToString(orderRequest).getBytes("utf-8"));
-                response = rabbitMQSendMessage.sendMessage(message, BuiltinExchangeType.DIRECT);
+                response = rabbitMQSendMessage.sendMessage(message, BuiltinExchangeType.DIRECT,orderRequest.getId());
                 response.setId(orderId);
                 response.setFruitId(orderRequest.getFruitId());
                 //前台页面根据该参数判断是否是消息队列创建
@@ -113,6 +119,11 @@ public class OrderController {
                 response.setId(orderId);
                 response.setFruitId(orderRequest.getFruitId());
                 response.setIsMessage(1);
+            }else {
+                response = new OrderResponse();
+                BeanUtils.copyProperties(orderRequest,response);
+                response.setCode(CommonEnum.NUM_OVER.getCode());
+                response.setMsg(CommonEnum.NUM_OVER.getMsg());
             }
         }else {
             logger.info("调用接口创建订单");

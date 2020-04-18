@@ -11,7 +11,7 @@ import java.util.List;
  * @date:2019/9/2420:16
  */
 public interface OrderMapper extends TkMapper<Order>{
-    List<Order> selectOrderByMemberId(@Param("memberId") long memberId);
 
+    List<Order> selectOrderByMemberId(@Param("memberId") long memberId);
 
 }

@@ -26,6 +26,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public Result handler(Exception e){
         Result result = ResultUtil.build();
+        e.printStackTrace();
         if (e instanceof BaseException){
             BaseException baseException = (BaseException) e;
             result.setData(baseException.getCode());

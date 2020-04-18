@@ -45,6 +45,5 @@ public class RedisOrderNumHandler extends AbstractOrderNumHandler {
             response.setMsg(CommonEnum.NUM_OVER.getMsg());
             return;
         }
-        redisService.decrBy(OrderConstants.FRUIT_NUM+fruitId,orderTotal);
     }
 }

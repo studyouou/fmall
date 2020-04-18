@@ -1,6 +1,7 @@
 package org.og.fmall.fmallstock.service;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import io.seata.rm.tcc.api.BusinessActionContext;
 import org.og.fmall.commonapi.enums.CommonEnum;
 import org.og.fmall.commonapi.exception.BaseException;
 import org.og.fmall.commonapi.result.Result;
@@ -28,16 +29,15 @@ public class FruitService implements IFruitService{
     private static Logger logger = LoggerFactory.getLogger(FruitService.class);
     @Autowired
     private FruitMapper fruitMapper;
+
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS)
-    public FruitResponse reduceNum(long id, int num) {
+    public FruitResponse reduceOrderPrepare(Long id, Integer num) {
+        System.out.println("--------------------------------执行stocks的reduceOrderPrepare操作-------------------------------------------");
         Integer reduce = fruitMapper.reduceNumById(id, num);
         FruitResponse response = new FruitResponse();
         response.setId(id);
-        if (reduce == null){
-            response.setCode(CommonEnum.NUM_NOT_ENGHTH.getCode());
-            response.setMsg(CommonEnum.NUM_NOT_ENGHTH.getMsg());
-            return response;
+        if (reduce == null ){
+            throw new BaseException(CommonEnum.NUM_NOT_ENGHTH.getCode(),CommonEnum.NUM_NOT_ENGHTH.getMsg());
         }
         response.setReduceStock(num);
         response.setId(id);
@@ -45,7 +45,21 @@ public class FruitService implements IFruitService{
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS)
+    public boolean reduceCommit(BusinessActionContext actionContext) {
+        System.out.println("--------------------------------执行stocks的commit操作-------------------------------------------");
+        return true;
+    }
+
+    @Override
+    public boolean reduceRollback(BusinessActionContext actionContext) {
+        System.out.println("--------------------------------执行stocks的reduceRollback操作-------------------------------------------");
+        Long fruitId = Integer.toUnsignedLong((Integer) actionContext.getActionContext("fruitId"));
+        Integer freezeNum = (Integer) actionContext.getActionContext("freezeNum");
+        fruitMapper.incrementNumById(fruitId, freezeNum);
+        return true;
+    }
+
+    @Override
     public FruitResponse incrementNum(long id, int num) {
         Result<FruitResponse> result ;
         fruitMapper.incrementNumById(id,num);
